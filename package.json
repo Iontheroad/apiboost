@@ -5,10 +5,10 @@
   "type": "commonjs",
   "scripts": {
     "build": "tsc",
-    "g": "ts-node scripts/generate.ts"
+    "g": "ts-node bin/generate.ts"
   },
   "bin": {
-    "apigen": "scripts/generate.ts"
+    "apigen": "bin/generate.ts"
   },
   "devDependencies": {
     "@types/node": "^24.9.1",
