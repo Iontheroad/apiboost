@@ -1,0 +1,15 @@
+{
+  "sourcePath": "standard/blog.all.openapi.result.generated.tag.json",
+  "outDir": "outputs",
+  "exportStyle": "function",
+  "outputExt": "ts",
+  "baseUrlPrefix": "",
+  "filenameCase": "camel",
+  "includeJSDoc": true,
+  "groupInclude": [],
+  "requestImport": {
+    "enabled": true,
+    "importLine": "import request from '@/utils/request';",
+    "identifier": "request"
+  }
+}

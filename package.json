@@ -1,0 +1,17 @@
+{
+  "name": "openapi-standard-pipeline",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "build": "tsc",
+    "parser": "ts-node scripts/parser.ts",
+    "generate": "ts-node src/index.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^24.9.1",
+    "@zpeak/openapi-adapter": "^1.0.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
+  }
+}

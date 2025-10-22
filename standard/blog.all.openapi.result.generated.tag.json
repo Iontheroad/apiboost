@@ -1,0 +1,3745 @@
+[
+  {
+    "name": "article", 
+    "description": "",
+    "controllerName": "reqArticle", 
+    "services": [
+      {
+        "path": "/article/list",
+        "method": "get",
+        "summary": "获取全部文章列表",
+        "description": "",
+        "tag": "article", 
+        "controllerName": "reqGetArticleList", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [
+            {
+              "name": "currentPage",
+              "type": "number",
+              "required": true,
+              "description": "当前页",
+              "default": 1
+            },
+            {
+              "name": "pageSize",
+              "type": "number",
+              "required": true,
+              "description": "每页数量",
+              "default": 10
+            },
+            {
+              "name": "status",
+              "type": "number",
+              "required": true,
+              "description": "文章状态(1:审核中 2:通过 3:未通过)",
+              "default": 2
+            },
+            {
+              "name": "tag_ids",
+              "type": "string",
+              "required": true,
+              "description": "文章标签(单个: 1 ; 多个: 1,2,3)",
+              "default": ""
+            },
+            {
+              "name": "searchKey",
+              "type": "string",
+              "description": "模糊搜索文章标题"
+            },
+            {
+              "name": "cate_id",
+              "type": "number",
+              "description": "文章分类"
+            }
+          ],
+          "path": [],
+          "body": null
+        },
+        "response": {
+          "type": "object",
+          "items": [
+            {
+              "name": "code",
+              "type": "number",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "msg",
+              "type": "string",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "total",
+              "type": "number",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "currentPage",
+              "type": "string",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "pageSize",
+              "type": "string",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "data",
+              "type": "array",
+              "required": true,
+              "description": "",
+              "items": [
+                {
+                  "name": "article_id",
+                  "type": "number",
+                  "description": ""
+                },
+                {
+                  "name": "article_title",
+                  "type": "string",
+                  "description": ""
+                },
+                {
+                  "name": "article_digest",
+                  "type": "string",
+                  "description": ""
+                },
+                {
+                  "name": "article_content",
+                  "type": "string",
+                  "description": ""
+                },
+                {
+                  "name": "article_cover",
+                  "type": "string",
+                  "description": ""
+                },
+                {
+                  "name": "status",
+                  "type": "number",
+                  "description": ""
+                },
+                {
+                  "name": "noPass_reason",
+                  "type": "string",
+                  "description": ""
+                },
+                {
+                  "name": "create_by",
+                  "type": "string",
+                  "description": ""
+                },
+                {
+                  "name": "create_id",
+                  "type": "number",
+                  "description": ""
+                },
+                {
+                  "name": "create_time",
+                  "type": "string",
+                  "description": ""
+                },
+                {
+                  "name": "update_by",
+                  "type": "string",
+                  "description": ""
+                },
+                {
+                  "name": "update_id",
+                  "type": "number",
+                  "description": ""
+                },
+                {
+                  "name": "update_time",
+                  "type": "string",
+                  "description": ""
+                },
+                {
+                  "name": "comment_status",
+                  "type": "number",
+                  "description": ""
+                },
+                {
+                  "name": "article_type",
+                  "type": "number",
+                  "description": ""
+                },
+                {
+                  "name": "article_views",
+                  "type": "string",
+                  "description": ""
+                },
+                {
+                  "name": "article_cateList",
+                  "type": "array",
+                  "description": "",
+                  "items": [
+                    {
+                      "name": "cate_id",
+                      "type": "number",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "cate_name",
+                      "type": "string",
+                      "required": true,
+                      "description": ""
+                    }
+                  ]
+                },
+                {
+                  "name": "likes_count",
+                  "type": "number",
+                  "description": ""
+                },
+                {
+                  "name": "user_liked",
+                  "type": "number",
+                  "description": ""
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "path": "/article/list/self",
+        "method": "get",
+        "summary": "获取个人文章列表 ",
+        "description": "",
+        "tag": "article", 
+        "controllerName": "reqGetArticleListSelf", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [
+            {
+              "name": "currentPage",
+              "type": "number",
+              "required": true,
+              "description": "当前页",
+              "default": 1
+            },
+            {
+              "name": "pageSize",
+              "type": "number",
+              "required": true,
+              "description": "每页数量",
+              "default": 10
+            },
+            {
+              "name": "status",
+              "type": "number",
+              "required": true,
+              "description": "文章状态(1:审核中 2:通过 3:未通过)",
+              "default": 2
+            },
+            {
+              "name": "tag_ids",
+              "type": "string",
+              "required": true,
+              "description": "文章标签(单个: 1 ; 多个: 1,2,3)",
+              "default": ""
+            },
+            {
+              "name": "searchKey",
+              "type": "string",
+              "description": "模糊搜索文章标题"
+            },
+            {
+              "name": "cate_id",
+              "type": "number",
+              "description": "文章分类"
+            }
+          ],
+          "path": [],
+          "body": null
+        },
+        "response": {
+          "type": "object",
+          "items": [
+            {
+              "name": "code",
+              "type": "number",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "msg",
+              "type": "string",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "total",
+              "type": "number",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "currentPage",
+              "type": "string",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "pageSize",
+              "type": "string",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "data",
+              "type": "array",
+              "required": true,
+              "description": "",
+              "items": [
+                {
+                  "name": "article_id",
+                  "type": "number",
+                  "description": ""
+                },
+                {
+                  "name": "article_title",
+                  "type": "string",
+                  "description": ""
+                },
+                {
+                  "name": "article_digest",
+                  "type": "string",
+                  "description": ""
+                },
+                {
+                  "name": "article_content",
+                  "type": "string",
+                  "description": ""
+                },
+                {
+                  "name": "article_cover",
+                  "type": "string",
+                  "description": ""
+                },
+                {
+                  "name": "status",
+                  "type": "number",
+                  "description": ""
+                },
+                {
+                  "name": "noPass_reason",
+                  "type": "string",
+                  "description": ""
+                },
+                {
+                  "name": "create_by",
+                  "type": "string",
+                  "description": ""
+                },
+                {
+                  "name": "create_id",
+                  "type": "number",
+                  "description": ""
+                },
+                {
+                  "name": "create_time",
+                  "type": "string",
+                  "description": ""
+                },
+                {
+                  "name": "update_by",
+                  "type": "string",
+                  "description": ""
+                },
+                {
+                  "name": "update_id",
+                  "type": "number",
+                  "description": ""
+                },
+                {
+                  "name": "update_time",
+                  "type": "string",
+                  "description": ""
+                },
+                {
+                  "name": "comment_status",
+                  "type": "number",
+                  "description": ""
+                },
+                {
+                  "name": "article_type",
+                  "type": "number",
+                  "description": ""
+                },
+                {
+                  "name": "article_views",
+                  "type": "string",
+                  "description": ""
+                },
+                {
+                  "name": "article_cateList",
+                  "type": "array",
+                  "description": "",
+                  "items": [
+                    {
+                      "name": "cate_id",
+                      "type": "number",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "cate_name",
+                      "type": "string",
+                      "required": true,
+                      "description": ""
+                    }
+                  ]
+                },
+                {
+                  "name": "likes_count",
+                  "type": "number",
+                  "description": ""
+                },
+                {
+                  "name": "user_liked",
+                  "type": "number",
+                  "description": ""
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "path": "/article",
+        "method": "get",
+        "summary": "获取某个文章",
+        "description": "",
+        "tag": "article", 
+        "controllerName": "reqGetArticle", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [
+            {
+              "name": "article_id",
+              "type": "string",
+              "required": true,
+              "description": "文章id"
+            }
+          ],
+          "body": null
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/article",
+        "method": "post",
+        "summary": "新增文章",
+        "description": "",
+        "tag": "article", 
+        "controllerName": "reqPostArticle", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": {
+            "type": "object",
+            "items": [
+              {
+                "name": "article_title",
+                "type": "string",
+                "required": true,
+                "description": "文章标题"
+              },
+              {
+                "name": "article_digest",
+                "type": "string",
+                "required": true,
+                "description": "文章摘要"
+              },
+              {
+                "name": "article_content",
+                "type": "string",
+                "required": true,
+                "description": "文章内容"
+              },
+              {
+                "name": "article_cover",
+                "type": "string",
+                "required": true,
+                "description": "文章封面"
+              },
+              {
+                "name": "article_type",
+                "type": "number",
+                "required": true,
+                "description": "文章类型(1:原创 2:转载)"
+              },
+              {
+                "name": "comment_status",
+                "type": "number",
+                "required": true,
+                "description": "评论状态(1开启 2关闭)"
+              },
+              {
+                "name": "tag_ids",
+                "type": "array",
+                "required": true,
+                "description": "文章标签 [1,2]",
+                "items": [{"type": "number"}]
+              },
+              {
+                "name": "cate_id",
+                "type": "number",
+                "required": true,
+                "description": "文章分类"
+              }
+            ]
+          }
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/article",
+        "method": "put",
+        "summary": "修改文章",
+        "description": "",
+        "tag": "article", 
+        "controllerName": "reqPutArticle", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": {
+            "type": "object",
+            "items": [
+              {
+                "name": "article_id",
+                "type": "number",
+                "required": true,
+                "description": "文章id"
+              },
+              {
+                "name": "article_title",
+                "type": "string",
+                "required": true,
+                "description": "文章标题"
+              },
+              {
+                "name": "article_digest",
+                "type": "string",
+                "required": true,
+                "description": "文章摘要"
+              },
+              {
+                "name": "article_content",
+                "type": "string",
+                "required": true,
+                "description": "文章内容"
+              },
+              {
+                "name": "article_cover",
+                "type": "string",
+                "required": true,
+                "description": "文章封面"
+              },
+              {
+                "name": "article_type",
+                "type": "number",
+                "required": true,
+                "description": "文章类型(1:原创 2:转载)"
+              },
+              {
+                "name": "comment_status",
+                "type": "number",
+                "required": true,
+                "description": "评论状态(1开启 2关闭)"
+              },
+              {
+                "name": "tag_ids",
+                "type": "array",
+                "required": true,
+                "description": "文章标签",
+                "items": [{"type": "number"}]
+              },
+              {
+                "name": "cate_id",
+                "type": "number",
+                "required": true,
+                "description": "分类id"
+              },
+              {
+                "name": "status",
+                "type": "number",
+                "required": true,
+                "description": "文章状态"
+              }
+            ]
+          }
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/article",
+        "method": "delete",
+        "summary": "删除文章",
+        "description": "",
+        "tag": "article", 
+        "controllerName": "reqDeleteArticle", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": {
+            "type": "object",
+            "items": [
+              {
+                "name": "ids",
+                "type": "array",
+                "required": true,
+                "description": "文章id集合",
+                "items": [{"type": "number"}]
+              }
+            ]
+          }
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/article/review",
+        "method": "patch",
+        "summary": "文章审核",
+        "description": "根据角色拦截权限",
+        "tag": "article", 
+        "controllerName": "reqPatchArticleReview", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": {
+            "type": "object",
+            "items": [
+              {
+                "name": "article_id",
+                "type": "number",
+                "required": true,
+                "description": "文章id"
+              },
+              {
+                "name": "status",
+                "type": "number",
+                "required": true,
+                "description": "文章状态(1:审核中 2:通过 3:未通过)"
+              },
+              {
+                "name": "noPass_reason",
+                "type": "string",
+                "description": "未通过原因"
+              }
+            ]
+          }
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/article/like",
+        "method": "patch",
+        "summary": "文章 点赞和取消",
+        "description": "点赞后再次调用就是取消点赞",
+        "tag": "article", 
+        "controllerName": "reqPatchArticleLike", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [
+            {
+              "name": "article_id",
+              "type": "number",
+              "required": true,
+              "description": "文章id"
+            }
+          ],
+          "body": null
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/article/comment",
+        "method": "get",
+        "summary": "获取文章评论",
+        "description": "",
+        "tag": "article", 
+        "controllerName": "reqGetArticleComment", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [
+            {
+              "name": "article_id",
+              "type": "string",
+              "required": true,
+              "description": ""
+            }
+          ],
+          "body": null
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/article/comment/page",
+        "method": "get",
+        "summary": "获取文章评论分页",
+        "description": "",
+        "tag": "article", 
+        "controllerName": "reqGetArticleCommentPage", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [
+            {
+              "name": "currentPage",
+              "type": "string",
+              "required": true,
+              "description": "当前页数",
+              "default": "1"
+            },
+            {
+              "name": "pageSize",
+              "type": "string",
+              "required": true,
+              "description": "每页数量",
+              "default": "2"
+            },
+            {
+              "name": "article_id",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "71"
+            }
+          ],
+          "path": [],
+          "body": null
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/article/comment",
+        "method": "post",
+        "summary": "新增文章评论",
+        "description": "",
+        "tag": "article", 
+        "controllerName": "reqPostArticleComment", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": {
+            "type": "object",
+            "items": [
+              {
+                "name": "article_id",
+                "type": "number",
+                "required": true,
+                "description": "文章id"
+              },
+              {
+                "name": "content",
+                "type": "string",
+                "required": true,
+                "description": "评论内容"
+              },
+              {
+                "name": "parent_id",
+                "type": "number",
+                "required": true,
+                "description": "一级评论值为0, 二级评论值对所属一级评论的id"
+              },
+              {
+                "name": "reply_id",
+                "type": "number",
+                "required": true,
+                "description": "被回复评论id"
+              },
+              {
+                "name": "reply_user_id",
+                "type": "number",
+                "required": true,
+                "description": "被回复评论的用户id"
+              }
+            ]
+          }
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/article/comment",
+        "method": "delete",
+        "summary": "删除文章评论",
+        "description": "",
+        "tag": "article", 
+        "controllerName": "reqDeleteArticleComment", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true,
+              "description": "评论id"
+            }
+          ],
+          "body": null
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/article/comment/like",
+        "method": "patch",
+        "summary": "文章评论 点赞或取消",
+        "description": "点赞后再次调用就是取消点赞",
+        "tag": "article", 
+        "controllerName": "reqPatchArticleCommentLike", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": {
+            "type": "object",
+            "items": [
+              {
+                "name": "article_id",
+                "type": "number",
+                "required": true,
+                "description": ""
+              },
+              {
+                "name": "comment_id",
+                "type": "number",
+                "required": true,
+                "description": ""
+              }
+            ]
+          }
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/tags",
+        "method": "get",
+        "summary": "获取标签",
+        "description": "",
+        "tag": "article", 
+        "controllerName": "reqGetTags", 
+        "auth": false, 
+        "contentType": "application/json",
+        "request": {
+          "header": [],
+          "query": [],
+          "path": [],
+          "body": null
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/tags",
+        "method": "post",
+        "summary": "新增标签",
+        "description": "",
+        "tag": "article", 
+        "controllerName": "reqPostTags", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": {
+            "type": "object",
+            "items": [
+              {
+                "name": "tag_name",
+                "type": "string",
+                "required": true,
+                "description": "标签名"
+              }
+            ]
+          }
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/tags",
+        "method": "put",
+        "summary": "修改标签",
+        "description": "",
+        "tag": "article", 
+        "controllerName": "reqPutTags", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": {
+            "type": "object",
+            "items": [
+              {
+                "name": "tag_id",
+                "type": "number",
+                "required": true,
+                "description": "标签id"
+              },
+              {
+                "name": "tag_name",
+                "type": "string",
+                "required": true,
+                "description": "标签名"
+              }
+            ]
+          }
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/tags",
+        "method": "delete",
+        "summary": "删除标签",
+        "description": "",
+        "tag": "article", 
+        "controllerName": "reqDeleteTags", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": {
+            "type": "object",
+            "items": [
+              {
+                "name": "ids",
+                "type": "array",
+                "required": true,
+                "description": "分类id集合",
+                "items": [{"type": "number"}]
+              }
+            ]
+          }
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/category",
+        "method": "get",
+        "summary": "获取分类",
+        "description": "",
+        "tag": "article", 
+        "controllerName": "reqGetCategory", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": null
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/category",
+        "method": "post",
+        "summary": "新增分类",
+        "description": "",
+        "tag": "article", 
+        "controllerName": "reqPostCategory", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": {
+            "type": "object",
+            "items": [
+              {
+                "name": "cate_name",
+                "type": "string",
+                "required": true,
+                "description": "分类名(长度最大为6)"
+              }
+            ]
+          }
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/category",
+        "method": "put",
+        "summary": "修改分类",
+        "description": "",
+        "tag": "article", 
+        "controllerName": "reqPutCategory", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": {
+            "type": "object",
+            "items": [
+              {
+                "name": "cate_id",
+                "type": "number",
+                "required": true,
+                "description": "分类id"
+              },
+              {
+                "name": "cate_name",
+                "type": "string",
+                "required": true,
+                "description": "分类名"
+              }
+            ]
+          }
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/category",
+        "method": "delete",
+        "summary": "删除分类",
+        "description": "",
+        "tag": "article", 
+        "controllerName": "reqDeleteCategory", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": {
+            "type": "object",
+            "items": [
+              {
+                "name": "ids",
+                "type": "array",
+                "required": true,
+                "description": "分类id集合",
+                "items": [{"type": "number"}]
+              }
+            ]
+          }
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/user/checkUsername",
+        "method": "get",
+        "summary": "检查用户名是否使用",
+        "description": "",
+        "tag": "article", 
+        "controllerName": "reqGetUserCheckUsername", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [
+            {
+              "name": "username",
+              "type": "string",
+              "required": true,
+              "description": "用户名(账号)",
+              "default": "huge"
+            }
+          ],
+          "path": [],
+          "body": null
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/user/register",
+        "method": "post",
+        "summary": "用户注册",
+        "description": "",
+        "tag": "article", 
+        "controllerName": "reqPostUserRegister", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": {
+            "type": "object",
+            "items": [
+              {
+                "name": "nickname",
+                "type": "string",
+                "required": true,
+                "description": "用户昵称"
+              },
+              {
+                "name": "username",
+                "type": "string",
+                "required": true,
+                "description": "用户名(账号)"
+              },
+              {
+                "name": "password",
+                "type": "string",
+                "required": true,
+                "description": "密码"
+              },
+              {
+                "name": "verify_password",
+                "type": "string",
+                "required": true,
+                "description": "二次确认密码"
+              }
+            ]
+          }
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/user/login",
+        "method": "post",
+        "summary": "用户登录",
+        "description": "",
+        "tag": "article", 
+        "controllerName": "reqPostUserLogin", 
+        "auth": false, 
+        "contentType": "application/json",
+        "request": {
+          "header": [],
+          "query": [],
+          "path": [],
+          "body": {
+            "type": "object",
+            "items": [
+              {
+                "name": "username",
+                "type": "string",
+                "required": true,
+                "description": "用户名(账号)"
+              },
+              {
+                "name": "password",
+                "type": "string",
+                "required": true,
+                "description": "密码"
+              }
+            ]
+          }
+        },
+        "response": {
+          "type": "object",
+          "items": [
+            {
+              "name": "code",
+              "type": "number",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "msg",
+              "type": "string",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "data",
+              "type": "object",
+              "required": true,
+              "description": "",
+              "items": [
+                {
+                  "name": "refresh_token",
+                  "type": "string",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "access_token",
+                  "type": "string",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "user_id",
+                  "type": "number",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "username",
+                  "type": "string",
+                  "required": true,
+                  "description": ""
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "path": "/token/refresh/token",
+        "method": "post",
+        "summary": "刷新token",
+        "description": "",
+        "tag": "article", 
+        "controllerName": "reqPostTokenRefreshToken", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": {
+            "type": "object",
+            "items": [
+              {
+                "name": "refresh_token",
+                "type": "string",
+                "required": true,
+                "description": "刷新token"
+              }
+            ]
+          }
+        },
+        "response": {
+          "type": "object",
+          "items": [
+            {
+              "name": "code",
+              "type": "number",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "msg",
+              "type": "string",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "data",
+              "type": "object",
+              "required": true,
+              "description": "",
+              "items": [
+                {
+                  "name": "refresh_token",
+                  "type": "string",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "access_token",
+                  "type": "string",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "user_id",
+                  "type": "number",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "username",
+                  "type": "string",
+                  "required": true,
+                  "description": ""
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "path": "/user/logout",
+        "method": "post",
+        "summary": "用户登出",
+        "description": "",
+        "tag": "article", 
+        "controllerName": "reqPostUserLogout", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": null
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/user",
+        "method": "get",
+        "summary": "获取用户信息",
+        "description": "",
+        "tag": "article", 
+        "controllerName": "reqGetUser", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [
+            {
+              "name": "user_id",
+              "type": "number",
+              "description": "用户id(如果不传就获取当前登录的用户信息)",
+              "default": 29
+            }
+          ],
+          "path": [],
+          "body": null
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/user",
+        "method": "post",
+        "summary": "后台创建用户",
+        "description": "后台创建用户的默认密码(qwe123)",
+        "tag": "article", 
+        "controllerName": "reqPostUser", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": {
+            "type": "object",
+            "items": [
+              {
+                "name": "nickname",
+                "type": "string",
+                "required": true,
+                "description": "用户昵称"
+              },
+              {
+                "name": "username",
+                "type": "string",
+                "required": true,
+                "description": "用户名(账号)"
+              }
+            ]
+          }
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/user",
+        "method": "put",
+        "summary": "修改用户信息",
+        "description": "",
+        "tag": "article", 
+        "controllerName": "reqPutUser", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": {
+            "type": "object",
+            "items": [
+              {
+                "name": "id",
+                "type": "number",
+                "required": true,
+                "description": "用户id"
+              },
+              {
+                "name": "nickname",
+                "type": "string",
+                "required": true,
+                "description": "用户昵称"
+              },
+              {
+                "name": "avatar",
+                "type": "string",
+                "required": true,
+                "description": "用户头像"
+              },
+              {
+                "name": "sex",
+                "type": "string",
+                "required": true,
+                "description": "性别(u:未知 m:男 w:女)"
+              },
+              {
+                "name": "age",
+                "type": "string",
+                "required": true,
+                "description": "年龄"
+              },
+              {
+                "name": "address",
+                "type": "string",
+                "required": true,
+                "description": "地址"
+              },
+              {
+                "name": "phone",
+                "type": "string",
+                "required": true,
+                "description": "手机号"
+              },
+              {
+                "name": "email",
+                "type": "string",
+                "required": true,
+                "description": "邮箱"
+              }
+            ]
+          }
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/user",
+        "method": "delete",
+        "summary": "删除用户",
+        "description": "",
+        "tag": "article", 
+        "controllerName": "reqDeleteUser", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": {
+            "type": "object",
+            "items": [
+              {
+                "name": "ids",
+                "type": "array",
+                "required": true,
+                "description": "用户id集合",
+                "items": [{"type": "number"}]
+              }
+            ]
+          }
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/user/list",
+        "method": "get",
+        "summary": "获取用户列表",
+        "description": "",
+        "tag": "article", 
+        "controllerName": "reqGetUserList", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": null
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/user/password",
+        "method": "patch",
+        "summary": "修改用户密码",
+        "description": "新旧密码不能相同",
+        "tag": "article", 
+        "controllerName": "reqPatchUserPassword", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": {
+            "type": "object",
+            "items": [
+              {
+                "name": "username",
+                "type": "string",
+                "required": true,
+                "description": "用户名(账号)"
+              },
+              {
+                "name": "oldPassword",
+                "type": "string",
+                "required": true,
+                "description": "旧密码"
+              },
+              {
+                "name": "newPassword",
+                "type": "string",
+                "required": true,
+                "description": "新密码"
+              }
+            ]
+          }
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/mo_upload/upload",
+        "method": "post",
+        "summary": "(mo)单个上传 ",
+        "description": "",
+        "tag": "article", 
+        "controllerName": "reqPostMoUploadUpload", 
+        "auth": true, 
+        "contentType": "multipart/form-data",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": {
+            "type": "object",
+            "items": [
+              {
+                "name": "file",
+                "type": "string",
+                "required": true,
+                "description": ""
+              },
+              {
+                "name": "type",
+                "type": "string",
+                "description": ""
+              }
+            ]
+          }
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/mo_upload/files",
+        "method": "delete",
+        "summary": "(mo)删除文件",
+        "description": "",
+        "tag": "article", 
+        "controllerName": "reqDeleteMoUploadFiles", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": {
+            "type": "object",
+            "items": [
+              {
+                "name": "ids",
+                "type": "array",
+                "required": true,
+                "description": "文章id集合",
+                "items": [{"type": "string"}]
+              }
+            ]
+          }
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/mo_upload/files",
+        "method": "get",
+        "summary": "(mo)查询文件",
+        "description": "",
+        "tag": "article", 
+        "controllerName": "reqGetMoUploadFiles", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [
+            {
+              "name": "currentPage",
+              "type": "string",
+              "required": true,
+              "description": "当前页数",
+              "default": "1"
+            },
+            {
+              "name": "pageSize",
+              "type": "string",
+              "required": true,
+              "description": "每页数量",
+              "default": "2"
+            },
+            {
+              "name": "fileName",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": ""
+            }
+          ],
+          "path": [],
+          "body": null
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/mo_upload/files/download",
+        "method": "get",
+        "summary": "(mo)下载文件",
+        "description": "",
+        "tag": "article", 
+        "controllerName": "reqGetMoUploadFilesDownload", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true,
+              "description": ""
+            }
+          ],
+          "body": null
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/upload/file",
+        "method": "post",
+        "summary": "单个上传",
+        "description": "",
+        "tag": "article", 
+        "controllerName": "reqPostUploadFile", 
+        "auth": true, 
+        "contentType": "multipart/form-data",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": {
+            "type": "object",
+            "items": [
+              {
+                "name": "file",
+                "type": "string",
+                "required": true,
+                "description": ""
+              },
+              {
+                "name": "type",
+                "type": "string",
+                "description": ""
+              }
+            ]
+          }
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/upload/files",
+        "method": "post",
+        "summary": "批量上传",
+        "description": "",
+        "tag": "article", 
+        "controllerName": "reqPostUploadFiles", 
+        "auth": true, 
+        "contentType": "multipart/form-data",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": {
+            "type": "object",
+            "items": [
+              {
+                "name": "file",
+                "type": "string",
+                "description": ""
+              },
+              {
+                "name": "dir",
+                "type": "string",
+                "description": ""
+              }
+            ]
+          }
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/upload/verify",
+        "method": "post",
+        "summary": "验证是否已经上传",
+        "description": "",
+        "tag": "article", 
+        "controllerName": "reqPostUploadVerify", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": {
+            "type": "object",
+            "items": [
+              {
+                "name": "file_name",
+                "type": "string",
+                "required": true,
+                "description": ""
+              }
+            ]
+          }
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "blogroll", 
+    "description": "",
+    "controllerName": "reqBlogroll", 
+    "services": [
+      {
+        "path": "/blogroll",
+        "method": "get",
+        "summary": "获取友链",
+        "description": "",
+        "tag": "blogroll", 
+        "controllerName": "reqGetBlogroll", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [
+            {
+              "name": "currentPage",
+              "type": "number",
+              "required": true,
+              "description": "当前页",
+              "default": 1
+            },
+            {
+              "name": "pageSize",
+              "type": "number",
+              "required": true,
+              "description": "每页数量",
+              "default": 10
+            }
+          ],
+          "path": [],
+          "body": null
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/blogroll",
+        "method": "post",
+        "summary": "新增友链",
+        "description": "",
+        "tag": "blogroll", 
+        "controllerName": "reqPostBlogroll", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": {
+            "type": "object",
+            "items": [
+              {
+                "name": "site_name",
+                "type": "string",
+                "required": true,
+                "description": "网站名称"
+              },
+              {
+                "name": "site_url",
+                "type": "string",
+                "required": true,
+                "description": "网站地址"
+              },
+              {
+                "name": "site_icon",
+                "type": "string",
+                "required": true,
+                "description": "网站图标"
+              },
+              {
+                "name": "email",
+                "type": "string",
+                "required": true,
+                "description": "联系方式"
+              },
+              {
+                "name": "description",
+                "type": "string",
+                "required": true,
+                "description": "网站描述"
+              }
+            ]
+          }
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/blogroll",
+        "method": "put",
+        "summary": "修改友链",
+        "description": "",
+        "tag": "blogroll", 
+        "controllerName": "reqPutBlogroll", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": {
+            "type": "object",
+            "items": [
+              {
+                "name": "id",
+                "type": "number",
+                "required": true,
+                "description": "友链id"
+              },
+              {
+                "name": "site_name",
+                "type": "string",
+                "required": true,
+                "description": "网站名称"
+              },
+              {
+                "name": "site_url",
+                "type": "string",
+                "required": true,
+                "description": "网站地址"
+              },
+              {
+                "name": "site_icon",
+                "type": "string",
+                "required": true,
+                "description": "网站图标"
+              },
+              {
+                "name": "email",
+                "type": "string",
+                "required": true,
+                "description": "联系方式"
+              },
+              {
+                "name": "description",
+                "type": "string",
+                "required": true,
+                "description": "网站描述"
+              }
+            ]
+          }
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/blogroll",
+        "method": "delete",
+        "summary": "删除友链",
+        "description": "",
+        "tag": "blogroll", 
+        "controllerName": "reqDeleteBlogroll", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": {
+            "type": "object",
+            "items": [
+              {
+                "name": "ids",
+                "type": "array",
+                "required": true,
+                "description": "友链id集合",
+                "items": [{"type": "number"}]
+              }
+            ]
+          }
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "role", 
+    "description": "",
+    "controllerName": "reqRole", 
+    "services": [
+      {
+        "path": "/role",
+        "method": "get",
+        "summary": "获取角色列表",
+        "description": "",
+        "tag": "role", 
+        "controllerName": "reqGetRole", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [
+            {
+              "name": "role_name",
+              "type": "string",
+              "description": "角色名"
+            },
+            {
+              "name": "sort",
+              "type": "string",
+              "description": "排序( asc | desc ) 默认asc",
+              "default": "asc"
+            }
+          ],
+          "path": [],
+          "body": null
+        },
+        "response": {
+          "type": "object",
+          "items": [
+            {
+              "name": "code",
+              "type": "number",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "msg",
+              "type": "string",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "data",
+              "type": "array",
+              "required": true,
+              "description": "",
+              "items": [
+                {
+                  "name": "role_id",
+                  "type": "number",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "role_name",
+                  "type": "string",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "role_key",
+                  "type": "string",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "role_sort",
+                  "type": "number",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "status",
+                  "type": "number",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "create_by",
+                  "type": "string",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "create_time",
+                  "type": "string",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "update_by",
+                  "type": "string",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "update_time",
+                  "type": "string",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "remark",
+                  "type": "string",
+                  "required": true,
+                  "description": ""
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "path": "/role",
+        "method": "post",
+        "summary": "创建角色",
+        "description": "后台创建用户的默认密码(qwe123)",
+        "tag": "role", 
+        "controllerName": "reqPostRole", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": {
+            "type": "object",
+            "items": [
+              {
+                "name": "role_name",
+                "type": "string",
+                "required": true,
+                "description": "角色名称"
+              },
+              {
+                "name": "role_key",
+                "type": "string",
+                "required": true,
+                "description": "角色权限字符"
+              },
+              {
+                "name": "role_sort",
+                "type": "number",
+                "required": true,
+                "description": "排序"
+              },
+              {
+                "name": "remark",
+                "type": "string",
+                "required": true,
+                "description": "备注"
+              }
+            ]
+          }
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/role",
+        "method": "put",
+        "summary": "修改角色",
+        "description": "后台创建用户的默认密码(qwe123)",
+        "tag": "role", 
+        "controllerName": "reqPutRole", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": {
+            "type": "object",
+            "items": [
+              {
+                "name": "role_id",
+                "type": "number",
+                "required": true,
+                "description": "角色id"
+              },
+              {
+                "name": "role_name",
+                "type": "string",
+                "required": true,
+                "description": "角色名称"
+              },
+              {
+                "name": "role_key",
+                "type": "string",
+                "required": true,
+                "description": "角色权限字符"
+              },
+              {
+                "name": "role_sort",
+                "type": "number",
+                "required": true,
+                "description": "排序"
+              },
+              {
+                "name": "remark",
+                "type": "string",
+                "required": true,
+                "description": "备注"
+              }
+            ]
+          }
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/role",
+        "method": "delete",
+        "summary": "删除角色",
+        "description": "后台创建用户的默认密码(qwe123)",
+        "tag": "role", 
+        "controllerName": "reqDeleteRole", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": {
+            "type": "object",
+            "items": [
+              {
+                "name": "ids",
+                "type": "array",
+                "required": true,
+                "description": "要删除的id集合",
+                "items": [{"type": "number"}]
+              }
+            ]
+          }
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/role/selectedMenu",
+        "method": "get",
+        "summary": "获取角色已选菜单",
+        "description": "",
+        "tag": "role", 
+        "controllerName": "reqGetRoleSelectedMenu", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [
+            {
+              "name": "role_id",
+              "type": "number",
+              "required": true,
+              "description": ""
+            }
+          ],
+          "body": null
+        },
+        "response": {
+          "type": "object",
+          "items": [
+            {
+              "name": "code",
+              "type": "number",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "msg",
+              "type": "string",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "data",
+              "type": "array",
+              "required": true,
+              "description": "",
+              "items": [{"type": "number"}]
+            }
+          ]
+        }
+      },
+      {
+        "path": "/role/status",
+        "method": "patch",
+        "summary": "修改角色状态",
+        "description": "后台创建用户的默认密码(qwe123)",
+        "tag": "role", 
+        "controllerName": "reqPatchRoleStatus", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": {
+            "type": "object",
+            "items": [
+              {
+                "name": "role_id",
+                "type": "number",
+                "required": true,
+                "description": "角色id"
+              },
+              {
+                "name": "status",
+                "type": "number",
+                "required": true,
+                "description": "1正常 0停用, 默认1"
+              }
+            ]
+          }
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "menu", 
+    "description": "",
+    "controllerName": "reqMenu", 
+    "services": [
+      {
+        "path": "/menu/getRouters",
+        "method": "get",
+        "summary": "获取动态路由",
+        "description": "",
+        "tag": "menu", 
+        "controllerName": "reqGetMenuGetRouters", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": null
+        },
+        "response": {
+          "type": "object",
+          "items": [
+            {
+              "name": "code",
+              "type": "number",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "msg",
+              "type": "string",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "data",
+              "type": "array",
+              "required": true,
+              "description": "",
+              "items": [
+                {
+                  "name": "parent_id",
+                  "type": "number",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "menu_id",
+                  "type": "number",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "name",
+                  "type": "string",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "path",
+                  "type": "string",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "component",
+                  "type": "string",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "meta",
+                  "type": "object",
+                  "required": true,
+                  "description": "",
+                  "items": [
+                    {
+                      "name": "title",
+                      "type": "string",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "icon",
+                      "type": "string",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "activeMenu",
+                      "type": "string",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "target",
+                      "type": "string",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "isLink",
+                      "type": "boolean",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "isKeepAlive",
+                      "type": "boolean",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "isHidden",
+                      "type": "boolean",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "isRefresh",
+                      "type": "boolean",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "isAffix",
+                      "type": "boolean",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "isFull",
+                      "type": "boolean",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "isAlwaysShow",
+                      "type": "boolean",
+                      "required": true,
+                      "description": ""
+                    }
+                  ]
+                },
+                {
+                  "name": "children",
+                  "type": "array",
+                  "required": true,
+                  "description": "",
+                  "items": [
+                    {
+                      "name": "parent_id",
+                      "type": "number",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "menu_id",
+                      "type": "number",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "name",
+                      "type": "string",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "path",
+                      "type": "string",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "component",
+                      "type": "string",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "meta",
+                      "type": "object",
+                      "required": true,
+                      "description": "",
+                      "items": [
+                        {
+                          "name": "title",
+                          "type": "string",
+                          "required": true,
+                          "description": ""
+                        },
+                        {
+                          "name": "icon",
+                          "type": "string",
+                          "required": true,
+                          "description": ""
+                        },
+                        {
+                          "name": "activeMenu",
+                          "type": "string",
+                          "required": true,
+                          "description": ""
+                        },
+                        {
+                          "name": "target",
+                          "type": "string",
+                          "required": true,
+                          "description": ""
+                        },
+                        {
+                          "name": "isLink",
+                          "type": "boolean",
+                          "required": true,
+                          "description": ""
+                        },
+                        {
+                          "name": "isKeepAlive",
+                          "type": "boolean",
+                          "required": true,
+                          "description": ""
+                        },
+                        {
+                          "name": "isHidden",
+                          "type": "boolean",
+                          "required": true,
+                          "description": ""
+                        },
+                        {
+                          "name": "isRefresh",
+                          "type": "boolean",
+                          "required": true,
+                          "description": ""
+                        },
+                        {
+                          "name": "isAffix",
+                          "type": "boolean",
+                          "required": true,
+                          "description": ""
+                        },
+                        {
+                          "name": "isFull",
+                          "type": "boolean",
+                          "required": true,
+                          "description": ""
+                        },
+                        {
+                          "name": "isAlwaysShow",
+                          "type": "boolean",
+                          "required": true,
+                          "description": ""
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "path": "/menu/list",
+        "method": "get",
+        "summary": "查询菜单管理列表",
+        "description": "",
+        "tag": "menu", 
+        "controllerName": "reqGetMenuList", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": null
+        },
+        "response": {
+          "type": "object",
+          "items": [
+            {
+              "name": "code",
+              "type": "number",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "msg",
+              "type": "string",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "data",
+              "type": "array",
+              "required": true,
+              "description": "",
+              "items": [
+                {
+                  "name": "menu_id",
+                  "type": "number",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "menu_name",
+                  "type": "string",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "parent_id",
+                  "type": "number",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "perms",
+                  "type": "string",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "route_name",
+                  "type": "string",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "path",
+                  "type": "string",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "component",
+                  "type": "string",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "target",
+                  "type": "string",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "menu_type",
+                  "type": "string",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "active_menu",
+                  "type": "string",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "icon",
+                  "type": "string",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "order_num",
+                  "type": "number",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "is_link",
+                  "type": "number",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "is_keep_alive",
+                  "type": "number",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "is_hidden",
+                  "type": "number",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "is_disabled",
+                  "type": "number",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "is_refresh",
+                  "type": "number",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "is_affix",
+                  "type": "number",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "is_full",
+                  "type": "number",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "is_always_show",
+                  "type": "number",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "create_by",
+                  "type": "string",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "create_time",
+                  "type": "string",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "update_by",
+                  "type": "string",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "update_time",
+                  "type": "string",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "remark",
+                  "type": "string",
+                  "required": true,
+                  "description": ""
+                },
+                {
+                  "name": "children",
+                  "type": "array",
+                  "description": "",
+                  "items": [
+                    {
+                      "name": "menu_id",
+                      "type": "number",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "menu_name",
+                      "type": "string",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "parent_id",
+                      "type": "number",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "perms",
+                      "type": "string",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "route_name",
+                      "type": "string",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "path",
+                      "type": "string",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "component",
+                      "type": "string",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "target",
+                      "type": "string",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "menu_type",
+                      "type": "string",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "active_menu",
+                      "type": "string",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "icon",
+                      "type": "string",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "order_num",
+                      "type": "number",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "is_link",
+                      "type": "number",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "is_keep_alive",
+                      "type": "number",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "is_hidden",
+                      "type": "number",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "is_disabled",
+                      "type": "number",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "is_refresh",
+                      "type": "number",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "is_affix",
+                      "type": "number",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "is_full",
+                      "type": "number",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "is_always_show",
+                      "type": "number",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "create_by",
+                      "type": "string",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "create_time",
+                      "type": "string",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "update_by",
+                      "type": "string",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "update_time",
+                      "type": "string",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "remark",
+                      "type": "string",
+                      "required": true,
+                      "description": ""
+                    },
+                    {
+                      "name": "children",
+                      "type": "array",
+                      "description": "",
+                      "items": [
+                        {
+                          "name": "menu_id",
+                          "type": "number",
+                          "required": true,
+                          "description": ""
+                        },
+                        {
+                          "name": "menu_name",
+                          "type": "string",
+                          "required": true,
+                          "description": ""
+                        },
+                        {
+                          "name": "parent_id",
+                          "type": "number",
+                          "required": true,
+                          "description": ""
+                        },
+                        {
+                          "name": "perms",
+                          "type": "string",
+                          "required": true,
+                          "description": ""
+                        },
+                        {
+                          "name": "route_name",
+                          "type": "string",
+                          "required": true,
+                          "description": ""
+                        },
+                        {
+                          "name": "path",
+                          "type": "string",
+                          "required": true,
+                          "description": ""
+                        },
+                        {
+                          "name": "component",
+                          "type": "string",
+                          "required": true,
+                          "description": ""
+                        },
+                        {
+                          "name": "target",
+                          "type": "string",
+                          "required": true,
+                          "description": ""
+                        },
+                        {
+                          "name": "menu_type",
+                          "type": "string",
+                          "required": true,
+                          "description": ""
+                        },
+                        {
+                          "name": "active_menu",
+                          "type": "string",
+                          "required": true,
+                          "description": ""
+                        },
+                        {
+                          "name": "icon",
+                          "type": "string",
+                          "required": true,
+                          "description": ""
+                        },
+                        {
+                          "name": "order_num",
+                          "type": "number",
+                          "required": true,
+                          "description": ""
+                        },
+                        {
+                          "name": "is_link",
+                          "type": "number",
+                          "required": true,
+                          "description": ""
+                        },
+                        {
+                          "name": "is_keep_alive",
+                          "type": "number",
+                          "required": true,
+                          "description": ""
+                        },
+                        {
+                          "name": "is_hidden",
+                          "type": "number",
+                          "required": true,
+                          "description": ""
+                        },
+                        {
+                          "name": "is_disabled",
+                          "type": "number",
+                          "required": true,
+                          "description": ""
+                        },
+                        {
+                          "name": "is_refresh",
+                          "type": "number",
+                          "required": true,
+                          "description": ""
+                        },
+                        {
+                          "name": "is_affix",
+                          "type": "number",
+                          "required": true,
+                          "description": ""
+                        },
+                        {
+                          "name": "is_full",
+                          "type": "number",
+                          "required": true,
+                          "description": ""
+                        },
+                        {
+                          "name": "is_always_show",
+                          "type": "number",
+                          "required": true,
+                          "description": ""
+                        },
+                        {
+                          "name": "create_by",
+                          "type": "string",
+                          "required": true,
+                          "description": ""
+                        },
+                        {
+                          "name": "create_time",
+                          "type": "string",
+                          "required": true,
+                          "description": ""
+                        },
+                        {
+                          "name": "update_by",
+                          "type": "string",
+                          "required": true,
+                          "description": ""
+                        },
+                        {
+                          "name": "update_time",
+                          "type": "string",
+                          "required": true,
+                          "description": ""
+                        },
+                        {
+                          "name": "remark",
+                          "type": "string",
+                          "required": true,
+                          "description": ""
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "path": "/menu",
+        "method": "post",
+        "summary": "添加或编辑菜单",
+        "description": "",
+        "tag": "menu", 
+        "controllerName": "reqPostMenu", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": {
+            "type": "object",
+            "items": [
+              {
+                "name": "menu_id",
+                "type": "number",
+                "required": true,
+                "description": "菜单ID"
+              },
+              {
+                "name": "menu_name",
+                "type": "string",
+                "required": true,
+                "description": "菜单名称title"
+              },
+              {
+                "name": "parent_id",
+                "type": "number",
+                "required": true,
+                "description": "父菜单ID"
+              },
+              {
+                "name": "route_name",
+                "type": "string",
+                "description": "路由别名"
+              },
+              {
+                "name": "path",
+                "type": "string",
+                "description": "路由地址"
+              },
+              {
+                "name": "component",
+                "type": "string",
+                "description": "组件路径"
+              },
+              {
+                "name": "target",
+                "type": "string",
+                "description": "打开方式（self页签 blank新窗口）"
+              },
+              {
+                "name": "menu_type",
+                "type": "string",
+                "required": true,
+                "description": "菜单类型（M目录 C菜单 F按钮）"
+              },
+              {
+                "name": "active_menu",
+                "type": "string",
+                "description": "需要高亮的菜单"
+              },
+              {
+                "name": "icon",
+                "type": "string",
+                "description": "菜单图标"
+              },
+              {
+                "name": "order_num",
+                "type": "number",
+                "description": "显示顺序"
+              },
+              {
+                "name": "is_link",
+                "type": "string",
+                "description": "是否外链"
+              },
+              {
+                "name": "is_keep_alive",
+                "type": "string",
+                "description": "是否缓存keep-alive"
+              },
+              {
+                "name": "is_hidden",
+                "type": "string",
+                "description": "菜单状态（0显示 1隐藏）"
+              },
+              {
+                "name": "is_refresh",
+                "type": "string",
+                "description": "是否刷新（0刷新 1不刷新）"
+              },
+              {
+                "name": "is_affix",
+                "type": "string",
+                "description": "是否固定在tabs"
+              },
+              {
+                "name": "is_full",
+                "type": "string",
+                "description": "是否全屏"
+              },
+              {
+                "name": "is_always_show",
+                "type": "string",
+                "description": "是否一直显示该路由"
+              },
+              {
+                "name": "perms",
+                "type": "string",
+                "description": "权限标识"
+              },
+              {
+                "name": "remark",
+                "type": "string",
+                "description": "备注"
+              }
+            ]
+          }
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      },
+      {
+        "path": "/menu",
+        "method": "delete",
+        "summary": "删除菜单 ",
+        "description": "",
+        "tag": "menu", 
+        "controllerName": "reqDeleteMenu", 
+        "auth": true, 
+        "contentType": "application/json",
+        "request": {
+          "header": [
+            {
+              "name": "Authorization",
+              "type": "string",
+              "required": true,
+              "description": "",
+              "default": "{{access_token}}"
+            }
+          ],
+          "query": [],
+          "path": [],
+          "body": {
+            "type": "object",
+            "items": [
+              {
+                "name": "ids",
+                "type": "array",
+                "required": true,
+                "description": "",
+                "items": [{"type": "number"}]
+              }
+            ]
+          }
+        },
+        "response": {
+          "type": "object",
+          "items": [
+          ]
+        }
+      }
+    ]
+  }
+]

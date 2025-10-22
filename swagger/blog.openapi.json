@@ -1,0 +1,2036 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "blog",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "role"
+    },
+    {
+      "name": "menu"
+    }
+  ],
+  "paths": {
+    "/role": {
+      "get": {
+        "summary": "获取角色列表",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "role"
+        ],
+        "parameters": [
+          {
+            "name": "role_name",
+            "in": "query",
+            "description": "角色名",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "排序( asc | desc ) 默认asc",
+            "required": false,
+            "example": "asc",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "role_id": {
+                            "type": "integer"
+                          },
+                          "role_name": {
+                            "type": "string"
+                          },
+                          "role_key": {
+                            "type": "string"
+                          },
+                          "role_sort": {
+                            "type": "integer"
+                          },
+                          "status": {
+                            "type": "integer"
+                          },
+                          "create_by": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "create_time": {
+                            "type": "string"
+                          },
+                          "update_by": {
+                            "type": "null"
+                          },
+                          "update_time": {
+                            "type": "string"
+                          },
+                          "remark": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "role_id",
+                          "role_name",
+                          "role_key",
+                          "role_sort",
+                          "status",
+                          "create_by",
+                          "create_time",
+                          "update_by",
+                          "update_time",
+                          "remark"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "code": 200,
+                  "msg": "获取角色成功",
+                  "data": [
+                    {
+                      "role_id": 11,
+                      "role_name": "普通用户",
+                      "role_key": "common_user",
+                      "role_sort": 1,
+                      "status": 1,
+                      "create_by": "蒙毅1",
+                      "create_time": "2023-12-21 13:45:16",
+                      "update_by": null,
+                      "update_time": "2023-12-29 17:45:04",
+                      "remark": "ddd1"
+                    },
+                    {
+                      "role_id": 14,
+                      "role_name": "文章管理员",
+                      "role_key": "article_admin",
+                      "role_sort": 1,
+                      "status": 1,
+                      "create_by": "蒙毅3",
+                      "create_time": "2023-12-21 13:45:40",
+                      "update_by": null,
+                      "update_time": "2024-07-13 23:34:46",
+                      "remark": "ddd1"
+                    },
+                    {
+                      "role_id": 10,
+                      "role_name": "超级管理员",
+                      "role_key": "super_admin",
+                      "role_sort": 2,
+                      "status": 1,
+                      "create_by": null,
+                      "create_time": "2023-12-18 15:12:47",
+                      "update_by": null,
+                      "update_time": "2024-08-28 00:35:29",
+                      "remark": null
+                    }
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "post": {
+        "summary": "创建角色",
+        "deprecated": false,
+        "description": "后台创建用户的默认密码(qwe123)",
+        "tags": [
+          "role"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "role_name": {
+                    "description": "角色名称",
+                    "type": "string"
+                  },
+                  "role_key": {
+                    "description": "角色权限字符",
+                    "type": "string"
+                  },
+                  "role_sort": {
+                    "description": "排序",
+                    "type": "integer"
+                  },
+                  "remark": {
+                    "description": "备注",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "role_name",
+                  "role_key",
+                  "role_sort",
+                  "remark"
+                ]
+              },
+              "example": {
+                "role_name": "仵梓睿",
+                "role_key": "eiusmod",
+                "role_sort": 50,
+                "remark": "sunt nostrud laborum dolore ut"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "example": {
+                  "code": 200,
+                  "msg": "添加角色成功"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "put": {
+        "summary": "修改角色",
+        "deprecated": false,
+        "description": "后台创建用户的默认密码(qwe123)",
+        "tags": [
+          "role"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "role_id": {
+                    "description": "角色id",
+                    "type": "integer"
+                  },
+                  "role_name": {
+                    "description": "角色名称",
+                    "type": "string"
+                  },
+                  "role_key": {
+                    "description": "角色权限字符",
+                    "type": "string"
+                  },
+                  "role_sort": {
+                    "description": "排序",
+                    "type": "integer"
+                  },
+                  "remark": {
+                    "description": "备注",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "role_id",
+                  "role_name",
+                  "role_key",
+                  "role_sort",
+                  "remark"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "删除角色",
+        "deprecated": false,
+        "description": "后台创建用户的默认密码(qwe123)",
+        "tags": [
+          "role"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    },
+                    "description": "要删除的id集合"
+                  }
+                },
+                "required": [
+                  "ids"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/role/selectedMenu/{role_id}": {
+      "get": {
+        "summary": "获取角色已选菜单",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "role"
+        ],
+        "parameters": [
+          {
+            "name": "role_id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "example": 10,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "code": 200,
+                  "msg": "获取角色已选菜单成功",
+                  "data": [
+                    10,
+                    20,
+                    2001,
+                    2002,
+                    2003,
+                    2004,
+                    2005,
+                    2006,
+                    2008,
+                    2009,
+                    2011,
+                    2012,
+                    2013,
+                    2014,
+                    2015,
+                    2016,
+                    2017,
+                    2018,
+                    2019,
+                    2020,
+                    2021,
+                    2023,
+                    2025,
+                    2026,
+                    2027
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/role/status": {
+      "patch": {
+        "summary": "修改角色状态",
+        "deprecated": false,
+        "description": "后台创建用户的默认密码(qwe123)",
+        "tags": [
+          "role"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "role_id": {
+                    "description": "角色id",
+                    "type": "integer"
+                  },
+                  "status": {
+                    "description": "1正常 0停用, 默认1",
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "role_id",
+                  "status"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/menu/getRouters": {
+      "get": {
+        "summary": "获取动态路由",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "menu"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parent_id": {
+                            "type": "integer"
+                          },
+                          "menu_id": {
+                            "type": "integer"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "path": {
+                            "type": "string"
+                          },
+                          "component": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "meta": {
+                            "type": "object",
+                            "properties": {
+                              "title": {
+                                "type": "string"
+                              },
+                              "icon": {
+                                "type": "string"
+                              },
+                              "activeMenu": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "target": {
+                                "type": "string"
+                              },
+                              "isLink": {
+                                "type": "boolean"
+                              },
+                              "isKeepAlive": {
+                                "type": "boolean"
+                              },
+                              "isHidden": {
+                                "type": "boolean"
+                              },
+                              "isRefresh": {
+                                "type": "boolean"
+                              },
+                              "isAffix": {
+                                "type": "boolean"
+                              },
+                              "isFull": {
+                                "type": "boolean"
+                              },
+                              "isAlwaysShow": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "title",
+                              "icon",
+                              "activeMenu",
+                              "target",
+                              "isLink",
+                              "isKeepAlive",
+                              "isHidden",
+                              "isRefresh",
+                              "isAffix",
+                              "isFull",
+                              "isAlwaysShow"
+                            ]
+                          },
+                          "children": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "parent_id": {
+                                  "type": "integer"
+                                },
+                                "menu_id": {
+                                  "type": "integer"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "path": {
+                                  "type": "string"
+                                },
+                                "component": {
+                                  "type": "string"
+                                },
+                                "meta": {
+                                  "type": "object",
+                                  "properties": {
+                                    "title": {
+                                      "type": "string"
+                                    },
+                                    "icon": {
+                                      "type": "string"
+                                    },
+                                    "activeMenu": {
+                                      "type": "null"
+                                    },
+                                    "target": {
+                                      "type": "string"
+                                    },
+                                    "isLink": {
+                                      "type": "boolean"
+                                    },
+                                    "isKeepAlive": {
+                                      "type": "boolean"
+                                    },
+                                    "isHidden": {
+                                      "type": "boolean"
+                                    },
+                                    "isRefresh": {
+                                      "type": "boolean"
+                                    },
+                                    "isAffix": {
+                                      "type": "boolean"
+                                    },
+                                    "isFull": {
+                                      "type": "boolean"
+                                    },
+                                    "isAlwaysShow": {
+                                      "type": "boolean"
+                                    }
+                                  },
+                                  "required": [
+                                    "title",
+                                    "icon",
+                                    "activeMenu",
+                                    "target",
+                                    "isLink",
+                                    "isKeepAlive",
+                                    "isHidden",
+                                    "isRefresh",
+                                    "isAffix",
+                                    "isFull",
+                                    "isAlwaysShow"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "parent_id",
+                                "menu_id",
+                                "name",
+                                "path",
+                                "component",
+                                "meta"
+                              ]
+                            }
+                          }
+                        },
+                        "required": [
+                          "parent_id",
+                          "menu_id",
+                          "name",
+                          "path",
+                          "component",
+                          "meta",
+                          "children"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/menu/list": {
+      "get": {
+        "summary": "查询菜单管理列表",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "menu"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "menu_id": {
+                            "type": "integer"
+                          },
+                          "menu_name": {
+                            "type": "string"
+                          },
+                          "parent_id": {
+                            "type": "integer"
+                          },
+                          "perms": {
+                            "type": "string"
+                          },
+                          "route_name": {
+                            "type": "string"
+                          },
+                          "path": {
+                            "type": "string"
+                          },
+                          "component": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "target": {
+                            "type": "string"
+                          },
+                          "menu_type": {
+                            "type": "string"
+                          },
+                          "active_menu": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "icon": {
+                            "type": "string"
+                          },
+                          "order_num": {
+                            "type": "integer"
+                          },
+                          "is_link": {
+                            "type": "integer"
+                          },
+                          "is_keep_alive": {
+                            "type": "integer"
+                          },
+                          "is_hidden": {
+                            "type": "integer"
+                          },
+                          "is_disabled": {
+                            "type": "integer"
+                          },
+                          "is_refresh": {
+                            "type": "integer"
+                          },
+                          "is_affix": {
+                            "type": "integer"
+                          },
+                          "is_full": {
+                            "type": "integer"
+                          },
+                          "is_always_show": {
+                            "type": "integer"
+                          },
+                          "create_by": {
+                            "type": "string"
+                          },
+                          "create_time": {
+                            "type": "string"
+                          },
+                          "update_by": {
+                            "type": "string"
+                          },
+                          "update_time": {
+                            "type": "string"
+                          },
+                          "remark": {
+                            "type": "string"
+                          },
+                          "children": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "menu_id": {
+                                  "type": "integer"
+                                },
+                                "menu_name": {
+                                  "type": "string"
+                                },
+                                "parent_id": {
+                                  "type": "integer"
+                                },
+                                "perms": {
+                                  "type": "string"
+                                },
+                                "route_name": {
+                                  "type": "string"
+                                },
+                                "path": {
+                                  "type": "string"
+                                },
+                                "component": {
+                                  "type": "string"
+                                },
+                                "target": {
+                                  "type": "string"
+                                },
+                                "menu_type": {
+                                  "type": "string"
+                                },
+                                "active_menu": {
+                                  "type": "null"
+                                },
+                                "icon": {
+                                  "type": "string"
+                                },
+                                "order_num": {
+                                  "type": "integer"
+                                },
+                                "is_link": {
+                                  "type": "integer"
+                                },
+                                "is_keep_alive": {
+                                  "type": "integer"
+                                },
+                                "is_hidden": {
+                                  "type": "integer"
+                                },
+                                "is_disabled": {
+                                  "type": "integer"
+                                },
+                                "is_refresh": {
+                                  "type": "integer"
+                                },
+                                "is_affix": {
+                                  "type": "integer"
+                                },
+                                "is_full": {
+                                  "type": "integer"
+                                },
+                                "is_always_show": {
+                                  "type": "integer"
+                                },
+                                "create_by": {
+                                  "type": "string"
+                                },
+                                "create_time": {
+                                  "type": "string"
+                                },
+                                "update_by": {
+                                  "type": "string"
+                                },
+                                "update_time": {
+                                  "type": "string"
+                                },
+                                "remark": {
+                                  "type": "string"
+                                },
+                                "children": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "menu_id": {
+                                        "type": "integer"
+                                      },
+                                      "menu_name": {
+                                        "type": "string"
+                                      },
+                                      "parent_id": {
+                                        "type": "integer"
+                                      },
+                                      "perms": {
+                                        "type": "string"
+                                      },
+                                      "route_name": {
+                                        "type": "string"
+                                      },
+                                      "path": {
+                                        "type": [
+                                          "string",
+                                          "null"
+                                        ]
+                                      },
+                                      "component": {
+                                        "type": [
+                                          "string",
+                                          "null"
+                                        ]
+                                      },
+                                      "target": {
+                                        "type": "string"
+                                      },
+                                      "menu_type": {
+                                        "type": "string"
+                                      },
+                                      "active_menu": {
+                                        "type": "null"
+                                      },
+                                      "icon": {
+                                        "type": "string"
+                                      },
+                                      "order_num": {
+                                        "type": "integer"
+                                      },
+                                      "is_link": {
+                                        "type": "integer"
+                                      },
+                                      "is_keep_alive": {
+                                        "type": "integer"
+                                      },
+                                      "is_hidden": {
+                                        "type": "integer"
+                                      },
+                                      "is_disabled": {
+                                        "type": "integer"
+                                      },
+                                      "is_refresh": {
+                                        "type": "integer"
+                                      },
+                                      "is_affix": {
+                                        "type": "integer"
+                                      },
+                                      "is_full": {
+                                        "type": "integer"
+                                      },
+                                      "is_always_show": {
+                                        "type": "integer"
+                                      },
+                                      "create_by": {
+                                        "type": "string"
+                                      },
+                                      "create_time": {
+                                        "type": "string"
+                                      },
+                                      "update_by": {
+                                        "type": "string"
+                                      },
+                                      "update_time": {
+                                        "type": "string"
+                                      },
+                                      "remark": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "menu_id",
+                                      "menu_name",
+                                      "parent_id",
+                                      "perms",
+                                      "route_name",
+                                      "path",
+                                      "component",
+                                      "target",
+                                      "menu_type",
+                                      "active_menu",
+                                      "icon",
+                                      "order_num",
+                                      "is_link",
+                                      "is_keep_alive",
+                                      "is_hidden",
+                                      "is_disabled",
+                                      "is_refresh",
+                                      "is_affix",
+                                      "is_full",
+                                      "is_always_show",
+                                      "create_by",
+                                      "create_time",
+                                      "update_by",
+                                      "update_time",
+                                      "remark"
+                                    ]
+                                  }
+                                }
+                              },
+                              "required": [
+                                "menu_id",
+                                "menu_name",
+                                "parent_id",
+                                "perms",
+                                "route_name",
+                                "path",
+                                "component",
+                                "target",
+                                "menu_type",
+                                "active_menu",
+                                "icon",
+                                "order_num",
+                                "is_link",
+                                "is_keep_alive",
+                                "is_hidden",
+                                "is_disabled",
+                                "is_refresh",
+                                "is_affix",
+                                "is_full",
+                                "is_always_show",
+                                "create_by",
+                                "create_time",
+                                "update_by",
+                                "update_time",
+                                "remark"
+                              ]
+                            }
+                          }
+                        },
+                        "required": [
+                          "menu_id",
+                          "menu_name",
+                          "parent_id",
+                          "perms",
+                          "route_name",
+                          "path",
+                          "component",
+                          "target",
+                          "menu_type",
+                          "active_menu",
+                          "icon",
+                          "order_num",
+                          "is_link",
+                          "is_keep_alive",
+                          "is_hidden",
+                          "is_disabled",
+                          "is_refresh",
+                          "is_affix",
+                          "is_full",
+                          "is_always_show",
+                          "create_by",
+                          "create_time",
+                          "update_by",
+                          "update_time",
+                          "remark"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "code": 200,
+                  "msg": "获取菜单列表成功",
+                  "data": [
+                    {
+                      "menu_id": 20,
+                      "menu_name": "分类管理",
+                      "parent_id": 0,
+                      "perms": "category",
+                      "route_name": "Category",
+                      "path": "/category",
+                      "component": "/category/index",
+                      "target": "blank",
+                      "menu_type": "C",
+                      "active_menu": null,
+                      "icon": "menu-system-menu",
+                      "order_num": 2,
+                      "is_link": 0,
+                      "is_keep_alive": 1,
+                      "is_hidden": 0,
+                      "is_disabled": 0,
+                      "is_refresh": 0,
+                      "is_affix": 0,
+                      "is_full": 0,
+                      "is_always_show": 0,
+                      "create_by": "26",
+                      "create_time": "2024-07-13 00:48:47",
+                      "update_by": "26",
+                      "update_time": "2024-09-08 21:14:06",
+                      "remark": "",
+                      "children": [
+                        {
+                          "menu_id": 2013,
+                          "menu_name": "分类新增",
+                          "parent_id": 20,
+                          "perms": "category:insert",
+                          "route_name": "",
+                          "path": "",
+                          "component": "",
+                          "target": "blank",
+                          "menu_type": "F",
+                          "active_menu": null,
+                          "icon": "",
+                          "order_num": 0,
+                          "is_link": 0,
+                          "is_keep_alive": 0,
+                          "is_hidden": 0,
+                          "is_disabled": 0,
+                          "is_refresh": 0,
+                          "is_affix": 0,
+                          "is_full": 0,
+                          "is_always_show": 0,
+                          "create_by": "26",
+                          "create_time": "2024-07-21 00:51:54",
+                          "update_by": "26",
+                          "update_time": "2024-07-21 00:51:54",
+                          "remark": ""
+                        },
+                        {
+                          "menu_id": 2014,
+                          "menu_name": "分类删除",
+                          "parent_id": 20,
+                          "perms": "category:delete",
+                          "route_name": "",
+                          "path": "",
+                          "component": "",
+                          "target": "blank",
+                          "menu_type": "F",
+                          "active_menu": null,
+                          "icon": "",
+                          "order_num": 0,
+                          "is_link": 0,
+                          "is_keep_alive": 0,
+                          "is_hidden": 0,
+                          "is_disabled": 0,
+                          "is_refresh": 0,
+                          "is_affix": 0,
+                          "is_full": 0,
+                          "is_always_show": 0,
+                          "create_by": "26",
+                          "create_time": "2024-07-21 00:52:11",
+                          "update_by": "26",
+                          "update_time": "2024-07-21 00:52:11",
+                          "remark": ""
+                        },
+                        {
+                          "menu_id": 2015,
+                          "menu_name": "分类修改",
+                          "parent_id": 20,
+                          "perms": "category:update",
+                          "route_name": "",
+                          "path": "",
+                          "component": "",
+                          "target": "blank",
+                          "menu_type": "F",
+                          "active_menu": null,
+                          "icon": "",
+                          "order_num": 0,
+                          "is_link": 0,
+                          "is_keep_alive": 0,
+                          "is_hidden": 0,
+                          "is_disabled": 0,
+                          "is_refresh": 0,
+                          "is_affix": 0,
+                          "is_full": 0,
+                          "is_always_show": 0,
+                          "create_by": "26",
+                          "create_time": "2024-07-21 00:52:29",
+                          "update_by": "26",
+                          "update_time": "2024-07-21 00:52:29",
+                          "remark": ""
+                        }
+                      ]
+                    },
+                    {
+                      "menu_id": 2002,
+                      "menu_name": "系统管理",
+                      "parent_id": 0,
+                      "perms": "system",
+                      "route_name": "System",
+                      "path": "/system",
+                      "component": null,
+                      "target": "",
+                      "menu_type": "M",
+                      "active_menu": null,
+                      "icon": "menu-system",
+                      "order_num": 0,
+                      "is_link": 0,
+                      "is_keep_alive": 0,
+                      "is_hidden": 0,
+                      "is_disabled": 0,
+                      "is_refresh": 0,
+                      "is_affix": 0,
+                      "is_full": 0,
+                      "is_always_show": 0,
+                      "create_by": "26",
+                      "create_time": "2024-07-13 13:33:49",
+                      "update_by": "26",
+                      "update_time": "2024-07-21 00:49:30",
+                      "remark": "",
+                      "children": [
+                        {
+                          "menu_id": 2003,
+                          "menu_name": "角色管理",
+                          "parent_id": 2002,
+                          "perms": "system:role",
+                          "route_name": "Role",
+                          "path": "/system/role",
+                          "component": "/system/role/index",
+                          "target": "blank",
+                          "menu_type": "C",
+                          "active_menu": null,
+                          "icon": "menu-table",
+                          "order_num": 0,
+                          "is_link": 0,
+                          "is_keep_alive": 0,
+                          "is_hidden": 0,
+                          "is_disabled": 0,
+                          "is_refresh": 0,
+                          "is_affix": 0,
+                          "is_full": 0,
+                          "is_always_show": 0,
+                          "create_by": "",
+                          "create_time": "2024-07-13 22:42:52",
+                          "update_by": "",
+                          "update_time": "2024-07-14 01:49:13",
+                          "remark": "",
+                          "children": [
+                            {
+                              "menu_id": 2004,
+                              "menu_name": "角色查询",
+                              "parent_id": 2003,
+                              "perms": "system:role:select",
+                              "route_name": "",
+                              "path": null,
+                              "component": null,
+                              "target": "",
+                              "menu_type": "F",
+                              "active_menu": null,
+                              "icon": "",
+                              "order_num": 0,
+                              "is_link": 0,
+                              "is_keep_alive": 0,
+                              "is_hidden": 0,
+                              "is_disabled": 0,
+                              "is_refresh": 0,
+                              "is_affix": 0,
+                              "is_full": 0,
+                              "is_always_show": 0,
+                              "create_by": "",
+                              "create_time": "2024-07-13 13:28:25",
+                              "update_by": "",
+                              "update_time": "2024-07-13 13:34:00",
+                              "remark": ""
+                            },
+                            {
+                              "menu_id": 2016,
+                              "menu_name": "角色新增",
+                              "parent_id": 2003,
+                              "perms": "system:role:insert",
+                              "route_name": "",
+                              "path": "",
+                              "component": "",
+                              "target": "blank",
+                              "menu_type": "F",
+                              "active_menu": null,
+                              "icon": "",
+                              "order_num": 0,
+                              "is_link": 0,
+                              "is_keep_alive": 0,
+                              "is_hidden": 0,
+                              "is_disabled": 0,
+                              "is_refresh": 0,
+                              "is_affix": 0,
+                              "is_full": 0,
+                              "is_always_show": 0,
+                              "create_by": "26",
+                              "create_time": "2024-07-21 00:55:30",
+                              "update_by": "26",
+                              "update_time": "2024-07-21 00:55:30",
+                              "remark": ""
+                            },
+                            {
+                              "menu_id": 2017,
+                              "menu_name": "角色删除",
+                              "parent_id": 2003,
+                              "perms": "system:role:delete",
+                              "route_name": "",
+                              "path": "",
+                              "component": "",
+                              "target": "blank",
+                              "menu_type": "F",
+                              "active_menu": null,
+                              "icon": "",
+                              "order_num": 0,
+                              "is_link": 0,
+                              "is_keep_alive": 0,
+                              "is_hidden": 0,
+                              "is_disabled": 0,
+                              "is_refresh": 0,
+                              "is_affix": 0,
+                              "is_full": 0,
+                              "is_always_show": 0,
+                              "create_by": "26",
+                              "create_time": "2024-07-21 00:55:47",
+                              "update_by": "26",
+                              "update_time": "2024-07-21 00:55:47",
+                              "remark": ""
+                            },
+                            {
+                              "menu_id": 2018,
+                              "menu_name": "角色编辑",
+                              "parent_id": 2003,
+                              "perms": "system:role:update",
+                              "route_name": "",
+                              "path": "",
+                              "component": "",
+                              "target": "blank",
+                              "menu_type": "F",
+                              "active_menu": null,
+                              "icon": "",
+                              "order_num": 0,
+                              "is_link": 0,
+                              "is_keep_alive": 0,
+                              "is_hidden": 0,
+                              "is_disabled": 0,
+                              "is_refresh": 0,
+                              "is_affix": 0,
+                              "is_full": 0,
+                              "is_always_show": 0,
+                              "create_by": "26",
+                              "create_time": "2024-07-21 01:27:25",
+                              "update_by": "26",
+                              "update_time": "2024-07-21 01:27:25",
+                              "remark": ""
+                            }
+                          ]
+                        },
+                        {
+                          "menu_id": 2005,
+                          "menu_name": "菜单管理",
+                          "parent_id": 2002,
+                          "perms": "system:menu",
+                          "route_name": "Menu",
+                          "path": "/system/menu",
+                          "component": "/system/menu/index",
+                          "target": "blank",
+                          "menu_type": "C",
+                          "active_menu": null,
+                          "icon": "menu-table",
+                          "order_num": 0,
+                          "is_link": 0,
+                          "is_keep_alive": 0,
+                          "is_hidden": 0,
+                          "is_disabled": 0,
+                          "is_refresh": 0,
+                          "is_affix": 0,
+                          "is_full": 0,
+                          "is_always_show": 0,
+                          "create_by": "",
+                          "create_time": "2024-07-13 22:42:52",
+                          "update_by": "",
+                          "update_time": "2024-07-14 01:49:13",
+                          "remark": "",
+                          "children": [
+                            {
+                              "menu_id": 2011,
+                              "menu_name": "菜单删除",
+                              "parent_id": 2005,
+                              "perms": "system:menu:delete",
+                              "route_name": "",
+                              "path": "",
+                              "component": "",
+                              "target": "blank",
+                              "menu_type": "F",
+                              "active_menu": null,
+                              "icon": "",
+                              "order_num": 0,
+                              "is_link": 0,
+                              "is_keep_alive": 0,
+                              "is_hidden": 0,
+                              "is_disabled": 0,
+                              "is_refresh": 0,
+                              "is_affix": 0,
+                              "is_full": 0,
+                              "is_always_show": 0,
+                              "create_by": "26",
+                              "create_time": "2024-07-21 00:37:10",
+                              "update_by": "26",
+                              "update_time": "2024-07-21 00:45:38",
+                              "remark": ""
+                            },
+                            {
+                              "menu_id": 2019,
+                              "menu_name": "菜单编辑",
+                              "parent_id": 2005,
+                              "perms": "system:menu:update",
+                              "route_name": "",
+                              "path": "",
+                              "component": "",
+                              "target": "blank",
+                              "menu_type": "F",
+                              "active_menu": null,
+                              "icon": "",
+                              "order_num": 0,
+                              "is_link": 0,
+                              "is_keep_alive": 0,
+                              "is_hidden": 0,
+                              "is_disabled": 0,
+                              "is_refresh": 0,
+                              "is_affix": 0,
+                              "is_full": 0,
+                              "is_always_show": 0,
+                              "create_by": "26",
+                              "create_time": "2024-07-21 01:27:57",
+                              "update_by": "26",
+                              "update_time": "2024-07-21 01:27:57",
+                              "remark": ""
+                            },
+                            {
+                              "menu_id": 2020,
+                              "menu_name": "菜单新增",
+                              "parent_id": 2005,
+                              "perms": "system:menu:insert",
+                              "route_name": "",
+                              "path": "",
+                              "component": "",
+                              "target": "blank",
+                              "menu_type": "F",
+                              "active_menu": null,
+                              "icon": "",
+                              "order_num": 0,
+                              "is_link": 0,
+                              "is_keep_alive": 0,
+                              "is_hidden": 0,
+                              "is_disabled": 0,
+                              "is_refresh": 0,
+                              "is_affix": 0,
+                              "is_full": 0,
+                              "is_always_show": 0,
+                              "create_by": "26",
+                              "create_time": "2024-07-21 01:28:12",
+                              "update_by": "26",
+                              "update_time": "2024-07-21 01:28:12",
+                              "remark": ""
+                            }
+                          ]
+                        },
+                        {
+                          "menu_id": 2021,
+                          "menu_name": "用户管理",
+                          "parent_id": 2002,
+                          "perms": "system:user",
+                          "route_name": "User",
+                          "path": "/system/user",
+                          "component": "/system/user/index",
+                          "target": "blank",
+                          "menu_type": "C",
+                          "active_menu": null,
+                          "icon": "menu-system-user",
+                          "order_num": 0,
+                          "is_link": 0,
+                          "is_keep_alive": 0,
+                          "is_hidden": 0,
+                          "is_disabled": 0,
+                          "is_refresh": 0,
+                          "is_affix": 0,
+                          "is_full": 0,
+                          "is_always_show": 0,
+                          "create_by": "26",
+                          "create_time": "2024-07-25 01:21:57",
+                          "update_by": "26",
+                          "update_time": "2024-07-25 01:24:59",
+                          "remark": ""
+                        }
+                      ]
+                    },
+                    {
+                      "menu_id": 2008,
+                      "menu_name": "友链管理",
+                      "parent_id": 0,
+                      "perms": "blogroll",
+                      "route_name": "Blogroll",
+                      "path": "/blogroll",
+                      "component": "/blogroll/index",
+                      "target": "blank",
+                      "menu_type": "C",
+                      "active_menu": "",
+                      "icon": "func-forum-sanuk",
+                      "order_num": 0,
+                      "is_link": 0,
+                      "is_keep_alive": 1,
+                      "is_hidden": 0,
+                      "is_disabled": 0,
+                      "is_refresh": 1,
+                      "is_affix": 0,
+                      "is_full": 0,
+                      "is_always_show": 0,
+                      "create_by": "26",
+                      "create_time": "2024-07-20 22:03:13",
+                      "update_by": "26",
+                      "update_time": "2024-09-08 22:09:32",
+                      "remark": "in in officia"
+                    },
+                    {
+                      "menu_id": 2009,
+                      "menu_name": "标签管理",
+                      "parent_id": 0,
+                      "perms": "tags",
+                      "route_name": "Tags",
+                      "path": "/tags",
+                      "component": "/tags/index",
+                      "target": "blank",
+                      "menu_type": "C",
+                      "active_menu": null,
+                      "icon": "menu-echarts-multiple",
+                      "order_num": 0,
+                      "is_link": 0,
+                      "is_keep_alive": 1,
+                      "is_hidden": 0,
+                      "is_disabled": 0,
+                      "is_refresh": 0,
+                      "is_affix": 0,
+                      "is_full": 0,
+                      "is_always_show": 0,
+                      "create_by": "26",
+                      "create_time": "2024-07-20 23:47:04",
+                      "update_by": "26",
+                      "update_time": "2024-09-08 21:14:17",
+                      "remark": ""
+                    },
+                    {
+                      "menu_id": 2025,
+                      "menu_name": "文章管理",
+                      "parent_id": 0,
+                      "perms": "Article",
+                      "route_name": "Article",
+                      "path": "/article",
+                      "component": "",
+                      "target": "blank",
+                      "menu_type": "M",
+                      "active_menu": null,
+                      "icon": "menu-echarts-multiple",
+                      "order_num": 1,
+                      "is_link": 0,
+                      "is_keep_alive": 0,
+                      "is_hidden": 0,
+                      "is_disabled": 0,
+                      "is_refresh": 0,
+                      "is_affix": 0,
+                      "is_full": 0,
+                      "is_always_show": 0,
+                      "create_by": "26",
+                      "create_time": "2024-08-21 21:28:51",
+                      "update_by": "26",
+                      "update_time": "2024-08-21 21:42:31",
+                      "remark": "",
+                      "children": [
+                        {
+                          "menu_id": 10,
+                          "menu_name": "文章列表",
+                          "parent_id": 2025,
+                          "perms": "article:list",
+                          "route_name": "ArticleList",
+                          "path": "/article/list",
+                          "component": "/article/article-list/index",
+                          "target": "blank",
+                          "menu_type": "C",
+                          "active_menu": null,
+                          "icon": "menu-form",
+                          "order_num": 0,
+                          "is_link": 0,
+                          "is_keep_alive": 0,
+                          "is_hidden": 0,
+                          "is_disabled": 0,
+                          "is_refresh": 0,
+                          "is_affix": 1,
+                          "is_full": 0,
+                          "is_always_show": 0,
+                          "create_by": "26",
+                          "create_time": "2024-07-13 00:48:43",
+                          "update_by": "26",
+                          "update_time": "2024-09-08 22:09:44",
+                          "remark": "",
+                          "children": [
+                            {
+                              "menu_id": 2001,
+                              "menu_name": "文章查询",
+                              "parent_id": 10,
+                              "perms": "article:list:select",
+                              "route_name": "",
+                              "path": null,
+                              "component": null,
+                              "target": "",
+                              "menu_type": "F",
+                              "active_menu": null,
+                              "icon": "",
+                              "order_num": 1,
+                              "is_link": 0,
+                              "is_keep_alive": 0,
+                              "is_hidden": 0,
+                              "is_disabled": 0,
+                              "is_refresh": 0,
+                              "is_affix": 0,
+                              "is_full": 0,
+                              "is_always_show": 0,
+                              "create_by": "26",
+                              "create_time": "2024-07-13 13:28:25",
+                              "update_by": "26",
+                              "update_time": "2024-10-14 21:27:15",
+                              "remark": ""
+                            },
+                            {
+                              "menu_id": 2006,
+                              "menu_name": "文章删除",
+                              "parent_id": 10,
+                              "perms": "article:list:delete",
+                              "route_name": "",
+                              "path": "",
+                              "component": "",
+                              "target": "",
+                              "menu_type": "F",
+                              "active_menu": null,
+                              "icon": "",
+                              "order_num": 0,
+                              "is_link": 0,
+                              "is_keep_alive": 0,
+                              "is_hidden": 0,
+                              "is_disabled": 0,
+                              "is_refresh": 0,
+                              "is_affix": 0,
+                              "is_full": 0,
+                              "is_always_show": 0,
+                              "create_by": "26",
+                              "create_time": "2024-07-13 00:48:43",
+                              "update_by": "26",
+                              "update_time": "2024-10-14 21:27:55",
+                              "remark": ""
+                            },
+                            {
+                              "menu_id": 2012,
+                              "menu_name": "文章新增",
+                              "parent_id": 10,
+                              "perms": "article:list:insert",
+                              "route_name": "",
+                              "path": "",
+                              "component": "",
+                              "target": "blank",
+                              "menu_type": "F",
+                              "active_menu": null,
+                              "icon": "",
+                              "order_num": 1,
+                              "is_link": 0,
+                              "is_keep_alive": 0,
+                              "is_hidden": 0,
+                              "is_disabled": 0,
+                              "is_refresh": 0,
+                              "is_affix": 0,
+                              "is_full": 0,
+                              "is_always_show": 0,
+                              "create_by": "26",
+                              "create_time": "2024-07-21 00:51:28",
+                              "update_by": "26",
+                              "update_time": "2024-10-14 21:28:02",
+                              "remark": ""
+                            }
+                          ]
+                        },
+                        {
+                          "menu_id": 2026,
+                          "menu_name": "文章审核",
+                          "parent_id": 2025,
+                          "perms": "article:review",
+                          "route_name": "ArticleReview",
+                          "path": "/article/review",
+                          "component": "/article/article-review/index",
+                          "target": "blank",
+                          "menu_type": "C",
+                          "active_menu": null,
+                          "icon": "el-icon-Stamp",
+                          "order_num": 0,
+                          "is_link": 0,
+                          "is_keep_alive": 0,
+                          "is_hidden": 0,
+                          "is_disabled": 0,
+                          "is_refresh": 0,
+                          "is_affix": 0,
+                          "is_full": 0,
+                          "is_always_show": 0,
+                          "create_by": "26",
+                          "create_time": "2024-08-21 21:29:12",
+                          "update_by": "26",
+                          "update_time": "2024-08-21 21:50:37",
+                          "remark": ""
+                        },
+                        {
+                          "menu_id": 2027,
+                          "menu_name": "文章编辑",
+                          "parent_id": 2025,
+                          "perms": "article:read-write",
+                          "route_name": "ArticleRW",
+                          "path": "/article/read-write/:article_id?",
+                          "component": "/article/article-list/read-write",
+                          "target": "blank",
+                          "menu_type": "C",
+                          "active_menu": null,
+                          "icon": "el-icon-EditPen",
+                          "order_num": 0,
+                          "is_link": 0,
+                          "is_keep_alive": 0,
+                          "is_hidden": 1,
+                          "is_disabled": 0,
+                          "is_refresh": 0,
+                          "is_affix": 0,
+                          "is_full": 0,
+                          "is_always_show": 0,
+                          "create_by": "26",
+                          "create_time": "2024-08-21 22:14:33",
+                          "update_by": "26",
+                          "update_time": "2024-10-14 23:16:53",
+                          "remark": ""
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/menu": {
+      "post": {
+        "summary": "添加或编辑菜单",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "menu"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "menu_id": {
+                    "type": "integer",
+                    "description": "菜单ID"
+                  },
+                  "menu_name": {
+                    "description": "菜单名称title",
+                    "type": "string",
+                    "maxLength": 50
+                  },
+                  "parent_id": {
+                    "description": "父菜单ID",
+                    "default": "0",
+                    "type": "integer",
+                    "minimum": -2147483648,
+                    "maximum": 2147483647
+                  },
+                  "route_name": {
+                    "description": "路由别名",
+                    "default": "#",
+                    "type": "string",
+                    "maxLength": 200
+                  },
+                  "path": {
+                    "description": "路由地址",
+                    "type": "string",
+                    "maxLength": 255
+                  },
+                  "component": {
+                    "description": "组件路径",
+                    "type": "string",
+                    "maxLength": 255
+                  },
+                  "target": {
+                    "description": "打开方式（self页签 blank新窗口）",
+                    "default": "blank",
+                    "type": "string",
+                    "maxLength": 20
+                  },
+                  "menu_type": {
+                    "description": "菜单类型（M目录 C菜单 F按钮）",
+                    "type": "string",
+                    "enum": [
+                      "M",
+                      "C",
+                      "F"
+                    ]
+                  },
+                  "active_menu": {
+                    "description": "需要高亮的菜单",
+                    "type": "string",
+                    "maxLength": 255
+                  },
+                  "icon": {
+                    "description": "菜单图标",
+                    "default": "#",
+                    "type": "string",
+                    "maxLength": 100
+                  },
+                  "order_num": {
+                    "description": "显示顺序",
+                    "default": "0",
+                    "type": "integer",
+                    "minimum": -2147483648,
+                    "maximum": 2147483647
+                  },
+                  "is_link": {
+                    "description": "是否外链"
+                  },
+                  "is_keep_alive": {
+                    "description": "是否缓存keep-alive"
+                  },
+                  "is_hidden": {
+                    "description": "菜单状态（0显示 1隐藏）"
+                  },
+                  "is_refresh": {
+                    "description": "是否刷新（0刷新 1不刷新）"
+                  },
+                  "is_affix": {
+                    "description": "是否固定在tabs"
+                  },
+                  "is_full": {
+                    "description": "是否全屏"
+                  },
+                  "is_always_show": {
+                    "description": "是否一直显示该路由"
+                  },
+                  "perms": {
+                    "description": "权限标识",
+                    "type": "string",
+                    "maxLength": 100
+                  },
+                  "remark": {
+                    "description": "备注",
+                    "type": "string",
+                    "maxLength": 500
+                  }
+                },
+                "type": "object",
+                "required": [
+                  "menu_name",
+                  "menu_type",
+                  "parent_id",
+                  "menu_id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "删除菜单 ",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "menu"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "required": [
+                  "ids"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "webhooks": {},
+  "components": {
+    "schemas": {},
+    "securitySchemes": {}
+  },
+  "servers": [],
+  "security": []
+}

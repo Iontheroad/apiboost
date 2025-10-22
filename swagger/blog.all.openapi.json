@@ -1,0 +1,5453 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "默认模块",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "article"
+    },
+    {
+      "name": "blogroll"
+    },
+    {
+      "name": "role"
+    },
+    {
+      "name": "menu"
+    }
+  ],
+  "paths": {
+    "/article/list": {
+      "get": {
+        "summary": "获取全部文章列表",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "article"
+        ],
+        "parameters": [
+          {
+            "name": "currentPage",
+            "in": "query",
+            "description": "当前页",
+            "required": true,
+            "example": 1,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "每页数量",
+            "required": true,
+            "example": 10,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "文章状态(1:审核中 2:通过 3:未通过)",
+            "required": true,
+            "example": 2,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "tag_ids",
+            "in": "query",
+            "description": "文章标签(单个: 1 ; 多个: 1,2,3)",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "searchKey",
+            "in": "query",
+            "description": "模糊搜索文章标题",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cate_id",
+            "in": "query",
+            "description": "文章分类",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "total": {
+                      "type": "integer"
+                    },
+                    "currentPage": {
+                      "type": "string"
+                    },
+                    "pageSize": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "article_id": {
+                            "type": "integer"
+                          },
+                          "article_title": {
+                            "type": "string"
+                          },
+                          "article_digest": {
+                            "type": "string"
+                          },
+                          "article_content": {
+                            "type": "string"
+                          },
+                          "article_cover": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "integer"
+                          },
+                          "noPass_reason": {
+                            "type": "null"
+                          },
+                          "create_by": {
+                            "type": "string"
+                          },
+                          "create_id": {
+                            "type": "integer"
+                          },
+                          "create_time": {
+                            "type": "string"
+                          },
+                          "update_by": {
+                            "type": "string"
+                          },
+                          "update_id": {
+                            "type": "integer"
+                          },
+                          "update_time": {
+                            "type": "string"
+                          },
+                          "comment_status": {
+                            "type": "integer"
+                          },
+                          "article_type": {
+                            "type": "integer"
+                          },
+                          "article_views": {
+                            "type": "null"
+                          },
+                          "article_cateList": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "cate_id": {
+                                  "type": "integer"
+                                },
+                                "cate_name": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "cate_id",
+                                "cate_name"
+                              ]
+                            }
+                          },
+                          "likes_count": {
+                            "type": "integer"
+                          },
+                          "user_liked": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "total",
+                    "currentPage",
+                    "pageSize",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "获取文章成功",
+                      "total": 4,
+                      "currentPage": "1",
+                      "pageSize": "1",
+                      "data": [
+                        {
+                          "article_id": 22,
+                          "article_title": "文章标题1",
+                          "article_digest": "文章摘要1",
+                          "article_content": "文章内容1",
+                          "article_cover": "https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg",
+                          "status": 2,
+                          "noPass_reason": null,
+                          "create_by": "peak",
+                          "create_id": 26,
+                          "create_time": "2024-01-02 14:44:23",
+                          "update_by": "",
+                          "update_id": 26,
+                          "update_time": "2024-01-03 17:28:26",
+                          "comment_status": 1,
+                          "article_type": 1,
+                          "article_views": null,
+                          "article_cateList": [
+                            {
+                              "cate_id": 10,
+                              "cate_name": "NodeJS"
+                            },
+                            {
+                              "cate_id": 11,
+                              "cate_name": "Git"
+                            }
+                          ],
+                          "likes_count": 0,
+                          "user_liked": 0
+                        }
+                      ]
+                    }
+                  },
+                  "2": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "获取文章成功",
+                      "total": 4,
+                      "currentPage": "1",
+                      "pageSize": "1",
+                      "data": [
+                        {
+                          "article_id": 22,
+                          "article_title": "文章标题1",
+                          "article_digest": "文章摘要1",
+                          "article_content": "文章内容1",
+                          "article_cover": "https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg",
+                          "status": 2,
+                          "noPass_reason": null,
+                          "create_by": "peak",
+                          "create_id": 26,
+                          "create_time": "2024-01-02 14:44:23",
+                          "update_by": "",
+                          "update_id": 26,
+                          "update_time": "2024-01-03 17:28:26",
+                          "comment_status": 1,
+                          "article_type": 1,
+                          "article_views": null,
+                          "article_cateList": [
+                            {
+                              "cate_id": 10,
+                              "cate_name": "NodeJS"
+                            },
+                            {
+                              "cate_id": 11,
+                              "cate_name": "Git"
+                            }
+                          ],
+                          "likes_count": 0,
+                          "user_liked": 0
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/article/list/self": {
+      "get": {
+        "summary": "获取个人文章列表 ",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "article"
+        ],
+        "parameters": [
+          {
+            "name": "currentPage",
+            "in": "query",
+            "description": "当前页",
+            "required": true,
+            "example": 1,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "每页数量",
+            "required": true,
+            "example": 10,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "文章状态(1:审核中 2:通过 3:未通过)",
+            "required": true,
+            "example": 2,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "tag_ids",
+            "in": "query",
+            "description": "文章标签(单个: 1 ; 多个: 1,2,3)",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "searchKey",
+            "in": "query",
+            "description": "模糊搜索文章标题",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cate_id",
+            "in": "query",
+            "description": "文章分类",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "total": {
+                      "type": "integer"
+                    },
+                    "currentPage": {
+                      "type": "string"
+                    },
+                    "pageSize": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "article_id": {
+                            "type": "integer"
+                          },
+                          "article_title": {
+                            "type": "string"
+                          },
+                          "article_digest": {
+                            "type": "string"
+                          },
+                          "article_content": {
+                            "type": "string"
+                          },
+                          "article_cover": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "integer"
+                          },
+                          "noPass_reason": {
+                            "type": "null"
+                          },
+                          "create_by": {
+                            "type": "string"
+                          },
+                          "create_id": {
+                            "type": "integer"
+                          },
+                          "create_time": {
+                            "type": "string"
+                          },
+                          "update_by": {
+                            "type": "string"
+                          },
+                          "update_id": {
+                            "type": "integer"
+                          },
+                          "update_time": {
+                            "type": "string"
+                          },
+                          "comment_status": {
+                            "type": "integer"
+                          },
+                          "article_type": {
+                            "type": "integer"
+                          },
+                          "article_views": {
+                            "type": "null"
+                          },
+                          "article_cateList": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "cate_id": {
+                                  "type": "integer"
+                                },
+                                "cate_name": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "cate_id",
+                                "cate_name"
+                              ]
+                            }
+                          },
+                          "likes_count": {
+                            "type": "integer"
+                          },
+                          "user_liked": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "total",
+                    "currentPage",
+                    "pageSize",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "获取文章成功",
+                      "total": 4,
+                      "currentPage": "1",
+                      "pageSize": "1",
+                      "data": [
+                        {
+                          "article_id": 22,
+                          "article_title": "文章标题1",
+                          "article_digest": "文章摘要1",
+                          "article_content": "文章内容1",
+                          "article_cover": "https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg",
+                          "status": 2,
+                          "noPass_reason": null,
+                          "create_by": "peak",
+                          "create_id": 26,
+                          "create_time": "2024-01-02 14:44:23",
+                          "update_by": "",
+                          "update_id": 26,
+                          "update_time": "2024-01-03 17:28:26",
+                          "comment_status": 1,
+                          "article_type": 1,
+                          "article_views": null,
+                          "article_cateList": [
+                            {
+                              "cate_id": 10,
+                              "cate_name": "NodeJS"
+                            },
+                            {
+                              "cate_id": 11,
+                              "cate_name": "Git"
+                            }
+                          ],
+                          "likes_count": 0,
+                          "user_liked": 0
+                        }
+                      ]
+                    }
+                  },
+                  "2": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "获取文章成功",
+                      "total": 4,
+                      "currentPage": "1",
+                      "pageSize": "1",
+                      "data": [
+                        {
+                          "article_id": 22,
+                          "article_title": "文章标题1",
+                          "article_digest": "文章摘要1",
+                          "article_content": "文章内容1",
+                          "article_cover": "https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg",
+                          "status": 2,
+                          "noPass_reason": null,
+                          "create_by": "peak",
+                          "create_id": 26,
+                          "create_time": "2024-01-02 14:44:23",
+                          "update_by": "",
+                          "update_id": 26,
+                          "update_time": "2024-01-03 17:28:26",
+                          "comment_status": 1,
+                          "article_type": 1,
+                          "article_views": null,
+                          "article_cateList": [
+                            {
+                              "cate_id": 10,
+                              "cate_name": "NodeJS"
+                            },
+                            {
+                              "cate_id": 11,
+                              "cate_name": "Git"
+                            }
+                          ],
+                          "likes_count": 0,
+                          "user_liked": 0
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/article/{article_id}": {
+      "get": {
+        "summary": "获取某个文章",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "article"
+        ],
+        "parameters": [
+          {
+            "name": "article_id",
+            "in": "path",
+            "description": "文章id",
+            "required": true,
+            "example": "69",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/article": {
+      "post": {
+        "summary": "新增文章",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "article"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "article_title": {
+                    "description": "文章标题",
+                    "type": "string"
+                  },
+                  "article_digest": {
+                    "description": "文章摘要",
+                    "type": "string"
+                  },
+                  "article_content": {
+                    "description": "文章内容",
+                    "type": "string"
+                  },
+                  "article_cover": {
+                    "description": "文章封面",
+                    "type": "string"
+                  },
+                  "article_type": {
+                    "description": "文章类型(1:原创 2:转载)",
+                    "type": "integer"
+                  },
+                  "comment_status": {
+                    "description": "评论状态(1开启 2关闭)",
+                    "type": "integer"
+                  },
+                  "tag_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "description": "标签id"
+                    },
+                    "description": "文章标签 [1,2]"
+                  },
+                  "cate_id": {
+                    "type": "integer",
+                    "description": "文章分类"
+                  }
+                },
+                "required": [
+                  "article_title",
+                  "article_digest",
+                  "article_content",
+                  "article_cover",
+                  "article_type",
+                  "comment_status",
+                  "tag_ids",
+                  "cate_id"
+                ]
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "put": {
+        "summary": "修改文章",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "article"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "article_id": {
+                    "description": "文章id",
+                    "type": "integer"
+                  },
+                  "article_title": {
+                    "description": "文章标题",
+                    "type": "string"
+                  },
+                  "article_digest": {
+                    "description": "文章摘要",
+                    "type": "string"
+                  },
+                  "article_content": {
+                    "description": "文章内容",
+                    "type": "string"
+                  },
+                  "article_cover": {
+                    "description": "文章封面",
+                    "type": "string"
+                  },
+                  "article_type": {
+                    "description": "文章类型(1:原创 2:转载)",
+                    "type": "integer"
+                  },
+                  "comment_status": {
+                    "description": "评论状态(1开启 2关闭)",
+                    "type": "integer"
+                  },
+                  "tag_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "description": "标签id"
+                    },
+                    "description": "文章标签"
+                  },
+                  "cate_id": {
+                    "type": "integer",
+                    "description": "分类id"
+                  },
+                  "status": {
+                    "type": "integer",
+                    "description": "文章状态",
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "minimum": 1,
+                    "maximum": 3
+                  }
+                },
+                "required": [
+                  "article_id",
+                  "article_title",
+                  "article_digest",
+                  "article_content",
+                  "article_cover",
+                  "article_type",
+                  "comment_status",
+                  "tag_ids",
+                  "cate_id",
+                  "status"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "删除文章",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "description": "文章id"
+                    },
+                    "description": "文章id集合"
+                  }
+                },
+                "required": [
+                  "ids"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/article/review": {
+      "patch": {
+        "summary": "文章审核",
+        "deprecated": false,
+        "description": "根据角色拦截权限",
+        "tags": [
+          "article"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "article_id": {
+                    "description": "文章id",
+                    "type": "integer"
+                  },
+                  "status": {
+                    "description": "文章状态(1:审核中 2:通过 3:未通过)",
+                    "type": "integer"
+                  },
+                  "noPass_reason": {
+                    "description": "未通过原因",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "article_id",
+                  "status"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/article/like/{article_id}": {
+      "patch": {
+        "summary": "文章 点赞和取消",
+        "deprecated": false,
+        "description": "点赞后再次调用就是取消点赞",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "article_id",
+            "in": "path",
+            "description": "文章id",
+            "required": true,
+            "example": 1,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/article/comment/{article_id}": {
+      "get": {
+        "summary": "获取文章评论",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "article_id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "example": "71",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "example": {
+                  "code": 200,
+                  "msg": "获取评论列表成功",
+                  "data": [
+                    {
+                      "id": 26,
+                      "article_id": 71,
+                      "user_id": 26,
+                      "content": "一级内容",
+                      "parent_id": 0,
+                      "reply_id": null,
+                      "reply_user_id": null,
+                      "create_time": "2024-01-29 11:04:55",
+                      "avatar": "https://avatars.githubusercontent.com/u/88591988?v=4",
+                      "nickname": "peak",
+                      "reply_avatar": null,
+                      "reply_nickname": null,
+                      "like_count": 2,
+                      "user_liked": 0,
+                      "children": [
+                        {
+                          "id": 31,
+                          "avatar": "https://avatars.githubusercontent.com/u/88591988?v=4",
+                          "content": "二级评论内容10",
+                          "user_id": 26,
+                          "nickname": "peak",
+                          "reply_id": 26,
+                          "parent_id": 26,
+                          "article_id": 71,
+                          "like_count": 2,
+                          "user_liked": 0,
+                          "create_time": "2024-01-29 11:08:30",
+                          "reply_avatar": null,
+                          "reply_user_id": 44,
+                          "reply_nickname": null
+                        },
+                        {
+                          "id": 32,
+                          "avatar": "https://avatars.githubusercontent.com/u/88591988?v=4",
+                          "content": "二级评论内容10",
+                          "user_id": 26,
+                          "nickname": "peak",
+                          "reply_id": 31,
+                          "parent_id": 26,
+                          "article_id": 71,
+                          "like_count": 0,
+                          "user_liked": 0,
+                          "create_time": "2024-01-29 11:11:50",
+                          "reply_avatar": null,
+                          "reply_user_id": 23,
+                          "reply_nickname": null
+                        },
+                        {
+                          "id": 33,
+                          "avatar": "https://jiang-xia.top/x-api/blog-server/static/uploads/2022-08-26/2tp9sykqn11a6b41yodluq-头像_巨蟹座.png",
+                          "content": "二级评论内容10",
+                          "user_id": 27,
+                          "nickname": "那一道似有似无的墙啊",
+                          "reply_id": 28,
+                          "parent_id": 26,
+                          "article_id": 71,
+                          "like_count": 1,
+                          "user_liked": 0,
+                          "create_time": "2024-01-29 15:02:43",
+                          "reply_avatar": null,
+                          "reply_user_id": 2,
+                          "reply_nickname": null
+                        }
+                      ]
+                    },
+                    {
+                      "id": 29,
+                      "article_id": 71,
+                      "user_id": 26,
+                      "content": "阿斯顿请问",
+                      "parent_id": 0,
+                      "reply_id": null,
+                      "reply_user_id": null,
+                      "create_time": "2024-01-29 11:05:49",
+                      "avatar": "https://avatars.githubusercontent.com/u/88591988?v=4",
+                      "nickname": "peak",
+                      "reply_avatar": null,
+                      "reply_nickname": null,
+                      "like_count": 0,
+                      "user_liked": 0,
+                      "children": []
+                    },
+                    {
+                      "id": 30,
+                      "article_id": 71,
+                      "user_id": 27,
+                      "content": "开个黑",
+                      "parent_id": 0,
+                      "reply_id": null,
+                      "reply_user_id": null,
+                      "create_time": "2024-01-29 11:05:52",
+                      "avatar": "https://jiang-xia.top/x-api/blog-server/static/uploads/2022-08-26/2tp9sykqn11a6b41yodluq-头像_巨蟹座.png",
+                      "nickname": "那一道似有似无的墙啊",
+                      "reply_avatar": null,
+                      "reply_nickname": null,
+                      "like_count": 1,
+                      "user_liked": 0,
+                      "children": []
+                    }
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/article/comment/page": {
+      "get": {
+        "summary": "获取文章评论分页",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "currentPage",
+            "in": "query",
+            "description": "当前页数",
+            "required": true,
+            "example": "1",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "每页数量",
+            "required": true,
+            "example": "2",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "article_id",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "71",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "example": {
+                  "code": 200,
+                  "msg": "获取评论列表成功",
+                  "data": [
+                    {
+                      "id": 26,
+                      "article_id": 71,
+                      "user_id": 26,
+                      "content": "一级内容",
+                      "parent_id": 0,
+                      "reply_id": null,
+                      "reply_user_id": null,
+                      "create_time": "2024-01-29 11:04:55",
+                      "avatar": "https://avatars.githubusercontent.com/u/88591988?v=4",
+                      "nickname": "peak",
+                      "reply_avatar": null,
+                      "reply_nickname": null,
+                      "like_count": 2,
+                      "user_liked": 0,
+                      "children": [
+                        {
+                          "id": 31,
+                          "avatar": "https://avatars.githubusercontent.com/u/88591988?v=4",
+                          "content": "二级评论内容10",
+                          "user_id": 26,
+                          "nickname": "peak",
+                          "reply_id": 26,
+                          "parent_id": 26,
+                          "article_id": 71,
+                          "like_count": 2,
+                          "user_liked": 0,
+                          "create_time": "2024-01-29 11:08:30",
+                          "reply_avatar": null,
+                          "reply_user_id": 44,
+                          "reply_nickname": null
+                        },
+                        {
+                          "id": 32,
+                          "avatar": "https://avatars.githubusercontent.com/u/88591988?v=4",
+                          "content": "二级评论内容10",
+                          "user_id": 26,
+                          "nickname": "peak",
+                          "reply_id": 31,
+                          "parent_id": 26,
+                          "article_id": 71,
+                          "like_count": 0,
+                          "user_liked": 0,
+                          "create_time": "2024-01-29 11:11:50",
+                          "reply_avatar": null,
+                          "reply_user_id": 23,
+                          "reply_nickname": null
+                        },
+                        {
+                          "id": 33,
+                          "avatar": "https://jiang-xia.top/x-api/blog-server/static/uploads/2022-08-26/2tp9sykqn11a6b41yodluq-头像_巨蟹座.png",
+                          "content": "二级评论内容10",
+                          "user_id": 27,
+                          "nickname": "那一道似有似无的墙啊",
+                          "reply_id": 28,
+                          "parent_id": 26,
+                          "article_id": 71,
+                          "like_count": 1,
+                          "user_liked": 0,
+                          "create_time": "2024-01-29 15:02:43",
+                          "reply_avatar": null,
+                          "reply_user_id": 2,
+                          "reply_nickname": null
+                        }
+                      ]
+                    },
+                    {
+                      "id": 29,
+                      "article_id": 71,
+                      "user_id": 26,
+                      "content": "阿斯顿请问",
+                      "parent_id": 0,
+                      "reply_id": null,
+                      "reply_user_id": null,
+                      "create_time": "2024-01-29 11:05:49",
+                      "avatar": "https://avatars.githubusercontent.com/u/88591988?v=4",
+                      "nickname": "peak",
+                      "reply_avatar": null,
+                      "reply_nickname": null,
+                      "like_count": 0,
+                      "user_liked": 0,
+                      "children": []
+                    },
+                    {
+                      "id": 30,
+                      "article_id": 71,
+                      "user_id": 27,
+                      "content": "开个黑",
+                      "parent_id": 0,
+                      "reply_id": null,
+                      "reply_user_id": null,
+                      "create_time": "2024-01-29 11:05:52",
+                      "avatar": "https://jiang-xia.top/x-api/blog-server/static/uploads/2022-08-26/2tp9sykqn11a6b41yodluq-头像_巨蟹座.png",
+                      "nickname": "那一道似有似无的墙啊",
+                      "reply_avatar": null,
+                      "reply_nickname": null,
+                      "like_count": 1,
+                      "user_liked": 0,
+                      "children": []
+                    }
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/article/comment": {
+      "post": {
+        "summary": "新增文章评论",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "article_id": {
+                    "type": "integer",
+                    "description": "文章id"
+                  },
+                  "content": {
+                    "type": "string",
+                    "description": "评论内容"
+                  },
+                  "parent_id": {
+                    "type": "integer",
+                    "description": "一级评论值为0, 二级评论值对所属一级评论的id"
+                  },
+                  "reply_id": {
+                    "type": "integer",
+                    "description": "被回复评论id"
+                  },
+                  "reply_user_id": {
+                    "type": "integer",
+                    "description": "被回复评论的用户id"
+                  }
+                },
+                "required": [
+                  "article_id",
+                  "content",
+                  "parent_id",
+                  "reply_id",
+                  "reply_user_id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/article/comment/{id}": {
+      "delete": {
+        "summary": "删除文章评论",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "评论id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/article/comment/like": {
+      "patch": {
+        "summary": "文章评论 点赞或取消",
+        "deprecated": false,
+        "description": "点赞后再次调用就是取消点赞",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "article_id": {
+                    "type": "integer",
+                    "title": "文章id"
+                  },
+                  "comment_id": {
+                    "type": "integer",
+                    "title": "评论id"
+                  }
+                },
+                "required": [
+                  "article_id",
+                  "comment_id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/blogroll": {
+      "get": {
+        "summary": "获取友链",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "blogroll"
+        ],
+        "parameters": [
+          {
+            "name": "currentPage",
+            "in": "query",
+            "description": "当前页",
+            "required": true,
+            "example": 1,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "每页数量",
+            "required": true,
+            "example": 10,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "post": {
+        "summary": "新增友链",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "blogroll"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "site_name": {
+                    "description": "网站名称",
+                    "type": "string"
+                  },
+                  "site_url": {
+                    "description": "网站地址",
+                    "type": "string"
+                  },
+                  "site_icon": {
+                    "description": "网站图标",
+                    "type": "string"
+                  },
+                  "email": {
+                    "description": "联系方式",
+                    "type": "string"
+                  },
+                  "description": {
+                    "description": "网站描述",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "site_name",
+                  "site_url",
+                  "site_icon",
+                  "email",
+                  "description"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "put": {
+        "summary": "修改友链",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "blogroll"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "description": "友链id"
+                  },
+                  "site_name": {
+                    "description": "网站名称",
+                    "type": "string"
+                  },
+                  "site_url": {
+                    "description": "网站地址",
+                    "type": "string"
+                  },
+                  "site_icon": {
+                    "description": "网站图标",
+                    "type": "string"
+                  },
+                  "email": {
+                    "description": "联系方式",
+                    "type": "string"
+                  },
+                  "description": {
+                    "description": "网站描述",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "site_name",
+                  "site_url",
+                  "site_icon",
+                  "email",
+                  "description",
+                  "id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "删除友链",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "blogroll"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "description": "友链id"
+                    },
+                    "description": "友链id集合"
+                  }
+                },
+                "required": [
+                  "ids"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/tags": {
+      "get": {
+        "summary": "获取标签",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "post": {
+        "summary": "新增标签",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "tag_name": {
+                    "description": "标签名",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "tag_name"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "put": {
+        "summary": "修改标签",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "tag_id": {
+                    "description": "标签id",
+                    "type": "integer"
+                  },
+                  "tag_name": {
+                    "description": "标签名",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "tag_id",
+                  "tag_name"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "删除标签",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "description": "分类id"
+                    },
+                    "description": "分类id集合"
+                  }
+                },
+                "required": [
+                  "ids"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/category": {
+      "get": {
+        "summary": "获取分类",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "post": {
+        "summary": "新增分类",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cate_name": {
+                    "description": "分类名(长度最大为6)",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "cate_name"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "put": {
+        "summary": "修改分类",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cate_id": {
+                    "description": "分类id",
+                    "type": "integer"
+                  },
+                  "cate_name": {
+                    "description": "分类名",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "cate_id",
+                  "cate_name"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "删除分类",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "description": "分类id"
+                    },
+                    "description": "分类id集合"
+                  }
+                },
+                "required": [
+                  "ids"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/user/checkUsername": {
+      "get": {
+        "summary": "检查用户名是否使用",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "query",
+            "description": "用户名(账号)",
+            "required": true,
+            "example": "huge",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/user/register": {
+      "post": {
+        "summary": "用户注册",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nickname": {
+                    "description": "用户昵称",
+                    "type": "string"
+                  },
+                  "username": {
+                    "description": "用户名(账号)",
+                    "type": "string"
+                  },
+                  "password": {
+                    "description": "密码",
+                    "type": "string"
+                  },
+                  "verify_password": {
+                    "description": "二次确认密码",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "nickname",
+                  "username",
+                  "password",
+                  "verify_password"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/user/login": {
+      "post": {
+        "summary": "用户登录",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "description": "用户名(账号)",
+                    "type": "string"
+                  },
+                  "password": {
+                    "description": "密码",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "username",
+                  "password"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "refresh_token": {
+                          "type": "string"
+                        },
+                        "access_token": {
+                          "type": "string"
+                        },
+                        "user_id": {
+                          "type": "integer"
+                        },
+                        "username": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "refresh_token",
+                        "access_token",
+                        "user_id",
+                        "username"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "code": 200,
+                  "msg": "登录成功",
+                  "data": {
+                    "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyNiwidXNlcm5hbWUiOiLokpnmr4UiLCJuaWNrbmFtZSI6InBlYWsiLCJ0eXBlIjoicmVmcmVzaCIsImlhdCI6MTcwNjgwNTI2NywiZXhwIjoxNzA5Mzk3MjY3LCJqdGkiOiJjOGYyYjJjNC03ZGMwLTRkOWYtODEwMy0zNDA5NjkzNTM0ODUifQ.vCzux_GGJ3YYdmsTz-6vaHa92AYlq2Gxthfok751ROw",
+                    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyNiwidXNlcm5hbWUiOiLokpnmr4UiLCJuaWNrbmFtZSI6InBlYWsiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzA2ODA1MjY3LCJleHAiOjE3MDY5MTMyNjd9.XrV4kECg0xEyfdnB3V0XF_Fy_MCSwMlyj7jWt7MAUJk",
+                    "user_id": 26,
+                    "username": "蒙毅"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/token/refresh/token": {
+      "post": {
+        "summary": "刷新token",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "refresh_token": {
+                    "description": "刷新token",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "refresh_token"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "refresh_token": {
+                          "type": "string"
+                        },
+                        "access_token": {
+                          "type": "string"
+                        },
+                        "user_id": {
+                          "type": "integer"
+                        },
+                        "username": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "refresh_token",
+                        "access_token",
+                        "user_id",
+                        "username"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "code": 200,
+                  "msg": "登录成功",
+                  "data": {
+                    "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyNiwidXNlcm5hbWUiOiLokpnmr4UiLCJuaWNrbmFtZSI6InBlYWsiLCJ0eXBlIjoicmVmcmVzaCIsImlhdCI6MTcwNjgwNTI2NywiZXhwIjoxNzA5Mzk3MjY3LCJqdGkiOiJjOGYyYjJjNC03ZGMwLTRkOWYtODEwMy0zNDA5NjkzNTM0ODUifQ.vCzux_GGJ3YYdmsTz-6vaHa92AYlq2Gxthfok751ROw",
+                    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyNiwidXNlcm5hbWUiOiLokpnmr4UiLCJuaWNrbmFtZSI6InBlYWsiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzA2ODA1MjY3LCJleHAiOjE3MDY5MTMyNjd9.XrV4kECg0xEyfdnB3V0XF_Fy_MCSwMlyj7jWt7MAUJk",
+                    "user_id": 26,
+                    "username": "蒙毅"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/user/logout": {
+      "post": {
+        "summary": "用户登出",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/user": {
+      "get": {
+        "summary": "获取用户信息",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "query",
+            "description": "用户id(如果不传就获取当前登录的用户信息)",
+            "required": false,
+            "example": 29,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "post": {
+        "summary": "后台创建用户",
+        "deprecated": false,
+        "description": "后台创建用户的默认密码(qwe123)",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nickname": {
+                    "description": "用户昵称",
+                    "type": "string"
+                  },
+                  "username": {
+                    "description": "用户名(账号)",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "nickname",
+                  "username"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "put": {
+        "summary": "修改用户信息",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "description": "用户id",
+                    "type": "integer"
+                  },
+                  "nickname": {
+                    "description": "用户昵称",
+                    "type": "string"
+                  },
+                  "avatar": {
+                    "description": "用户头像",
+                    "type": "string"
+                  },
+                  "sex": {
+                    "description": "性别(u:未知 m:男 w:女)",
+                    "type": "string"
+                  },
+                  "age": {
+                    "description": "年龄",
+                    "type": "string"
+                  },
+                  "address": {
+                    "description": "地址",
+                    "type": "string"
+                  },
+                  "phone": {
+                    "description": "手机号",
+                    "type": "string"
+                  },
+                  "email": {
+                    "description": "邮箱",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "nickname",
+                  "avatar",
+                  "sex",
+                  "age",
+                  "address",
+                  "phone",
+                  "email"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "删除用户",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "description": "用户id"
+                    },
+                    "description": "用户id集合"
+                  }
+                },
+                "required": [
+                  "ids"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/user/list": {
+      "get": {
+        "summary": "获取用户列表",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/user/password": {
+      "patch": {
+        "summary": "修改用户密码",
+        "deprecated": false,
+        "description": "新旧密码不能相同",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "description": "用户名(账号)",
+                    "type": "string"
+                  },
+                  "oldPassword": {
+                    "description": "旧密码",
+                    "type": "string"
+                  },
+                  "newPassword": {
+                    "description": "新密码",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "username",
+                  "oldPassword",
+                  "newPassword"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/role": {
+      "get": {
+        "summary": "获取角色列表",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "role"
+        ],
+        "parameters": [
+          {
+            "name": "role_name",
+            "in": "query",
+            "description": "角色名",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "排序( asc | desc ) 默认asc",
+            "required": false,
+            "example": "asc",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "role_id": {
+                            "type": "integer"
+                          },
+                          "role_name": {
+                            "type": "string"
+                          },
+                          "role_key": {
+                            "type": "string"
+                          },
+                          "role_sort": {
+                            "type": "integer"
+                          },
+                          "status": {
+                            "type": "integer"
+                          },
+                          "create_by": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "create_time": {
+                            "type": "string"
+                          },
+                          "update_by": {
+                            "type": "null"
+                          },
+                          "update_time": {
+                            "type": "string"
+                          },
+                          "remark": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "role_id",
+                          "role_name",
+                          "role_key",
+                          "role_sort",
+                          "status",
+                          "create_by",
+                          "create_time",
+                          "update_by",
+                          "update_time",
+                          "remark"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "code": 200,
+                  "msg": "获取角色成功",
+                  "data": [
+                    {
+                      "role_id": 11,
+                      "role_name": "普通用户",
+                      "role_key": "common_user",
+                      "role_sort": 1,
+                      "status": 1,
+                      "create_by": "蒙毅1",
+                      "create_time": "2023-12-21 13:45:16",
+                      "update_by": null,
+                      "update_time": "2023-12-29 17:45:04",
+                      "remark": "ddd1"
+                    },
+                    {
+                      "role_id": 14,
+                      "role_name": "文章管理员",
+                      "role_key": "article_admin",
+                      "role_sort": 1,
+                      "status": 1,
+                      "create_by": "蒙毅3",
+                      "create_time": "2023-12-21 13:45:40",
+                      "update_by": null,
+                      "update_time": "2024-07-13 23:34:46",
+                      "remark": "ddd1"
+                    },
+                    {
+                      "role_id": 10,
+                      "role_name": "超级管理员",
+                      "role_key": "super_admin",
+                      "role_sort": 2,
+                      "status": 1,
+                      "create_by": null,
+                      "create_time": "2023-12-18 15:12:47",
+                      "update_by": null,
+                      "update_time": "2024-08-28 00:35:29",
+                      "remark": null
+                    }
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "post": {
+        "summary": "创建角色",
+        "deprecated": false,
+        "description": "后台创建用户的默认密码(qwe123)",
+        "tags": [
+          "role"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "role_name": {
+                    "description": "角色名称",
+                    "type": "string"
+                  },
+                  "role_key": {
+                    "description": "角色权限字符",
+                    "type": "string"
+                  },
+                  "role_sort": {
+                    "description": "排序",
+                    "type": "integer"
+                  },
+                  "remark": {
+                    "description": "备注",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "role_name",
+                  "role_key",
+                  "role_sort",
+                  "remark"
+                ]
+              },
+              "example": {
+                "role_name": "仵梓睿",
+                "role_key": "eiusmod",
+                "role_sort": 50,
+                "remark": "sunt nostrud laborum dolore ut"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "example": {
+                  "code": 200,
+                  "msg": "添加角色成功"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "put": {
+        "summary": "修改角色",
+        "deprecated": false,
+        "description": "后台创建用户的默认密码(qwe123)",
+        "tags": [
+          "role"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "role_id": {
+                    "description": "角色id",
+                    "type": "integer"
+                  },
+                  "role_name": {
+                    "description": "角色名称",
+                    "type": "string"
+                  },
+                  "role_key": {
+                    "description": "角色权限字符",
+                    "type": "string"
+                  },
+                  "role_sort": {
+                    "description": "排序",
+                    "type": "integer"
+                  },
+                  "remark": {
+                    "description": "备注",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "role_id",
+                  "role_name",
+                  "role_key",
+                  "role_sort",
+                  "remark"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "删除角色",
+        "deprecated": false,
+        "description": "后台创建用户的默认密码(qwe123)",
+        "tags": [
+          "role"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    },
+                    "description": "要删除的id集合"
+                  }
+                },
+                "required": [
+                  "ids"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/role/selectedMenu/{role_id}": {
+      "get": {
+        "summary": "获取角色已选菜单",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "role"
+        ],
+        "parameters": [
+          {
+            "name": "role_id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "example": 10,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "code": 200,
+                  "msg": "获取角色已选菜单成功",
+                  "data": [
+                    10,
+                    20,
+                    2001,
+                    2002,
+                    2003,
+                    2004,
+                    2005,
+                    2006,
+                    2008,
+                    2009,
+                    2011,
+                    2012,
+                    2013,
+                    2014,
+                    2015,
+                    2016,
+                    2017,
+                    2018,
+                    2019,
+                    2020,
+                    2021,
+                    2023,
+                    2025,
+                    2026,
+                    2027
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/role/status": {
+      "patch": {
+        "summary": "修改角色状态",
+        "deprecated": false,
+        "description": "后台创建用户的默认密码(qwe123)",
+        "tags": [
+          "role"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "role_id": {
+                    "description": "角色id",
+                    "type": "integer"
+                  },
+                  "status": {
+                    "description": "1正常 0停用, 默认1",
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "role_id",
+                  "status"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/menu/getRouters": {
+      "get": {
+        "summary": "获取动态路由",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "menu"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parent_id": {
+                            "type": "integer"
+                          },
+                          "menu_id": {
+                            "type": "integer"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "path": {
+                            "type": "string"
+                          },
+                          "component": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "meta": {
+                            "type": "object",
+                            "properties": {
+                              "title": {
+                                "type": "string"
+                              },
+                              "icon": {
+                                "type": "string"
+                              },
+                              "activeMenu": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "target": {
+                                "type": "string"
+                              },
+                              "isLink": {
+                                "type": "boolean"
+                              },
+                              "isKeepAlive": {
+                                "type": "boolean"
+                              },
+                              "isHidden": {
+                                "type": "boolean"
+                              },
+                              "isRefresh": {
+                                "type": "boolean"
+                              },
+                              "isAffix": {
+                                "type": "boolean"
+                              },
+                              "isFull": {
+                                "type": "boolean"
+                              },
+                              "isAlwaysShow": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "title",
+                              "icon",
+                              "activeMenu",
+                              "target",
+                              "isLink",
+                              "isKeepAlive",
+                              "isHidden",
+                              "isRefresh",
+                              "isAffix",
+                              "isFull",
+                              "isAlwaysShow"
+                            ]
+                          },
+                          "children": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "parent_id": {
+                                  "type": "integer"
+                                },
+                                "menu_id": {
+                                  "type": "integer"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "path": {
+                                  "type": "string"
+                                },
+                                "component": {
+                                  "type": "string"
+                                },
+                                "meta": {
+                                  "type": "object",
+                                  "properties": {
+                                    "title": {
+                                      "type": "string"
+                                    },
+                                    "icon": {
+                                      "type": "string"
+                                    },
+                                    "activeMenu": {
+                                      "type": "null"
+                                    },
+                                    "target": {
+                                      "type": "string"
+                                    },
+                                    "isLink": {
+                                      "type": "boolean"
+                                    },
+                                    "isKeepAlive": {
+                                      "type": "boolean"
+                                    },
+                                    "isHidden": {
+                                      "type": "boolean"
+                                    },
+                                    "isRefresh": {
+                                      "type": "boolean"
+                                    },
+                                    "isAffix": {
+                                      "type": "boolean"
+                                    },
+                                    "isFull": {
+                                      "type": "boolean"
+                                    },
+                                    "isAlwaysShow": {
+                                      "type": "boolean"
+                                    }
+                                  },
+                                  "required": [
+                                    "title",
+                                    "icon",
+                                    "activeMenu",
+                                    "target",
+                                    "isLink",
+                                    "isKeepAlive",
+                                    "isHidden",
+                                    "isRefresh",
+                                    "isAffix",
+                                    "isFull",
+                                    "isAlwaysShow"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "parent_id",
+                                "menu_id",
+                                "name",
+                                "path",
+                                "component",
+                                "meta"
+                              ]
+                            }
+                          }
+                        },
+                        "required": [
+                          "parent_id",
+                          "menu_id",
+                          "name",
+                          "path",
+                          "component",
+                          "meta",
+                          "children"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/menu/list": {
+      "get": {
+        "summary": "查询菜单管理列表",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "menu"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "menu_id": {
+                            "type": "integer"
+                          },
+                          "menu_name": {
+                            "type": "string"
+                          },
+                          "parent_id": {
+                            "type": "integer"
+                          },
+                          "perms": {
+                            "type": "string"
+                          },
+                          "route_name": {
+                            "type": "string"
+                          },
+                          "path": {
+                            "type": "string"
+                          },
+                          "component": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "target": {
+                            "type": "string"
+                          },
+                          "menu_type": {
+                            "type": "string"
+                          },
+                          "active_menu": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "icon": {
+                            "type": "string"
+                          },
+                          "order_num": {
+                            "type": "integer"
+                          },
+                          "is_link": {
+                            "type": "integer"
+                          },
+                          "is_keep_alive": {
+                            "type": "integer"
+                          },
+                          "is_hidden": {
+                            "type": "integer"
+                          },
+                          "is_disabled": {
+                            "type": "integer"
+                          },
+                          "is_refresh": {
+                            "type": "integer"
+                          },
+                          "is_affix": {
+                            "type": "integer"
+                          },
+                          "is_full": {
+                            "type": "integer"
+                          },
+                          "is_always_show": {
+                            "type": "integer"
+                          },
+                          "create_by": {
+                            "type": "string"
+                          },
+                          "create_time": {
+                            "type": "string"
+                          },
+                          "update_by": {
+                            "type": "string"
+                          },
+                          "update_time": {
+                            "type": "string"
+                          },
+                          "remark": {
+                            "type": "string"
+                          },
+                          "children": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "menu_id": {
+                                  "type": "integer"
+                                },
+                                "menu_name": {
+                                  "type": "string"
+                                },
+                                "parent_id": {
+                                  "type": "integer"
+                                },
+                                "perms": {
+                                  "type": "string"
+                                },
+                                "route_name": {
+                                  "type": "string"
+                                },
+                                "path": {
+                                  "type": "string"
+                                },
+                                "component": {
+                                  "type": "string"
+                                },
+                                "target": {
+                                  "type": "string"
+                                },
+                                "menu_type": {
+                                  "type": "string"
+                                },
+                                "active_menu": {
+                                  "type": "null"
+                                },
+                                "icon": {
+                                  "type": "string"
+                                },
+                                "order_num": {
+                                  "type": "integer"
+                                },
+                                "is_link": {
+                                  "type": "integer"
+                                },
+                                "is_keep_alive": {
+                                  "type": "integer"
+                                },
+                                "is_hidden": {
+                                  "type": "integer"
+                                },
+                                "is_disabled": {
+                                  "type": "integer"
+                                },
+                                "is_refresh": {
+                                  "type": "integer"
+                                },
+                                "is_affix": {
+                                  "type": "integer"
+                                },
+                                "is_full": {
+                                  "type": "integer"
+                                },
+                                "is_always_show": {
+                                  "type": "integer"
+                                },
+                                "create_by": {
+                                  "type": "string"
+                                },
+                                "create_time": {
+                                  "type": "string"
+                                },
+                                "update_by": {
+                                  "type": "string"
+                                },
+                                "update_time": {
+                                  "type": "string"
+                                },
+                                "remark": {
+                                  "type": "string"
+                                },
+                                "children": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "menu_id": {
+                                        "type": "integer"
+                                      },
+                                      "menu_name": {
+                                        "type": "string"
+                                      },
+                                      "parent_id": {
+                                        "type": "integer"
+                                      },
+                                      "perms": {
+                                        "type": "string"
+                                      },
+                                      "route_name": {
+                                        "type": "string"
+                                      },
+                                      "path": {
+                                        "type": [
+                                          "string",
+                                          "null"
+                                        ]
+                                      },
+                                      "component": {
+                                        "type": [
+                                          "string",
+                                          "null"
+                                        ]
+                                      },
+                                      "target": {
+                                        "type": "string"
+                                      },
+                                      "menu_type": {
+                                        "type": "string"
+                                      },
+                                      "active_menu": {
+                                        "type": "null"
+                                      },
+                                      "icon": {
+                                        "type": "string"
+                                      },
+                                      "order_num": {
+                                        "type": "integer"
+                                      },
+                                      "is_link": {
+                                        "type": "integer"
+                                      },
+                                      "is_keep_alive": {
+                                        "type": "integer"
+                                      },
+                                      "is_hidden": {
+                                        "type": "integer"
+                                      },
+                                      "is_disabled": {
+                                        "type": "integer"
+                                      },
+                                      "is_refresh": {
+                                        "type": "integer"
+                                      },
+                                      "is_affix": {
+                                        "type": "integer"
+                                      },
+                                      "is_full": {
+                                        "type": "integer"
+                                      },
+                                      "is_always_show": {
+                                        "type": "integer"
+                                      },
+                                      "create_by": {
+                                        "type": "string"
+                                      },
+                                      "create_time": {
+                                        "type": "string"
+                                      },
+                                      "update_by": {
+                                        "type": "string"
+                                      },
+                                      "update_time": {
+                                        "type": "string"
+                                      },
+                                      "remark": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "menu_id",
+                                      "menu_name",
+                                      "parent_id",
+                                      "perms",
+                                      "route_name",
+                                      "path",
+                                      "component",
+                                      "target",
+                                      "menu_type",
+                                      "active_menu",
+                                      "icon",
+                                      "order_num",
+                                      "is_link",
+                                      "is_keep_alive",
+                                      "is_hidden",
+                                      "is_disabled",
+                                      "is_refresh",
+                                      "is_affix",
+                                      "is_full",
+                                      "is_always_show",
+                                      "create_by",
+                                      "create_time",
+                                      "update_by",
+                                      "update_time",
+                                      "remark"
+                                    ]
+                                  }
+                                }
+                              },
+                              "required": [
+                                "menu_id",
+                                "menu_name",
+                                "parent_id",
+                                "perms",
+                                "route_name",
+                                "path",
+                                "component",
+                                "target",
+                                "menu_type",
+                                "active_menu",
+                                "icon",
+                                "order_num",
+                                "is_link",
+                                "is_keep_alive",
+                                "is_hidden",
+                                "is_disabled",
+                                "is_refresh",
+                                "is_affix",
+                                "is_full",
+                                "is_always_show",
+                                "create_by",
+                                "create_time",
+                                "update_by",
+                                "update_time",
+                                "remark"
+                              ]
+                            }
+                          }
+                        },
+                        "required": [
+                          "menu_id",
+                          "menu_name",
+                          "parent_id",
+                          "perms",
+                          "route_name",
+                          "path",
+                          "component",
+                          "target",
+                          "menu_type",
+                          "active_menu",
+                          "icon",
+                          "order_num",
+                          "is_link",
+                          "is_keep_alive",
+                          "is_hidden",
+                          "is_disabled",
+                          "is_refresh",
+                          "is_affix",
+                          "is_full",
+                          "is_always_show",
+                          "create_by",
+                          "create_time",
+                          "update_by",
+                          "update_time",
+                          "remark"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "code": 200,
+                  "msg": "获取菜单列表成功",
+                  "data": [
+                    {
+                      "menu_id": 20,
+                      "menu_name": "分类管理",
+                      "parent_id": 0,
+                      "perms": "category",
+                      "route_name": "Category",
+                      "path": "/category",
+                      "component": "/category/index",
+                      "target": "blank",
+                      "menu_type": "C",
+                      "active_menu": null,
+                      "icon": "menu-system-menu",
+                      "order_num": 2,
+                      "is_link": 0,
+                      "is_keep_alive": 1,
+                      "is_hidden": 0,
+                      "is_disabled": 0,
+                      "is_refresh": 0,
+                      "is_affix": 0,
+                      "is_full": 0,
+                      "is_always_show": 0,
+                      "create_by": "26",
+                      "create_time": "2024-07-13 00:48:47",
+                      "update_by": "26",
+                      "update_time": "2024-09-08 21:14:06",
+                      "remark": "",
+                      "children": [
+                        {
+                          "menu_id": 2013,
+                          "menu_name": "分类新增",
+                          "parent_id": 20,
+                          "perms": "category:insert",
+                          "route_name": "",
+                          "path": "",
+                          "component": "",
+                          "target": "blank",
+                          "menu_type": "F",
+                          "active_menu": null,
+                          "icon": "",
+                          "order_num": 0,
+                          "is_link": 0,
+                          "is_keep_alive": 0,
+                          "is_hidden": 0,
+                          "is_disabled": 0,
+                          "is_refresh": 0,
+                          "is_affix": 0,
+                          "is_full": 0,
+                          "is_always_show": 0,
+                          "create_by": "26",
+                          "create_time": "2024-07-21 00:51:54",
+                          "update_by": "26",
+                          "update_time": "2024-07-21 00:51:54",
+                          "remark": ""
+                        },
+                        {
+                          "menu_id": 2014,
+                          "menu_name": "分类删除",
+                          "parent_id": 20,
+                          "perms": "category:delete",
+                          "route_name": "",
+                          "path": "",
+                          "component": "",
+                          "target": "blank",
+                          "menu_type": "F",
+                          "active_menu": null,
+                          "icon": "",
+                          "order_num": 0,
+                          "is_link": 0,
+                          "is_keep_alive": 0,
+                          "is_hidden": 0,
+                          "is_disabled": 0,
+                          "is_refresh": 0,
+                          "is_affix": 0,
+                          "is_full": 0,
+                          "is_always_show": 0,
+                          "create_by": "26",
+                          "create_time": "2024-07-21 00:52:11",
+                          "update_by": "26",
+                          "update_time": "2024-07-21 00:52:11",
+                          "remark": ""
+                        },
+                        {
+                          "menu_id": 2015,
+                          "menu_name": "分类修改",
+                          "parent_id": 20,
+                          "perms": "category:update",
+                          "route_name": "",
+                          "path": "",
+                          "component": "",
+                          "target": "blank",
+                          "menu_type": "F",
+                          "active_menu": null,
+                          "icon": "",
+                          "order_num": 0,
+                          "is_link": 0,
+                          "is_keep_alive": 0,
+                          "is_hidden": 0,
+                          "is_disabled": 0,
+                          "is_refresh": 0,
+                          "is_affix": 0,
+                          "is_full": 0,
+                          "is_always_show": 0,
+                          "create_by": "26",
+                          "create_time": "2024-07-21 00:52:29",
+                          "update_by": "26",
+                          "update_time": "2024-07-21 00:52:29",
+                          "remark": ""
+                        }
+                      ]
+                    },
+                    {
+                      "menu_id": 2002,
+                      "menu_name": "系统管理",
+                      "parent_id": 0,
+                      "perms": "system",
+                      "route_name": "System",
+                      "path": "/system",
+                      "component": null,
+                      "target": "",
+                      "menu_type": "M",
+                      "active_menu": null,
+                      "icon": "menu-system",
+                      "order_num": 0,
+                      "is_link": 0,
+                      "is_keep_alive": 0,
+                      "is_hidden": 0,
+                      "is_disabled": 0,
+                      "is_refresh": 0,
+                      "is_affix": 0,
+                      "is_full": 0,
+                      "is_always_show": 0,
+                      "create_by": "26",
+                      "create_time": "2024-07-13 13:33:49",
+                      "update_by": "26",
+                      "update_time": "2024-07-21 00:49:30",
+                      "remark": "",
+                      "children": [
+                        {
+                          "menu_id": 2003,
+                          "menu_name": "角色管理",
+                          "parent_id": 2002,
+                          "perms": "system:role",
+                          "route_name": "Role",
+                          "path": "/system/role",
+                          "component": "/system/role/index",
+                          "target": "blank",
+                          "menu_type": "C",
+                          "active_menu": null,
+                          "icon": "menu-table",
+                          "order_num": 0,
+                          "is_link": 0,
+                          "is_keep_alive": 0,
+                          "is_hidden": 0,
+                          "is_disabled": 0,
+                          "is_refresh": 0,
+                          "is_affix": 0,
+                          "is_full": 0,
+                          "is_always_show": 0,
+                          "create_by": "",
+                          "create_time": "2024-07-13 22:42:52",
+                          "update_by": "",
+                          "update_time": "2024-07-14 01:49:13",
+                          "remark": "",
+                          "children": [
+                            {
+                              "menu_id": 2004,
+                              "menu_name": "角色查询",
+                              "parent_id": 2003,
+                              "perms": "system:role:select",
+                              "route_name": "",
+                              "path": null,
+                              "component": null,
+                              "target": "",
+                              "menu_type": "F",
+                              "active_menu": null,
+                              "icon": "",
+                              "order_num": 0,
+                              "is_link": 0,
+                              "is_keep_alive": 0,
+                              "is_hidden": 0,
+                              "is_disabled": 0,
+                              "is_refresh": 0,
+                              "is_affix": 0,
+                              "is_full": 0,
+                              "is_always_show": 0,
+                              "create_by": "",
+                              "create_time": "2024-07-13 13:28:25",
+                              "update_by": "",
+                              "update_time": "2024-07-13 13:34:00",
+                              "remark": ""
+                            },
+                            {
+                              "menu_id": 2016,
+                              "menu_name": "角色新增",
+                              "parent_id": 2003,
+                              "perms": "system:role:insert",
+                              "route_name": "",
+                              "path": "",
+                              "component": "",
+                              "target": "blank",
+                              "menu_type": "F",
+                              "active_menu": null,
+                              "icon": "",
+                              "order_num": 0,
+                              "is_link": 0,
+                              "is_keep_alive": 0,
+                              "is_hidden": 0,
+                              "is_disabled": 0,
+                              "is_refresh": 0,
+                              "is_affix": 0,
+                              "is_full": 0,
+                              "is_always_show": 0,
+                              "create_by": "26",
+                              "create_time": "2024-07-21 00:55:30",
+                              "update_by": "26",
+                              "update_time": "2024-07-21 00:55:30",
+                              "remark": ""
+                            },
+                            {
+                              "menu_id": 2017,
+                              "menu_name": "角色删除",
+                              "parent_id": 2003,
+                              "perms": "system:role:delete",
+                              "route_name": "",
+                              "path": "",
+                              "component": "",
+                              "target": "blank",
+                              "menu_type": "F",
+                              "active_menu": null,
+                              "icon": "",
+                              "order_num": 0,
+                              "is_link": 0,
+                              "is_keep_alive": 0,
+                              "is_hidden": 0,
+                              "is_disabled": 0,
+                              "is_refresh": 0,
+                              "is_affix": 0,
+                              "is_full": 0,
+                              "is_always_show": 0,
+                              "create_by": "26",
+                              "create_time": "2024-07-21 00:55:47",
+                              "update_by": "26",
+                              "update_time": "2024-07-21 00:55:47",
+                              "remark": ""
+                            },
+                            {
+                              "menu_id": 2018,
+                              "menu_name": "角色编辑",
+                              "parent_id": 2003,
+                              "perms": "system:role:update",
+                              "route_name": "",
+                              "path": "",
+                              "component": "",
+                              "target": "blank",
+                              "menu_type": "F",
+                              "active_menu": null,
+                              "icon": "",
+                              "order_num": 0,
+                              "is_link": 0,
+                              "is_keep_alive": 0,
+                              "is_hidden": 0,
+                              "is_disabled": 0,
+                              "is_refresh": 0,
+                              "is_affix": 0,
+                              "is_full": 0,
+                              "is_always_show": 0,
+                              "create_by": "26",
+                              "create_time": "2024-07-21 01:27:25",
+                              "update_by": "26",
+                              "update_time": "2024-07-21 01:27:25",
+                              "remark": ""
+                            }
+                          ]
+                        },
+                        {
+                          "menu_id": 2005,
+                          "menu_name": "菜单管理",
+                          "parent_id": 2002,
+                          "perms": "system:menu",
+                          "route_name": "Menu",
+                          "path": "/system/menu",
+                          "component": "/system/menu/index",
+                          "target": "blank",
+                          "menu_type": "C",
+                          "active_menu": null,
+                          "icon": "menu-table",
+                          "order_num": 0,
+                          "is_link": 0,
+                          "is_keep_alive": 0,
+                          "is_hidden": 0,
+                          "is_disabled": 0,
+                          "is_refresh": 0,
+                          "is_affix": 0,
+                          "is_full": 0,
+                          "is_always_show": 0,
+                          "create_by": "",
+                          "create_time": "2024-07-13 22:42:52",
+                          "update_by": "",
+                          "update_time": "2024-07-14 01:49:13",
+                          "remark": "",
+                          "children": [
+                            {
+                              "menu_id": 2011,
+                              "menu_name": "菜单删除",
+                              "parent_id": 2005,
+                              "perms": "system:menu:delete",
+                              "route_name": "",
+                              "path": "",
+                              "component": "",
+                              "target": "blank",
+                              "menu_type": "F",
+                              "active_menu": null,
+                              "icon": "",
+                              "order_num": 0,
+                              "is_link": 0,
+                              "is_keep_alive": 0,
+                              "is_hidden": 0,
+                              "is_disabled": 0,
+                              "is_refresh": 0,
+                              "is_affix": 0,
+                              "is_full": 0,
+                              "is_always_show": 0,
+                              "create_by": "26",
+                              "create_time": "2024-07-21 00:37:10",
+                              "update_by": "26",
+                              "update_time": "2024-07-21 00:45:38",
+                              "remark": ""
+                            },
+                            {
+                              "menu_id": 2019,
+                              "menu_name": "菜单编辑",
+                              "parent_id": 2005,
+                              "perms": "system:menu:update",
+                              "route_name": "",
+                              "path": "",
+                              "component": "",
+                              "target": "blank",
+                              "menu_type": "F",
+                              "active_menu": null,
+                              "icon": "",
+                              "order_num": 0,
+                              "is_link": 0,
+                              "is_keep_alive": 0,
+                              "is_hidden": 0,
+                              "is_disabled": 0,
+                              "is_refresh": 0,
+                              "is_affix": 0,
+                              "is_full": 0,
+                              "is_always_show": 0,
+                              "create_by": "26",
+                              "create_time": "2024-07-21 01:27:57",
+                              "update_by": "26",
+                              "update_time": "2024-07-21 01:27:57",
+                              "remark": ""
+                            },
+                            {
+                              "menu_id": 2020,
+                              "menu_name": "菜单新增",
+                              "parent_id": 2005,
+                              "perms": "system:menu:insert",
+                              "route_name": "",
+                              "path": "",
+                              "component": "",
+                              "target": "blank",
+                              "menu_type": "F",
+                              "active_menu": null,
+                              "icon": "",
+                              "order_num": 0,
+                              "is_link": 0,
+                              "is_keep_alive": 0,
+                              "is_hidden": 0,
+                              "is_disabled": 0,
+                              "is_refresh": 0,
+                              "is_affix": 0,
+                              "is_full": 0,
+                              "is_always_show": 0,
+                              "create_by": "26",
+                              "create_time": "2024-07-21 01:28:12",
+                              "update_by": "26",
+                              "update_time": "2024-07-21 01:28:12",
+                              "remark": ""
+                            }
+                          ]
+                        },
+                        {
+                          "menu_id": 2021,
+                          "menu_name": "用户管理",
+                          "parent_id": 2002,
+                          "perms": "system:user",
+                          "route_name": "User",
+                          "path": "/system/user",
+                          "component": "/system/user/index",
+                          "target": "blank",
+                          "menu_type": "C",
+                          "active_menu": null,
+                          "icon": "menu-system-user",
+                          "order_num": 0,
+                          "is_link": 0,
+                          "is_keep_alive": 0,
+                          "is_hidden": 0,
+                          "is_disabled": 0,
+                          "is_refresh": 0,
+                          "is_affix": 0,
+                          "is_full": 0,
+                          "is_always_show": 0,
+                          "create_by": "26",
+                          "create_time": "2024-07-25 01:21:57",
+                          "update_by": "26",
+                          "update_time": "2024-07-25 01:24:59",
+                          "remark": ""
+                        }
+                      ]
+                    },
+                    {
+                      "menu_id": 2008,
+                      "menu_name": "友链管理",
+                      "parent_id": 0,
+                      "perms": "blogroll",
+                      "route_name": "Blogroll",
+                      "path": "/blogroll",
+                      "component": "/blogroll/index",
+                      "target": "blank",
+                      "menu_type": "C",
+                      "active_menu": "",
+                      "icon": "func-forum-sanuk",
+                      "order_num": 0,
+                      "is_link": 0,
+                      "is_keep_alive": 1,
+                      "is_hidden": 0,
+                      "is_disabled": 0,
+                      "is_refresh": 1,
+                      "is_affix": 0,
+                      "is_full": 0,
+                      "is_always_show": 0,
+                      "create_by": "26",
+                      "create_time": "2024-07-20 22:03:13",
+                      "update_by": "26",
+                      "update_time": "2024-09-08 22:09:32",
+                      "remark": "in in officia"
+                    },
+                    {
+                      "menu_id": 2009,
+                      "menu_name": "标签管理",
+                      "parent_id": 0,
+                      "perms": "tags",
+                      "route_name": "Tags",
+                      "path": "/tags",
+                      "component": "/tags/index",
+                      "target": "blank",
+                      "menu_type": "C",
+                      "active_menu": null,
+                      "icon": "menu-echarts-multiple",
+                      "order_num": 0,
+                      "is_link": 0,
+                      "is_keep_alive": 1,
+                      "is_hidden": 0,
+                      "is_disabled": 0,
+                      "is_refresh": 0,
+                      "is_affix": 0,
+                      "is_full": 0,
+                      "is_always_show": 0,
+                      "create_by": "26",
+                      "create_time": "2024-07-20 23:47:04",
+                      "update_by": "26",
+                      "update_time": "2024-09-08 21:14:17",
+                      "remark": ""
+                    },
+                    {
+                      "menu_id": 2025,
+                      "menu_name": "文章管理",
+                      "parent_id": 0,
+                      "perms": "Article",
+                      "route_name": "Article",
+                      "path": "/article",
+                      "component": "",
+                      "target": "blank",
+                      "menu_type": "M",
+                      "active_menu": null,
+                      "icon": "menu-echarts-multiple",
+                      "order_num": 1,
+                      "is_link": 0,
+                      "is_keep_alive": 0,
+                      "is_hidden": 0,
+                      "is_disabled": 0,
+                      "is_refresh": 0,
+                      "is_affix": 0,
+                      "is_full": 0,
+                      "is_always_show": 0,
+                      "create_by": "26",
+                      "create_time": "2024-08-21 21:28:51",
+                      "update_by": "26",
+                      "update_time": "2024-08-21 21:42:31",
+                      "remark": "",
+                      "children": [
+                        {
+                          "menu_id": 10,
+                          "menu_name": "文章列表",
+                          "parent_id": 2025,
+                          "perms": "article:list",
+                          "route_name": "ArticleList",
+                          "path": "/article/list",
+                          "component": "/article/article-list/index",
+                          "target": "blank",
+                          "menu_type": "C",
+                          "active_menu": null,
+                          "icon": "menu-form",
+                          "order_num": 0,
+                          "is_link": 0,
+                          "is_keep_alive": 0,
+                          "is_hidden": 0,
+                          "is_disabled": 0,
+                          "is_refresh": 0,
+                          "is_affix": 1,
+                          "is_full": 0,
+                          "is_always_show": 0,
+                          "create_by": "26",
+                          "create_time": "2024-07-13 00:48:43",
+                          "update_by": "26",
+                          "update_time": "2024-09-08 22:09:44",
+                          "remark": "",
+                          "children": [
+                            {
+                              "menu_id": 2001,
+                              "menu_name": "文章查询",
+                              "parent_id": 10,
+                              "perms": "article:list:select",
+                              "route_name": "",
+                              "path": null,
+                              "component": null,
+                              "target": "",
+                              "menu_type": "F",
+                              "active_menu": null,
+                              "icon": "",
+                              "order_num": 1,
+                              "is_link": 0,
+                              "is_keep_alive": 0,
+                              "is_hidden": 0,
+                              "is_disabled": 0,
+                              "is_refresh": 0,
+                              "is_affix": 0,
+                              "is_full": 0,
+                              "is_always_show": 0,
+                              "create_by": "26",
+                              "create_time": "2024-07-13 13:28:25",
+                              "update_by": "26",
+                              "update_time": "2024-10-14 21:27:15",
+                              "remark": ""
+                            },
+                            {
+                              "menu_id": 2006,
+                              "menu_name": "文章删除",
+                              "parent_id": 10,
+                              "perms": "article:list:delete",
+                              "route_name": "",
+                              "path": "",
+                              "component": "",
+                              "target": "",
+                              "menu_type": "F",
+                              "active_menu": null,
+                              "icon": "",
+                              "order_num": 0,
+                              "is_link": 0,
+                              "is_keep_alive": 0,
+                              "is_hidden": 0,
+                              "is_disabled": 0,
+                              "is_refresh": 0,
+                              "is_affix": 0,
+                              "is_full": 0,
+                              "is_always_show": 0,
+                              "create_by": "26",
+                              "create_time": "2024-07-13 00:48:43",
+                              "update_by": "26",
+                              "update_time": "2024-10-14 21:27:55",
+                              "remark": ""
+                            },
+                            {
+                              "menu_id": 2012,
+                              "menu_name": "文章新增",
+                              "parent_id": 10,
+                              "perms": "article:list:insert",
+                              "route_name": "",
+                              "path": "",
+                              "component": "",
+                              "target": "blank",
+                              "menu_type": "F",
+                              "active_menu": null,
+                              "icon": "",
+                              "order_num": 1,
+                              "is_link": 0,
+                              "is_keep_alive": 0,
+                              "is_hidden": 0,
+                              "is_disabled": 0,
+                              "is_refresh": 0,
+                              "is_affix": 0,
+                              "is_full": 0,
+                              "is_always_show": 0,
+                              "create_by": "26",
+                              "create_time": "2024-07-21 00:51:28",
+                              "update_by": "26",
+                              "update_time": "2024-10-14 21:28:02",
+                              "remark": ""
+                            }
+                          ]
+                        },
+                        {
+                          "menu_id": 2026,
+                          "menu_name": "文章审核",
+                          "parent_id": 2025,
+                          "perms": "article:review",
+                          "route_name": "ArticleReview",
+                          "path": "/article/review",
+                          "component": "/article/article-review/index",
+                          "target": "blank",
+                          "menu_type": "C",
+                          "active_menu": null,
+                          "icon": "el-icon-Stamp",
+                          "order_num": 0,
+                          "is_link": 0,
+                          "is_keep_alive": 0,
+                          "is_hidden": 0,
+                          "is_disabled": 0,
+                          "is_refresh": 0,
+                          "is_affix": 0,
+                          "is_full": 0,
+                          "is_always_show": 0,
+                          "create_by": "26",
+                          "create_time": "2024-08-21 21:29:12",
+                          "update_by": "26",
+                          "update_time": "2024-08-21 21:50:37",
+                          "remark": ""
+                        },
+                        {
+                          "menu_id": 2027,
+                          "menu_name": "文章编辑",
+                          "parent_id": 2025,
+                          "perms": "article:read-write",
+                          "route_name": "ArticleRW",
+                          "path": "/article/read-write/:article_id?",
+                          "component": "/article/article-list/read-write",
+                          "target": "blank",
+                          "menu_type": "C",
+                          "active_menu": null,
+                          "icon": "el-icon-EditPen",
+                          "order_num": 0,
+                          "is_link": 0,
+                          "is_keep_alive": 0,
+                          "is_hidden": 1,
+                          "is_disabled": 0,
+                          "is_refresh": 0,
+                          "is_affix": 0,
+                          "is_full": 0,
+                          "is_always_show": 0,
+                          "create_by": "26",
+                          "create_time": "2024-08-21 22:14:33",
+                          "update_by": "26",
+                          "update_time": "2024-10-14 23:16:53",
+                          "remark": ""
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/menu": {
+      "post": {
+        "summary": "添加或编辑菜单",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "menu"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "menu_id": {
+                    "type": "integer",
+                    "description": "菜单ID"
+                  },
+                  "menu_name": {
+                    "description": "菜单名称title",
+                    "type": "string",
+                    "maxLength": 50
+                  },
+                  "parent_id": {
+                    "description": "父菜单ID",
+                    "default": "0",
+                    "type": "integer",
+                    "minimum": -2147483648,
+                    "maximum": 2147483647
+                  },
+                  "route_name": {
+                    "description": "路由别名",
+                    "default": "#",
+                    "type": "string",
+                    "maxLength": 200
+                  },
+                  "path": {
+                    "description": "路由地址",
+                    "type": "string",
+                    "maxLength": 255
+                  },
+                  "component": {
+                    "description": "组件路径",
+                    "type": "string",
+                    "maxLength": 255
+                  },
+                  "target": {
+                    "description": "打开方式（self页签 blank新窗口）",
+                    "default": "blank",
+                    "type": "string",
+                    "maxLength": 20
+                  },
+                  "menu_type": {
+                    "description": "菜单类型（M目录 C菜单 F按钮）",
+                    "type": "string",
+                    "enum": [
+                      "M",
+                      "C",
+                      "F"
+                    ]
+                  },
+                  "active_menu": {
+                    "description": "需要高亮的菜单",
+                    "type": "string",
+                    "maxLength": 255
+                  },
+                  "icon": {
+                    "description": "菜单图标",
+                    "default": "#",
+                    "type": "string",
+                    "maxLength": 100
+                  },
+                  "order_num": {
+                    "description": "显示顺序",
+                    "default": "0",
+                    "type": "integer",
+                    "minimum": -2147483648,
+                    "maximum": 2147483647
+                  },
+                  "is_link": {
+                    "description": "是否外链"
+                  },
+                  "is_keep_alive": {
+                    "description": "是否缓存keep-alive"
+                  },
+                  "is_hidden": {
+                    "description": "菜单状态（0显示 1隐藏）"
+                  },
+                  "is_refresh": {
+                    "description": "是否刷新（0刷新 1不刷新）"
+                  },
+                  "is_affix": {
+                    "description": "是否固定在tabs"
+                  },
+                  "is_full": {
+                    "description": "是否全屏"
+                  },
+                  "is_always_show": {
+                    "description": "是否一直显示该路由"
+                  },
+                  "perms": {
+                    "description": "权限标识",
+                    "type": "string",
+                    "maxLength": 100
+                  },
+                  "remark": {
+                    "description": "备注",
+                    "type": "string",
+                    "maxLength": 500
+                  }
+                },
+                "type": "object",
+                "required": [
+                  "menu_name",
+                  "menu_type",
+                  "parent_id",
+                  "menu_id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "删除菜单 ",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "menu"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "required": [
+                  "ids"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/mo_upload/upload": {
+      "post": {
+        "summary": "(mo)单个上传 ",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "format": "binary",
+                    "type": "string",
+                    "example": "file://C:\\Users\\ZGFon\\OneDrive\\图片\\比奇堡\\海绵宝宝吹泡泡.jpg"
+                  },
+                  "type": {
+                    "example": "image",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "file"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/mo_upload/files": {
+      "delete": {
+        "summary": "(mo)删除文件",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "description": "文章id"
+                    },
+                    "description": "文章id集合"
+                  }
+                },
+                "required": [
+                  "ids"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "get": {
+        "summary": "(mo)查询文件",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "currentPage",
+            "in": "query",
+            "description": "当前页数",
+            "required": true,
+            "example": "1",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "每页数量",
+            "required": true,
+            "example": "2",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fileName",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "example": {
+                  "code": 200,
+                  "msg": "获取评论列表成功",
+                  "data": [
+                    {
+                      "id": 26,
+                      "article_id": 71,
+                      "user_id": 26,
+                      "content": "一级内容",
+                      "parent_id": 0,
+                      "reply_id": null,
+                      "reply_user_id": null,
+                      "create_time": "2024-01-29 11:04:55",
+                      "avatar": "https://avatars.githubusercontent.com/u/88591988?v=4",
+                      "nickname": "peak",
+                      "reply_avatar": null,
+                      "reply_nickname": null,
+                      "like_count": 2,
+                      "user_liked": 0,
+                      "children": [
+                        {
+                          "id": 31,
+                          "avatar": "https://avatars.githubusercontent.com/u/88591988?v=4",
+                          "content": "二级评论内容10",
+                          "user_id": 26,
+                          "nickname": "peak",
+                          "reply_id": 26,
+                          "parent_id": 26,
+                          "article_id": 71,
+                          "like_count": 2,
+                          "user_liked": 0,
+                          "create_time": "2024-01-29 11:08:30",
+                          "reply_avatar": null,
+                          "reply_user_id": 44,
+                          "reply_nickname": null
+                        },
+                        {
+                          "id": 32,
+                          "avatar": "https://avatars.githubusercontent.com/u/88591988?v=4",
+                          "content": "二级评论内容10",
+                          "user_id": 26,
+                          "nickname": "peak",
+                          "reply_id": 31,
+                          "parent_id": 26,
+                          "article_id": 71,
+                          "like_count": 0,
+                          "user_liked": 0,
+                          "create_time": "2024-01-29 11:11:50",
+                          "reply_avatar": null,
+                          "reply_user_id": 23,
+                          "reply_nickname": null
+                        },
+                        {
+                          "id": 33,
+                          "avatar": "https://jiang-xia.top/x-api/blog-server/static/uploads/2022-08-26/2tp9sykqn11a6b41yodluq-头像_巨蟹座.png",
+                          "content": "二级评论内容10",
+                          "user_id": 27,
+                          "nickname": "那一道似有似无的墙啊",
+                          "reply_id": 28,
+                          "parent_id": 26,
+                          "article_id": 71,
+                          "like_count": 1,
+                          "user_liked": 0,
+                          "create_time": "2024-01-29 15:02:43",
+                          "reply_avatar": null,
+                          "reply_user_id": 2,
+                          "reply_nickname": null
+                        }
+                      ]
+                    },
+                    {
+                      "id": 29,
+                      "article_id": 71,
+                      "user_id": 26,
+                      "content": "阿斯顿请问",
+                      "parent_id": 0,
+                      "reply_id": null,
+                      "reply_user_id": null,
+                      "create_time": "2024-01-29 11:05:49",
+                      "avatar": "https://avatars.githubusercontent.com/u/88591988?v=4",
+                      "nickname": "peak",
+                      "reply_avatar": null,
+                      "reply_nickname": null,
+                      "like_count": 0,
+                      "user_liked": 0,
+                      "children": []
+                    },
+                    {
+                      "id": 30,
+                      "article_id": 71,
+                      "user_id": 27,
+                      "content": "开个黑",
+                      "parent_id": 0,
+                      "reply_id": null,
+                      "reply_user_id": null,
+                      "create_time": "2024-01-29 11:05:52",
+                      "avatar": "https://jiang-xia.top/x-api/blog-server/static/uploads/2022-08-26/2tp9sykqn11a6b41yodluq-头像_巨蟹座.png",
+                      "nickname": "那一道似有似无的墙啊",
+                      "reply_avatar": null,
+                      "reply_nickname": null,
+                      "like_count": 1,
+                      "user_liked": 0,
+                      "children": []
+                    }
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/mo_upload/files/{id}/download": {
+      "get": {
+        "summary": "(mo)下载文件",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "example": "7b54d01a-fc51-47ce-bc3e-77a01e494acd",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "example": {
+                  "code": 200,
+                  "msg": "获取评论列表成功",
+                  "data": [
+                    {
+                      "id": 26,
+                      "article_id": 71,
+                      "user_id": 26,
+                      "content": "一级内容",
+                      "parent_id": 0,
+                      "reply_id": null,
+                      "reply_user_id": null,
+                      "create_time": "2024-01-29 11:04:55",
+                      "avatar": "https://avatars.githubusercontent.com/u/88591988?v=4",
+                      "nickname": "peak",
+                      "reply_avatar": null,
+                      "reply_nickname": null,
+                      "like_count": 2,
+                      "user_liked": 0,
+                      "children": [
+                        {
+                          "id": 31,
+                          "avatar": "https://avatars.githubusercontent.com/u/88591988?v=4",
+                          "content": "二级评论内容10",
+                          "user_id": 26,
+                          "nickname": "peak",
+                          "reply_id": 26,
+                          "parent_id": 26,
+                          "article_id": 71,
+                          "like_count": 2,
+                          "user_liked": 0,
+                          "create_time": "2024-01-29 11:08:30",
+                          "reply_avatar": null,
+                          "reply_user_id": 44,
+                          "reply_nickname": null
+                        },
+                        {
+                          "id": 32,
+                          "avatar": "https://avatars.githubusercontent.com/u/88591988?v=4",
+                          "content": "二级评论内容10",
+                          "user_id": 26,
+                          "nickname": "peak",
+                          "reply_id": 31,
+                          "parent_id": 26,
+                          "article_id": 71,
+                          "like_count": 0,
+                          "user_liked": 0,
+                          "create_time": "2024-01-29 11:11:50",
+                          "reply_avatar": null,
+                          "reply_user_id": 23,
+                          "reply_nickname": null
+                        },
+                        {
+                          "id": 33,
+                          "avatar": "https://jiang-xia.top/x-api/blog-server/static/uploads/2022-08-26/2tp9sykqn11a6b41yodluq-头像_巨蟹座.png",
+                          "content": "二级评论内容10",
+                          "user_id": 27,
+                          "nickname": "那一道似有似无的墙啊",
+                          "reply_id": 28,
+                          "parent_id": 26,
+                          "article_id": 71,
+                          "like_count": 1,
+                          "user_liked": 0,
+                          "create_time": "2024-01-29 15:02:43",
+                          "reply_avatar": null,
+                          "reply_user_id": 2,
+                          "reply_nickname": null
+                        }
+                      ]
+                    },
+                    {
+                      "id": 29,
+                      "article_id": 71,
+                      "user_id": 26,
+                      "content": "阿斯顿请问",
+                      "parent_id": 0,
+                      "reply_id": null,
+                      "reply_user_id": null,
+                      "create_time": "2024-01-29 11:05:49",
+                      "avatar": "https://avatars.githubusercontent.com/u/88591988?v=4",
+                      "nickname": "peak",
+                      "reply_avatar": null,
+                      "reply_nickname": null,
+                      "like_count": 0,
+                      "user_liked": 0,
+                      "children": []
+                    },
+                    {
+                      "id": 30,
+                      "article_id": 71,
+                      "user_id": 27,
+                      "content": "开个黑",
+                      "parent_id": 0,
+                      "reply_id": null,
+                      "reply_user_id": null,
+                      "create_time": "2024-01-29 11:05:52",
+                      "avatar": "https://jiang-xia.top/x-api/blog-server/static/uploads/2022-08-26/2tp9sykqn11a6b41yodluq-头像_巨蟹座.png",
+                      "nickname": "那一道似有似无的墙啊",
+                      "reply_avatar": null,
+                      "reply_nickname": null,
+                      "like_count": 1,
+                      "user_liked": 0,
+                      "children": []
+                    }
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/upload/file": {
+      "post": {
+        "summary": "单个上传",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "format": "binary",
+                    "type": "string",
+                    "example": "file://C:\\Users\\ZGFon\\OneDrive\\图片\\比奇堡\\17ab0e33-b9fc-4bd3-a185-b004a4cb89cc.jpg"
+                  },
+                  "type": {
+                    "example": "image",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "file"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/upload/files": {
+      "post": {
+        "summary": "批量上传",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "format": "binary",
+                    "type": "string",
+                    "example": [
+                      "cmMtdXBsb2FkLTE3MTA3MjU0NTAyOTYtMjI=/21323099_0_final.png",
+                      "cmMtdXBsb2FkLTE3MTA3MjU0NTAyOTYtMjM=/21341144_0_final.png"
+                    ]
+                  },
+                  "dir": {
+                    "example": "/upload",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/upload/verify": {
+      "post": {
+        "summary": "验证是否已经上传",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "{{access_token}}",
+            "schema": {
+              "type": "string",
+              "default": "{{access_token}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file_name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "file_name"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "webhooks": {},
+  "components": {
+    "schemas": {},
+    "securitySchemes": {}
+  },
+  "servers": [],
+  "security": []
+}
