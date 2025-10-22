@@ -1,14 +1,14 @@
 {
-  "name": "openapi-standard-pipeline",
+  "name": "apigen",
   "version": "1.0.0",
   "private": true,
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
     "build": "tsc",
-    "g": "ts-node bin/generate.ts"
+    "generate": "pnpm build && node dist/bin/generate.js"
   },
   "bin": {
-    "apigen": "bin/generate.ts"
+    "apigen": "./dist/bin/generate.js"
   },
   "devDependencies": {
     "@types/node": "^24.9.1",

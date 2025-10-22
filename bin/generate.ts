@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import path from "node:path";
 import fs from "node:fs";
 import {
@@ -6,9 +8,12 @@ import {
   toFileName,
   genObjectFile,
   genFunctionFile,
-} from "../src/api-generator";
-import type { GroupNode, GeneratorConfig } from "../src/api-generator";
+} from "../src/api-generator.js";
+import type { GroupNode, GeneratorConfig } from "../src/api-generator.js";
 import { processOpenAPIToStandard } from "@zpeak/openapi-adapter"
+import { fileURLToPath, pathToFileURL } from "node:url";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // 命令行参数解析
 interface CliOptions {
@@ -98,19 +103,41 @@ async function loadConfig(customConfigPath?: string): Promise<GeneratorConfig | 
     }
   }
 
-  // 尝试加载默认的 apigen.config.ts
+  // 优先加载编译后的 JS，再回退到 TS
+  const configJsPath = path.resolve(process.cwd(), 'dist', 'apigen.config.js');
   const configTsPath = path.resolve(process.cwd(), 'apigen.config.ts');
+
+  if (fs.existsSync(configJsPath)) {
+    try {
+
+      /**
+       * 为什么传递给 import() 的是 pathToFileURL(configJsPath).href 而不是 configJsPath ？
+       *
+       * ES 模块的 import() 语句（尤其是动态导入）期望接收一个 URL ，而不是一个普通的文件系统路径。
+       * pathToFileURL 是 Node.js 内置 url 模块提供的一个工具函数，它的作用就是将一个文件系统路径转换为一个标准的 file:// 协议的 URL 对象。
+       *    例如， d:\project\my_study_project\apigen\apigen.config.ts 会被转换为 file:///D:/project/my_study_project/apigen/apigen.config.ts 这样的 URL
+       */
+      const { apigen } = await import(pathToFileURL(configJsPath).href);
+      if (apigen) {
+        console.log('使用配置文件:', configJsPath);
+        return apigen;
+      }
+    } catch (error) {
+      console.error('加载配置文件失败:', error);
+      throw new Error(`无法加载配置文件 apigen.config.js : ${configJsPath}`);
+    }
+  }
 
   if (fs.existsSync(configTsPath)) {
     try {
-      // 使用动态导入加载TS配置文件
-      const { apigen } = await import(configTsPath);
+      const { apigen } = await import(pathToFileURL(configTsPath).href);
       if (apigen) {
         console.log('使用配置文件:', configTsPath);
         return apigen;
       }
     } catch (error) {
       console.error('加载配置文件失败:', error);
+      throw new Error(`无法加载配置文件 apigen.config.ts : ${configTsPath}`);
     }
   }
 
@@ -239,7 +266,7 @@ async function main(): Promise<void> {
   }
 }
 
-/** 允许作为模块引入调用 main，或直接 CLI 执行 */
-if (require.main === module) {
-  main();
-}
+console.log(123123);
+
+// 仅作为脚本使用：始终执行 main()
+main();
