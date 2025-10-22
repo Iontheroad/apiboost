@@ -1,5 +1,5 @@
 {
-  "sourcePath": "standard/blog.all.openapi.result.generated.tag.json",
+  "sourcePath": "swagger/blog.all.openapi.json",
   "outDir": "outputs",
   "exportStyle": "function",
   "outputExt": "ts",

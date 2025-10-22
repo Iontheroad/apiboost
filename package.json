@@ -5,8 +5,10 @@
   "type": "commonjs",
   "scripts": {
     "build": "tsc",
-    "parser": "ts-node scripts/parser.ts",
-    "generate": "ts-node src/index.ts"
+    "g": "ts-node scripts/generate.ts"
+  },
+  "bin": {
+    "apigen": "scripts/generate.ts"
   },
   "devDependencies": {
     "@types/node": "^24.9.1",

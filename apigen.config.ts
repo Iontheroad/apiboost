@@ -1,8 +1,8 @@
-import type { GeneratorConfig } from "../src/api-generator";
+import type { GeneratorConfig } from "./src/api-generator";
 
 export const apigen: GeneratorConfig[] = [
   {
-    "sourcePath": "standard/blog.all.openapi.result.generated.tag.json",
+    "sourcePath": "swagger/blog.all.openapi.json",
     "outDir": "outputs",
     "exportStyle": "function",
     "outputExt": "ts",
@@ -12,7 +12,7 @@ export const apigen: GeneratorConfig[] = [
     "groupInclude": [],
     "requestImport": {
       "enabled": true,
-      "importLine": "import request from '@/utils/request'; \n import request2 from '@/utils/request2'; ",
+      "importLine": "import request from '@/utils/request';",
       "identifier": "request"
     }
   }
