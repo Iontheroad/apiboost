@@ -9,9 +9,9 @@
  * - URL 前缀、文件命名、分组过滤、JSDoc 注释开关
  * - 参数组合：query + path + body
  * - 响应类型：尽力建模，无法建模回退 any
- * 
- * 
- * 配置（generate/config.json）示例：
+ *
+ *
+ * 配置 config 示例：
  * {
  *   "sourcePath": "standard/blog.all.openapi.result.generated.tag.jsonc",  // 源数据文件路径（支持 JSONC）
  *   "outDir": "generate/outputs",  // 生成代码的输出目录
@@ -27,8 +27,8 @@
  *     "identifier": "request" // 请求函数标识符（与导入保持一致） 示例："request"
  *   }
  * }
- * 
- * 
+ *
+ *
  * 使用：
  * 1) 编辑 generate/config.json 配置项
  * 2) 运行：npx ts-node generate/api-generator.ts
@@ -37,6 +37,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
+import { processOpenAPIToStandard } from "@zpeak/openapi-adapter"
 
 /**
  * 请求导入配置
@@ -44,7 +45,7 @@ import * as path from 'path';
  * - importLine：完整的 import 文本，如 "import request from '@/utils/request';"
  * - identifier：请求调用函数的标识符，通常与 import 的默认导出一致（如 "request"）
  */
-interface RequestImportCfg {
+export interface RequestImportCfg {
   enabled: boolean;
   importLine: string;
   identifier: string;
@@ -62,7 +63,7 @@ interface RequestImportCfg {
  * - groupInclude：只生成指定分组名（空数组表示全部）
  * - requestImport：请求导入配置
  */
-interface GeneratorConfig {
+export interface GeneratorConfig {
   sourcePath: string;
   outDir: string;
   exportStyle: 'object' | 'function';
@@ -80,7 +81,7 @@ interface GeneratorConfig {
  * - items: 若为 array，可能是字段列表或类型节点
  * - description: 字段中文说明，可能包含枚举解释（用于提取联合类型）
  */
-interface FieldNode {
+export interface FieldNode {
   name: string;
   type?: 'string' | 'number' | 'boolean' | 'object' | 'array';
   required?: boolean;
@@ -94,7 +95,7 @@ interface FieldNode {
  * - header/query/path/body：四种参数位置
  * - body.items：对象字段列表
  */
-interface RequestNode {
+export interface RequestNode {
   header?: FieldNode[];
   query?: FieldNode[];
   path?: FieldNode[];
@@ -108,7 +109,7 @@ interface RequestNode {
  * 源数据：响应节点
  * - items：顶层字段列表（代码、消息、分页、data 等）
  */
-interface ResponseNode {
+export interface ResponseNode {
   type?: string;
   items?: FieldNode[];
 }
@@ -119,7 +120,7 @@ interface ResponseNode {
  * - method：HTTP 方法
  * - controllerName：建议的函数名（可能重复）
  */
-interface ServiceNode {
+export interface ServiceNode {
   path: string;
   method: 'get' | 'post' | 'put' | 'delete' | 'patch';
   summary?: string;
@@ -137,7 +138,7 @@ interface ServiceNode {
  * - name：分组名，将作为输出文件名基础
  * - services：服务列表
  */
-interface GroupNode {
+export interface GroupNode {
   name: string;
   description?: string;
   controllerName?: string;
@@ -145,22 +146,11 @@ interface GroupNode {
 }
 
 /**
- * 加载生成器配置
- * - 从 generate/config.json 读取并解析
- * - 若缺失，抛错提示
- */
-function loadConfig(): GeneratorConfig {
-  const cfgPath = path.resolve(process.cwd(), 'src', 'config.json'); // 以项目根路径为基准定位配置文件
-  if (!fs.existsSync(cfgPath)) throw new Error('缺少配置文件 generate/config.json');
-  return JSON.parse(fs.readFileSync(cfgPath, 'utf8')) as GeneratorConfig; // 直接解析为强类型对象
-}
-
-/**
  * 去除 JSONC 注释
  * - 支持 /* ... *\/ 与 // 行注释
  * - 注意：不处理字符串边界的复杂情况（源数据为规则化 JSONC，足够安全）
  */
-function stripJsonc(jsonc: string): string {
+export function stripJsonc(jsonc: string): string {
   // 删除块注释
   const noBlock = jsonc.replace(/\/\*[\s\S]*?\*\//g, '');
   // 删除行注释
@@ -168,7 +158,7 @@ function stripJsonc(jsonc: string): string {
 }
 
 /** 确保目录存在，不存在则递归创建 */
-function ensureDir(dir: string): void {
+export function ensureDir(dir: string): void {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 }
 
@@ -177,7 +167,7 @@ function ensureDir(dir: string): void {
  * - 格式示例："文章状态(1:审核中 2:通过 3:未通过)"
  * - 提取到数字 1/2/3 后生成 "1 | 2 | 3"
  */
-function tryNumberUnion(node?: FieldNode): string | null {
+export function tryNumberUnion(node?: FieldNode): string | null {
   if (!node || node.type !== 'number') return null; // 仅针对 number 类型
   const desc = node.description || '';
   // 捕获 “数字 + 冒号”模式，如 "1:审核中"
@@ -196,7 +186,7 @@ function tryNumberUnion(node?: FieldNode): string | null {
  * - 处理 array（items 既可能是列表也可能是单节点）
  * - 兜底 any
  */
-function toTsType(node?: FieldNode): string {
+export function toTsType(node?: FieldNode): string {
   if (!node) return 'any';
   const union = tryNumberUnion(node); // 优先解析枚举联合
   if (union) return union;
@@ -223,7 +213,7 @@ function toTsType(node?: FieldNode): string {
 }
 
 /** 将 TS 类型转换为 JSDoc 类型字符串（简单替换以避免尖括号干扰） */
-function jsDocType(node?: FieldNode): string {
+export function jsDocType(node?: FieldNode): string {
   const t = toTsType(node);
   // 将泛型尖括号替换掉，避免 JSDoc 误解析
   return t.replace(/</g, '(').replace(/>/g, ')');
@@ -237,7 +227,7 @@ function jsDocType(node?: FieldNode): string {
  *     field?: string;
  *   }
  */
-function genInterfaceFromFields(fields?: FieldNode[]): string {
+export function genInterfaceFromFields(fields?: FieldNode[]): string {
   if (!fields || !fields.length) return '{}';
   const lines: string[] = ['{'];
   for (const f of fields) {
@@ -252,7 +242,7 @@ function genInterfaceFromFields(fields?: FieldNode[]): string {
 }
 
 /** 生成 JSDoc 的 @param 注释行列表，namePrefix 为 params/pathParams/data 前缀 */
-function genJsDocParams(fields: FieldNode[] | undefined, namePrefix: string): string[] {
+export function genJsDocParams(fields: FieldNode[] | undefined, namePrefix: string): string[] {
   if (!fields || !fields.length) return [];
   const lines: string[] = [];
   for (const f of fields) {
@@ -265,16 +255,16 @@ function genJsDocParams(fields: FieldNode[] | undefined, namePrefix: string): st
 }
 
 /** 大驼峰 */
-function pascalCase(s: string): string {
+export function pascalCase(s: string): string {
   return s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
 }
 /** 小驼峰（支持连字符/下划线转驼峰） */
-function camelCase(s: string): string {
+export function camelCase(s: string): string {
   if (!s) return s;
   return s.replace(/[-_ ]+([a-zA-Z])/g, (_, c: string) => c.toUpperCase());
 }
 /** 文件名命名风格转换 */
-function toFileName(name: string, caseType: 'camel' | 'kebab'): string {
+export function toFileName(name: string, caseType: 'camel' | 'kebab'): string {
   if (caseType === 'kebab') {
     // 将驼峰转为短横线（如 ArticleList -> article-list）
     return name.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
@@ -293,7 +283,7 @@ function toFileName(name: string, caseType: 'camel' | 'kebab'): string {
  *   2) 若路径未包含占位符但存在 pathFields，则按最安全策略追加 /${...} 片段
  *   3) 若包含模板变量，返回 `...`；否则返回 "..."
  */
-function buildUrl(basePrefix = '', rawPath: string, pathFields: FieldNode[] | undefined, argsObjName: string): string {
+export function buildUrl(basePrefix = '', rawPath: string, pathFields: FieldNode[] | undefined, argsObjName: string): string {
   const prefix = basePrefix || '';
   let url = `${prefix}${rawPath}`; // 先拼接前缀与原始路径
   if (pathFields && pathFields.length) {
@@ -322,7 +312,7 @@ function buildUrl(basePrefix = '', rawPath: string, pathFields: FieldNode[] | un
  *   * likes_count：兼容示例映射为 like_count?: number
  * - 否则输出通用结构（code/msg/data）
  */
-function genResponseType(resp?: ResponseNode): string {
+export function genResponseType(resp?: ResponseNode): string {
   if (!resp || !resp.items) return 'any';
   const top = resp.items;
   const byName = (n: string) => top.find((i) => i.name === n); // 在顶层 items 中按 name 查找字段
@@ -376,7 +366,7 @@ function genResponseType(resp?: ResponseNode): string {
 }
 
 /** 构建文件头部（按需插入请求 import 行） */
-function buildHeader(cfg: GeneratorConfig): string {
+export function buildHeader(cfg: GeneratorConfig): string {
   const header: string[] = [];
   if (cfg.requestImport?.enabled && cfg.requestImport.importLine) {
     header.push(cfg.requestImport.importLine); // 直接插入配置的 import 行
@@ -390,7 +380,7 @@ function buildHeader(cfg: GeneratorConfig): string {
  * - 例如：reqGetArticle -> reqGetArticle_get_article_list_self
  * - 冲突兜底：若仍重复，追加序号
  */
-function uniqueName(name: string, service: ServiceNode, used: Set<string>): string {
+export function uniqueName(name: string, service: ServiceNode, used: Set<string>): string {
   if (!used.has(name)) {
     used.add(name);
     return name;
@@ -415,7 +405,7 @@ function uniqueName(name: string, service: ServiceNode, used: Set<string>): stri
  * - 注释：JSDoc（可配置）包含 group / route / @param 列表
  * - 函数名：通过 uniqueName 保证唯一
  */
-function genFunctionCode(groupName: string, service: ServiceNode, cfg: GeneratorConfig, usedNames: Set<string>): string {
+export function genFunctionCode(groupName: string, service: ServiceNode, cfg: GeneratorConfig, usedNames: Set<string>): string {
   const request = service.request; // 当前服务的请求定义
   const { method, path: rawPath, summary, auth } = service;
 
@@ -492,7 +482,7 @@ function genFunctionCode(groupName: string, service: ServiceNode, cfg: Generator
  * - 顶部可插入 import
  * - 将每个服务的函数转换为对象方法（保留注释，去掉导出与返回类型字面量）
  */
-function genObjectFile(group: GroupNode, cfg: GeneratorConfig, header: string): string {
+export function genObjectFile(group: GroupNode, cfg: GeneratorConfig, header: string): string {
   const objName = group.controllerName || `req${pascalCase(group.name)}`; // 对象名：优先使用 group.controllerName
   const lines: string[] = [];
   const usedNames = new Set<string>(); // 跟踪本组内函数名，确保唯一
@@ -517,7 +507,7 @@ function genObjectFile(group: GroupNode, cfg: GeneratorConfig, header: string): 
  * - 顶部可插入 import
  * - 每个服务导出一个独立函数，名称已唯一化
  */
-function genFunctionFile(group: GroupNode, cfg: GeneratorConfig, header: string): string {
+export function genFunctionFile(group: GroupNode, cfg: GeneratorConfig, header: string): string {
   const lines: string[] = [];
   const usedNames = new Set<string>(); // 跟踪函数名唯一性
   if (header) lines.push(header);
@@ -527,4 +517,74 @@ function genFunctionFile(group: GroupNode, cfg: GeneratorConfig, header: string)
   return lines.join('\n');
 }
 
-export { loadConfig, ensureDir, stripJsonc, toFileName, genObjectFile, genFunctionFile, type GeneratorConfig, type GroupNode, type ServiceNode };
+
+/**
+ * 处理单个配置项
+ * @param cfg 配置项
+ */
+export async function processConfig(cfg: GeneratorConfig): Promise<void> {
+  // 默认 request 导入与标识符的兜底
+  if (!cfg.requestImport)
+    cfg.requestImport = {
+      enabled: false,
+      importLine: "",
+      identifier: "request",
+    };
+  if (!cfg.requestImport.identifier) cfg.requestImport.identifier = "request";
+  if (!cfg.outputExt) cfg.outputExt = "ts"; // 默认输出 TS
+  if (!cfg.filenameCase) cfg.filenameCase = "camel";
+  if (!Array.isArray(cfg.groupInclude)) cfg.groupInclude = [];
+
+  let sourceAbs = path.resolve(process.cwd(), cfg.sourcePath); // 源文件绝对路径
+  if (!fs.existsSync(sourceAbs)) throw new Error("源文件不存在: " + sourceAbs);
+  const outDirAbs = path.resolve(process.cwd(), cfg.outDir); // 输出目录绝对路径
+  ensureDir(outDirAbs);
+
+  // 标准化后的 OpenAPI 导出文件路径
+  const openapiAdapterOutputPath = path.join(outDirAbs, 'openapi-adapter', path.basename(sourceAbs))
+  ensureDir(path.dirname(openapiAdapterOutputPath));
+  // OPTIMIZATION: 后续优化， adapter 也要有可配置入口
+  const openapiAdapterData = await processOpenAPIToStandard({
+    inputPath: sourceAbs,
+    outputPath: openapiAdapterOutputPath,
+    // 分组模式：将 "tag" 切换为 "path" 可按路径首段分组
+    // 使用建议：
+    // - "tag": 适用于 OpenAPI 中严格维护 tags 的项目，便于跨路径聚合业务域
+    // - "path": 适用于未规范 tags 或希望按 URL 资源层次组织代码的项目
+    groupBy: "tag",
+    typePreference: { unionPrefer: "string" },
+    contentTypeFallback: "application/json",
+    withComments: false,
+  });
+
+
+  // 读取并清洗 JSONC
+  const jsonc = fs.readFileSync(openapiAdapterOutputPath, "utf8");
+  const jsonStr = stripJsonc(jsonc);
+  const data = JSON.parse(jsonStr) as GroupNode[]; // 解析为分组数组
+  // const data = openapiAdapterData as GroupNode[]; // 解析为分组数组
+  if (!Array.isArray(data)) throw new Error("源数据格式不正确，期望为数组");
+
+  // 构建文件头（包含 import，后加空行分隔正文）
+  const header =
+    cfg.requestImport?.enabled && cfg.requestImport.importLine
+      ? cfg.requestImport.importLine + "\n\n"
+      : "";
+
+  // 遍历分组进行文件生成
+  for (const group of data) {
+    // 过滤：若配置了 groupInclude，仅生成命中的分组
+    if (cfg.groupInclude.length && !cfg.groupInclude.includes(group.name))
+      continue;
+    const baseFileName = toFileName(group.name, cfg.filenameCase); // 生成文件名基础（命名风格）
+    const fileName = `${baseFileName}.${cfg.outputExt}`; // 拼接后缀 ts/js
+    // 根据导出风格生成完整文件内容
+    const content =
+      cfg.exportStyle === "object"
+        ? genObjectFile(group, cfg, header)
+        : genFunctionFile(group, cfg, header);
+    // 写入目标文件
+    fs.writeFileSync(path.join(outDirAbs, fileName), content, "utf8");
+    console.log("生成完成:", path.join(outDirAbs, fileName)); // 控制台提示
+  }
+}

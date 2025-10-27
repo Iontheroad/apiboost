@@ -1,15 +1,26 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "Node",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "outDir": "dist",
+    "rootDir": ".",
     "strict": true,
+    "declaration": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "types": ["node"]
+    "types": ["node"],
+    // 
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./*"]
+    }
   },
-  "include": ["src", "bin", "apigen.config.ts"]
+  "ts-node": {
+    "esm": true  // 启用 ESM 支持
+  },
+  "include": ["src", "bin"]
 }
