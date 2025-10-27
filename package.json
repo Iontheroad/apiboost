@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "private": false,
   "type": "module",
-  "main": "dist/bin/generate.js",
-  "types": "dist/bin/generate.d.ts",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
   "scripts": {
     "build": "tsc",
     "generate": "node dist/bin/generate.js",
     "g": "node dist/bin/generate.js",
-    "gs": "tsx bin/generate.ts"
+    "release": "npx bumpp --excute=\"pnpm i && pnpm build\"",
+    "pb": "pnpm publish"
   },
   "bin": {
     "apigen": "/dist/bin/generate.js",
@@ -26,5 +27,8 @@
     "@types/fs-extra": "^11.0.4",
     "@types/require-from-string": "^1.2.3",
     "require-from-string": "^2.0.2"
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }
