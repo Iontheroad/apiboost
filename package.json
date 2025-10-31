@@ -15,6 +15,27 @@
   "bin": {
     "apiboost": "/dist/bin/generate.js"
   },
+  "description": "",
+  "homepage": "https://github.com/Iontheroad/apiboost",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Iontheroad/apiboost.git"
+  },
+  "keywords": [
+    "apiboost",
+    "zpeak",
+    "api",
+    "boost",
+    "openapi",
+    "generate",
+    "swagger"
+  ],
+  "authors": [
+    {
+      "name": "zpeak",
+      "url": "https://zhanggaofeng.cn"
+    }
+  ],
   "devDependencies": {
     "@types/node": "^24.9.1",
     "@zpeak/openapi-adapter": "^1.0.9",
