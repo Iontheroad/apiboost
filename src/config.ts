@@ -4,7 +4,7 @@ import type { GeneratorConfig } from "./api-generator.js";
 /**
  * 默认配置
  */
-export const defaultApigenCliConfig: GeneratorConfig[] = [
+export const defaultApiboostCliConfig: GeneratorConfig[] = [
   {
     "sourcePath": "",
     "outDir": "outputs",
@@ -24,6 +24,6 @@ export const defaultApigenCliConfig: GeneratorConfig[] = [
 
 
 /**
- * apigen-cli 配置文件名称
+ * apiboost-cli 配置文件名称
  */
-export const apigenConfigFileNames = ['apigen.config.ts', 'apigen.config.js']
+export const apiboostConfigFileNames = ['apiboost.config.ts', 'apiboost.config.js']

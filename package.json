@@ -1,5 +1,5 @@
 {
-  "name": "apigen",
+  "name": "apiboost",
   "version": "1.0.0",
   "private": false,
   "type": "module",
@@ -13,8 +13,7 @@
     "pb": "pnpm publish"
   },
   "bin": {
-    "apigen": "/dist/bin/generate.js",
-    "ag-cli": "/dist/bin/generate.js"
+    "apiboost": "/dist/bin/generate.js"
   },
   "devDependencies": {
     "@types/node": "^24.9.1",

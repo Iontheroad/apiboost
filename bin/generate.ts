@@ -4,7 +4,7 @@ import path from "node:path";
 import fs from "node:fs";
 import { fileURLToPath } from "node:url";
 import { processConfig, } from "../src/api-generator.js"
-import { getApigenCliConfig, loadConfig } from "../src/utils/index.js"
+import { getApiboostCliConfig, loadConfig } from "../src/utils/index.js"
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -44,7 +44,7 @@ function showHelp(): void {
     node generate.ts [选项]
 
   选项:
-    -c, --config <path>  指定配置文件路径 (默认: ./apigen.config.ts)
+    -c, --config <path>  指定配置文件路径 (默认: ./apiboost.config.ts)
     -h, --help           显示帮助信息
     -v, --version        显示版本信息
   `);
@@ -88,7 +88,7 @@ async function main(): Promise<void> {
 
     // 读取配置
     // const configs = await loadConfig(options.configPath);
-    const configs = await getApigenCliConfig();
+    const configs = await getApiboostCliConfig();
 
     if (Array.isArray(configs)) {
       // 处理配置数组

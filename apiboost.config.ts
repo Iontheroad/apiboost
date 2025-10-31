@@ -1,6 +1,6 @@
 import type { GeneratorConfig } from "./src/api-generator";
 
-export const apigen: GeneratorConfig[] = [
+export const apiboost: GeneratorConfig[] = [
   {
     "sourcePath": "swagger/blog.all.openapi.json",
     "outDir": "outputs",
