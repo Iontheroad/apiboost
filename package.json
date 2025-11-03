@@ -1,26 +1,9 @@
 {
   "name": "apiboost",
+  "type": "module",
   "version": "1.0.0",
   "private": false,
-  "type": "module",
-  "main": "dist/src/index.js",
-  "types": "dist/src/index.d.ts",
-  "scripts": {
-    "build": "tsc",
-    "generate": "node dist/bin/generate.js",
-    "g": "node dist/bin/generate.js",
-    "release": "npx bumpp --excute=\"pnpm i && pnpm build\"",
-    "pb": "pnpm publish"
-  },
-  "bin": {
-    "apiboost": "/dist/bin/generate.js"
-  },
-  "description": "",
-  "homepage": "https://github.com/Iontheroad/apiboost",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Iontheroad/apiboost.git"
-  },
+  "description": "一个增强api文档的工具",
   "keywords": [
     "apiboost",
     "zpeak",
@@ -36,6 +19,38 @@
       "url": "https://zhanggaofeng.cn"
     }
   ],
+  "homepage": "https://github.com/Iontheroad/apiboost",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Iontheroad/apiboost.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "apiboost": "/dist/bin/generate.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "generate": "node dist/bin/generate.js",
+    "g": "node dist/bin/generate.js",
+    "release": "npx bumpp --excute=\"pnpm i && pnpm build\"",
+    "pb": "pnpm publish"
+  },
   "devDependencies": {
     "@types/node": "^24.9.1",
     "@zpeak/openapi-adapter": "^1.0.9",
@@ -47,12 +62,5 @@
     "@types/fs-extra": "^11.0.4",
     "@types/require-from-string": "^1.2.3",
     "require-from-string": "^2.0.2"
-  },
-  "files": [
-    "dist"
-  ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
   }
 }
