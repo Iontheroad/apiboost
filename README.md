@@ -1,6 +1,6 @@
 # apiboost
 
-一个增强 API 文档的工具，可以将 OpenAPI/Swagger 规范自动生成 TypeScript/JavaScript API 调用代码。
+一个开源工具，助力提升前端API开发效率。基于OpenAPI规范解析源数据，自动生成JavaScript/TypeScript API调用代码，与Vue、React等主流框架无缝集成，显著提高您的API开发流程。
 
 [![npm](https://img.shields.io/npm/v/apiboost)](https://www.npmjs.com/package/apiboost)
 [![license](https://img.shields.io/npm/l/apiboost)](https://github.com/Iontheroad/apiboost/blob/main/LICENSE)
