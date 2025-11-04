@@ -4,9 +4,10 @@ import path from "node:path";
 import fs from "node:fs";
 import { fileURLToPath } from "node:url";
 import { processConfig, } from "../src/api-generator.js"
-import { getApiboostCliConfig, loadConfig } from "../src/utils/index.js"
+import { loadConfig } from "../src/utils/index.js"
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+import 'tsx/esm'
 
 // 命令行参数解析
 interface CliOptions {
@@ -38,10 +39,10 @@ function parseArgs(): CliOptions {
 // 显示帮助信息
 function showHelp(): void {
   console.log(`
-  APIGen - API代码生成工具
+  apiboost - API代码生成工具
 
   用法:
-    node generate.ts [选项]
+    npx apiboost [选项]
 
   选项:
     -c, --config <path>  指定配置文件路径 (默认: ./apiboost.config.ts)
@@ -87,8 +88,7 @@ async function main(): Promise<void> {
     }
 
     // 读取配置
-    // const configs = await loadConfig(options.configPath);
-    const configs = await getApiboostCliConfig();
+    const configs = await loadConfig(options.configPath);
 
     if (Array.isArray(configs)) {
       // 处理配置数组
@@ -100,7 +100,7 @@ async function main(): Promise<void> {
       await processConfig(configs);
     }
 
-    console.log("全部生成完成。"); // 总结提示
+    console.log("✅ 全部生成完成。"); // 总结提示
   } catch (e: any) {
     console.error(e.message);
     process.exit(1);

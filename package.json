@@ -46,6 +46,7 @@
   },
   "scripts": {
     "build": "tsc",
+    "test": "tsx bin/generate.ts",
     "generate": "node dist/bin/generate.js",
     "g": "node dist/bin/generate.js",
     "release": "npx bumpp --excute=\"pnpm i && pnpm build\"",
@@ -56,11 +57,10 @@
     "@zpeak/openapi-adapter": "^1.0.9",
     "fs-extra": "^11.3.2",
     "ts-node": "^10.9.2",
+    "tsx": "^4.20.6",
     "typescript": "^5.6.3"
   },
   "dependencies": {
-    "@types/fs-extra": "^11.0.4",
-    "@types/require-from-string": "^1.2.3",
-    "require-from-string": "^2.0.2"
+    "@types/fs-extra": "^11.0.4"
   }
 }

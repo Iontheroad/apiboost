@@ -3,8 +3,10 @@ import type { GeneratorConfig } from "./api-generator.js";
 
 /**
  * 默认配置
+ * 优化 optimizing
+ * // OPTIMIZE : 优化配置参数
  */
-export const defaultApiboostCliConfig: GeneratorConfig[] = [
+export const DefaultApiboostConfig: GeneratorConfig[] = [
   {
     "sourcePath": "",
     "outDir": "outputs",
@@ -24,6 +26,6 @@ export const defaultApiboostCliConfig: GeneratorConfig[] = [
 
 
 /**
- * apiboost-cli 配置文件名称
+ * apiboost 配置文件名称
  */
-export const apiboostConfigFileNames = ['apiboost.config.ts', 'apiboost.config.js']
+export const ApiboostConfigFileNames = ['apiboost.config.ts', 'apiboost.config.js', "apiboost.config.mjs"]

@@ -563,7 +563,7 @@ export async function processConfig(cfg: GeneratorConfig): Promise<void> {
   const jsonStr = stripJsonc(jsonc);
   const data = JSON.parse(jsonStr) as GroupNode[]; // 解析为分组数组
   // const data = openapiAdapterData as GroupNode[]; // 解析为分组数组
-  if (!Array.isArray(data)) throw new Error("源数据格式不正确，期望为数组");
+  if (!Array.isArray(data)) throw new Error("❌ 源数据格式不正确，期望为数组");
 
   // 构建文件头（包含 import，后加空行分隔正文）
   const header =
@@ -585,6 +585,6 @@ export async function processConfig(cfg: GeneratorConfig): Promise<void> {
         : genFunctionFile(group, cfg, header);
     // 写入目标文件
     fs.writeFileSync(path.join(outDirAbs, fileName), content, "utf8");
-    console.log("生成完成:", path.join(outDirAbs, fileName)); // 控制台提示
+    console.log("✔️  生成完成:", path.join(outDirAbs, fileName)); // 控制台提示
   }
 }
