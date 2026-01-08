@@ -15,8 +15,6 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": "."
   },
-  "ts-node": {
-    "esm": true  // 启用 ESM 支持
-  },
+
   "include": ["src", "bin"]
 }
