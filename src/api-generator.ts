@@ -35,8 +35,8 @@
  * 3) 生成文件将输出至配置的 outDir
  */
 
-import * as fs from 'fs';
-import * as path from 'path';
+import path from 'node:path';
+import fs from 'fs-extra'
 import { processOpenAPIToStandard } from "@zpeak/openapi-adapter"
 
 /**

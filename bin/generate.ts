@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 import path from "node:path";
-import fs from "node:fs";
 import { fileURLToPath } from "node:url";
-import { processConfig, } from "../src/api-generator.js"
+import fs from 'fs-extra'
+import { processConfig } from "../src/api-generator.js"
 import { loadConfig } from "../src/utils/index.js"
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
