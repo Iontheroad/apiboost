@@ -1,4 +1,4 @@
-import type { GeneratorConfig } from "./src/api-generator";
+import type { GeneratorConfig } from "./src/type";
 
 export const apiboost: GeneratorConfig[] = [
   {

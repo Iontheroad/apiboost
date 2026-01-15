@@ -5,9 +5,10 @@ import { fileURLToPath } from "node:url";
 import fs from 'fs-extra'
 import { processConfig } from "../src/api-generator.js"
 import { loadConfig } from "../src/utils/index.js"
+import 'tsx/esm'
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-import 'tsx/esm'
 
 // 命令行参数解析
 interface CliOptions {

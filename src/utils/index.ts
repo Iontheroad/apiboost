@@ -1,7 +1,7 @@
 import fs from 'fs-extra'
 import path from "node:path";
 import { pathToFileURL, } from "node:url";
-import { GeneratorConfig } from '../api-generator.js'
+import { GeneratorConfig } from '../type.js'
 import { DefaultApiboostConfig, ApiboostConfigFileNames } from '../config.js';
 
 
