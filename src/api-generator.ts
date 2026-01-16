@@ -16,6 +16,7 @@ import fs from 'fs-extra'
 import { processOpenAPIToStandard } from "@zpeak/openapi-adapter"
 import type { StandardField, StandardService, StandardBody, StandardGroup } from "@zpeak/openapi-adapter"
 import type { GeneratorConfig } from "./type.js";
+import { DefaultApiboostConfig } from './config.js';
 
 
 /**
@@ -28,11 +29,6 @@ export function stripJsonc(jsonc: string): string {
   const noBlock = jsonc.replace(/\/\*[\s\S]*?\*\//g, '');
   // 删除行注释
   return noBlock.replace(/(^|\s)\/\/.*$/gm, '');
-}
-
-/** 确保目录存在，不存在则递归创建 */
-export function ensureDir(dir: string): void {
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 }
 
 /**
@@ -396,47 +392,24 @@ export function genFunctionFile(group: StandardGroup, cfg: GeneratorConfig, head
  * @param cfg 配置项
  */
 export async function processConfig(cfg: GeneratorConfig): Promise<void> {
-  // 默认 request 导入与标识符的兜底
-  if (!cfg.requestImport)
-    cfg.requestImport = {
-      enabled: false,
-      importLine: "",
-      identifier: "request",
-    };
-  if (!cfg.requestImport.identifier) cfg.requestImport.identifier = "request";
-  if (!cfg.outputExt) cfg.outputExt = "ts"; // 默认输出 TS
-  if (!cfg.filenameCase) cfg.filenameCase = "camel";
-  if (!Array.isArray(cfg.groupInclude)) cfg.groupInclude = [];
+  // 合并配置项与默认配置
+  Object.assign(DefaultApiboostConfig, cfg);
 
-  let sourceAbs = path.resolve(process.cwd(), cfg.sourcePath); // 源文件绝对路径
-  if (!fs.existsSync(sourceAbs)) throw new Error("源文件不存在: " + sourceAbs);
   const outDirAbs = path.resolve(process.cwd(), cfg.outDir); // 输出目录绝对路径
-  ensureDir(outDirAbs);
+  await fs.ensureDir(outDirAbs); // 确保输出目录存在
 
   // 标准化后的 OpenAPI 导出文件路径
-  const openapiAdapterOutputPath = path.join(outDirAbs, 'openapi-adapter', path.basename(sourceAbs))
-  ensureDir(path.dirname(openapiAdapterOutputPath));
+  const openapiAdapterOutputPath = path.join(outDirAbs, 'openapi-adapter', path.basename(cfg.sourcePath))
+  fs.ensureDir(path.dirname(openapiAdapterOutputPath)); // 确保目录存在
+
   // OPTIMIZATION: 后续优化， adapter 也要有可配置入口
   const openapiAdapterData = await processOpenAPIToStandard({
-    inputPath: sourceAbs,
+    inputPath: cfg.sourcePath,
     outputPath: openapiAdapterOutputPath,
-    // 分组模式：将 "tag" 切换为 "path" 可按路径首段分组
-    // 使用建议：
-    // - "tag": 适用于 OpenAPI 中严格维护 tags 的项目，便于跨路径聚合业务域
-    // - "path": 适用于未规范 tags 或希望按 URL 资源层次组织代码的项目
     groupBy: "tag",
-    typePreference: { unionPrefer: "string" },
-    contentTypeFallback: "application/json",
-    withComments: false,
   });
 
-
-  // 读取并清洗 JSONC
-  const jsonc = fs.readFileSync(openapiAdapterOutputPath, "utf8");
-  const jsonStr = stripJsonc(jsonc);
-  const data = JSON.parse(jsonStr) as StandardGroup[]; // 解析为分组数组
-  // const data = openapiAdapterData as StandardGroup[]; // 解析为分组数组
-  if (!Array.isArray(data)) throw new Error("❌ 源数据格式不正确，期望为数组");
+  if (!Array.isArray(openapiAdapterData)) throw new Error("❌ 源数据格式不正确，期望为数组");
 
   // 构建文件头（包含 import，后加空行分隔正文）
   const header =
@@ -445,7 +418,7 @@ export async function processConfig(cfg: GeneratorConfig): Promise<void> {
       : "";
 
   // 遍历分组进行文件生成
-  for (const group of data) {
+  for (const group of openapiAdapterData) {
     // 过滤：若配置了 groupInclude，仅生成命中的分组
     if (cfg.groupInclude.length && !cfg.groupInclude.includes(group.name))
       continue;

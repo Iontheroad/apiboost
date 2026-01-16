@@ -62,7 +62,7 @@ export async function loadConfig(customConfigPath?: string): Promise<GeneratorCo
      */
     const { apiboost } = await import(pathToFileURL(configFilePath).href);
     console.log('✔️  使用配置文件:', configFilePath);
-    return Object.assign(DefaultApiboostConfig, apiboost);
+    return apiboost
   } catch (error) {
     console.error('❌ 加载配置文件失败:', error);
     return [];

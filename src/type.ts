@@ -12,7 +12,7 @@ export interface RequestImportCfg {
 
 /**
  * 生成器总配置
- * - sourcePath：源 JSONC 路径
+ * - sourcePath：源 JSON 路径, 支持本地文件路径或网络 URL
  * - outDir：输出目录
  * - exportStyle："object" 对象聚合导出 | "function" 逐函数导出
  * - outputExt：生成后缀 "ts" | "js"
