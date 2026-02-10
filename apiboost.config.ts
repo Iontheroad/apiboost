@@ -1,10 +1,14 @@
-import type { GeneratorConfig } from "./src/type";
+import type { ApiboostConfig } from "./src/type";
 
-export const apiboost: GeneratorConfig[] = [
+
+// /qualstar-manage/standard/import/parseTemplate
+export const apiboost: ApiboostConfig[] = [
   {
-    "sourcePath": "swagger/blog.all.openapi.json",
+    // "sourcePath": "swagger/blog.all.openapi.json",
+    // "sourcePath": "http://localhost:3000/blog.all.openapi.json",
+    "sourcePath": "http://localhost:30001/xrz2.json",
     "outDir": "outputs",
-    "exportStyle": "function",
+    "exportStyle": "object",
     "outputExt": "ts",
     "baseUrlPrefix": "",
     "filenameCase": "camel",
@@ -14,6 +18,7 @@ export const apiboost: GeneratorConfig[] = [
       "enabled": true,
       "importLine": "import request from '@/utils/request';",
       "identifier": "request"
-    }
+    },
+    groupBy: "path"
   }
 ]

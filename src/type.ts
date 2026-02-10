@@ -1,3 +1,5 @@
+import { OpenAPIAdapterConfig } from "@zpeak/openapi-adapter/"
+
 /**
  * 请求导入配置
  * - enabled：是否在生成文件顶部插入 import 语句
@@ -22,7 +24,7 @@ export interface RequestImportCfg {
  * - groupInclude：只生成指定分组名（空数组表示全部）
  * - requestImport：请求导入配置
  */
-export interface GeneratorConfig {
+export interface ApiboostConfig extends Omit<OpenAPIAdapterConfig, 'inputPath' | 'outputPath'> {
   sourcePath: string;
   outDir: string;
   exportStyle: 'object' | 'function';

@@ -1,4 +1,4 @@
-import type { GeneratorConfig } from "./type.js";
+import type { ApiboostConfig } from "./type.js";
 
 
 /**
@@ -23,20 +23,20 @@ import type { GeneratorConfig } from "./type.js";
   }
  * 
  */
-export const DefaultApiboostConfig: GeneratorConfig = {
-  "sourcePath": "",
-  "outDir": "outputs",
-  "exportStyle": "function",
-  "outputExt": "ts",
-  "baseUrlPrefix": "",
-  "filenameCase": "camel",
-  "includeJSDoc": true,
-  "groupInclude": [],
-  "requestImport": {
-    "enabled": true,
-    "importLine": "import request from '@/utils/request';",
-    "identifier": "request"
-  }
+export const DefaultApiboostConfig: ApiboostConfig = {
+  sourcePath: "",
+  outDir: "outputs",
+  exportStyle: "function",
+  outputExt: "ts",
+  baseUrlPrefix: "",
+  filenameCase: "camel",
+  includeJSDoc: true,
+  groupInclude: [],
+  requestImport: {
+    enabled: true,
+    importLine: "import request from '@/utils/request';",
+    identifier: "request"
+  },
 }
 
 

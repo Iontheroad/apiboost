@@ -3,7 +3,7 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import fs from 'fs-extra'
-import { processConfig } from "../src/api-generator.js"
+import { processConfig } from "../src/generator/index.js"
 import { loadConfig } from "../src/utils/index.js"
 import 'tsx/esm'
 

@@ -1,8 +1,8 @@
 import fs from 'fs-extra'
 import path from "node:path";
 import { pathToFileURL, } from "node:url";
-import { GeneratorConfig } from '../type.js'
-import { DefaultApiboostConfig, ApiboostConfigFileNames } from '../config.js';
+import { ApiboostConfig } from '../type.js'
+import { ApiboostConfigFileNames } from '../config.js';
 
 
 /**
@@ -32,7 +32,7 @@ export function checkApiboostConfigFile(rootPath = process.cwd(), configFiles = 
  * - 其次从项目根目录读取 apiboost.config
  * - 若都缺失，抛错提示
  */
-export async function loadConfig(customConfigPath?: string): Promise<GeneratorConfig | GeneratorConfig[]> {
+export async function loadConfig(customConfigPath?: string): Promise<ApiboostConfig | ApiboostConfig[]> {
   let configFilePath: string = ''
   // 如果指定了自定义配置路径，直接返回
   if (customConfigPath) {

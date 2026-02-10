@@ -36,9 +36,9 @@ pnpm add apiboost
 在项目根目录创建 `apiboost.config.ts` 配置文件：
 
 ```ts
-import type { GeneratorConfig } from "apiboost";
+import type { ApiboostConfig } from "apiboost";
 
-export const apiboost: GeneratorConfig[] = [
+export const apiboost: ApiboostConfig[] = [
   {
     "sourcePath": "swagger/swagger.json",  // OpenAPI/Swagger 文件路径
     "outDir": "src/api",                   // 生成代码的输出目录
