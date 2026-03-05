@@ -15,7 +15,6 @@ import path from 'node:path';
 import fs from 'fs-extra'
 import { OpenAPIAdapter, StandardGroup } from "@zpeak/openapi-adapter"
 import type { ApiboostConfig } from "../type.js";
-import { DefaultApiboostConfig } from '../config.js';
 import { genFunctionCode, pascalCase, toFileName } from './utils.js';
 
 
@@ -23,6 +22,10 @@ import { genFunctionCode, pascalCase, toFileName } from './utils.js';
  * 生成对象聚合导出文件内容
  * - 顶部可插入 import
  * - 将每个服务的函数转换为对象方法（保留注释，去掉导出与返回类型字面量）
+ * @param group 分组数据
+ * @param cfg 配置
+ * @param header 头部内容
+ * @returns 
  */
 export function genObjectFile(group: StandardGroup, cfg: ApiboostConfig, header: string): string {
   const objName = group.controllerName || `req${pascalCase(group.name)}`; // 对象名：优先使用 group.controllerName
@@ -66,12 +69,18 @@ export function genFunctionFile(group: StandardGroup, cfg: ApiboostConfig, heade
  */
 export async function processConfig(config: ApiboostConfig): Promise<void> {
   // 合并配置项与默认配置
-  const cfg = {
-    ...DefaultApiboostConfig,
+  const cfg: ApiboostConfig = {
+    outDir: "outputs",
+    exportStyle: "function",
+    outputExt: "ts",
+    baseUrlPrefix: "",
+    filenameCase: "camel",
+    includeJSDoc: true,
+    groupInclude: [],
     ...config
   }
 
-  const outDirAbs = path.resolve(process.cwd(), cfg.outDir); // 输出目录绝对路径
+  const outDirAbs = path.resolve(process.cwd(), cfg.outDir!); // 输出目录绝对路径
   await fs.ensureDir(outDirAbs); // 确保输出目录存在
 
   // 标准化后的 OpenAPI 导出文件路径
@@ -96,9 +105,9 @@ export async function processConfig(config: ApiboostConfig): Promise<void> {
   // 遍历分组进行文件生成
   for (const group of openapiAdapterData) {
     // 过滤：若配置了 groupInclude，仅生成命中的分组
-    if (cfg.groupInclude.length && !cfg.groupInclude.includes(group.name))
+    if (cfg.groupInclude?.length && !cfg.groupInclude.includes(group.name))
       continue;
-    const baseFileName = toFileName(group.name, cfg.filenameCase); // 生成文件名基础（命名风格）
+    const baseFileName = toFileName(group.name, cfg.filenameCase!); // 生成文件名基础（命名风格）
     const fileName = `${baseFileName}.${cfg.outputExt}`; // 拼接后缀 ts/js
     // 根据导出风格生成完整文件内容
     const content =

@@ -47,56 +47,64 @@ export function toFileName(name: string, caseType: 'camel' | 'kebab'): string {
 
 /**
  * 构建 URL 表达式（字符串或模板字符串）
- * - 把 path 参数替换为模板变量（${args.id}）
- * - 逻辑：
- *   1) 替换 {id} 或 :id 为模板变量（${args.id}）
- *   2) 若路径未包含占位符但存在 pathFields，则按最安全策略追加 /${...} 片段
- *   3) 若包含模板变量，返回 `...`；否则返回 "..."
+ * @param basePrefix - 统一前缀（如 `/api`）
+ * @param rawPath - 源路径（可能包含 `{id}` 或 `:id` 占位符）
+ * @param pathFields - 路径参数字段列表
+ * @param argsObjName - 路径参数对象名（如 `pathParams`、`params`、`data`）
+ * @returns URL 表达式字符串（模板字符串或普通字符串字面量）
  * 
- * @param basePrefix  统一前缀（/api）
- * @param rawPath  源路径（可能包含 {id} 或 :id）
- * @param pathFields  路径参数集合
- * @param argsObjName  路径参数对象名称（pathParams 或 params/data）
- * @returns  string
+ * @example
+ * // 输入：basePrefix='/api', rawPath='/user/{id}', pathFields=[{name:'id'}], argsObjName='pathParams'
+ * // 输出：`/api/user/${pathParams.id}`
+ * 
+ * @example
+ * // 输入：basePrefix='/api', rawPath='/article', pathFields=[{name:'id'}], argsObjName='pathParams'
+ * // 输出：`/api/article/${pathParams.id}`
  */
-export function buildUrl(basePrefix = '', rawPath: string, pathFields: StandardField[] | undefined, argsObjName: string): string {
+export function buildUrl(basePrefix: string, rawPath: string, pathFields: StandardField[] | undefined, argsObjName: string): string {
   const prefix = basePrefix || '';
   let url = `${prefix}${rawPath}`; // 先拼接前缀与原始路径
   if (pathFields && pathFields.length) {
     for (const p of pathFields) {
       const token = p.name;
-      // 支持两种占位写法：{id} 或 :id
-      url = url.replace(new RegExp(`\\{${token}\\}`, 'g'), `\${${argsObjName}.${token}}`);
-      url = url.replace(new RegExp(`:${token}\\b`, 'g'), `\${${argsObjName}.${token}}`);
+      // 支持两种占位写法：{id} 或 :id（使用正则字面量）
+      // url = url.replace(new RegExp(`\\{${token}\\}`, 'g'), `\${${argsObjName}.${token}}`);
+      url = url.replace(/\{([^{}]+)\}/g, (match, key) => {
+        return key === token ? `\${${argsObjName}.${token}}` : match;
+      });
+      // url = url.replace(new RegExp(`:${token}\\b`, 'g'), `\${${argsObjName}.${token}}`);
+      url = url.replace(/:([^/:]+)\b/g, (match, key) => {
+        return key === token ? `\${${argsObjName}.${token}}` : match;
+      });
     }
+
     // 若原始路径没有任何占位符，则将所有 path 参数作为尾部片段追加
     if (!/[{}:]/.test(rawPath)) {
       const tail = pathFields.map(p => `\${${argsObjName}.${p.name}}`).join('/');
       if (tail) url = `${prefix}${rawPath}/${tail}`;
     }
   }
-  // 包含模板变量则返回模板字符串，否则返回普通字符串字面量
-  if (/\$\{/.test(url)) return '`' + url + '`';
+
+  // 包含 模板变量 则返回模板字符串
+  if (/\$\{/.test(url)) return `\`${url}\``; // '`' + url + '`'
+
+  // 否则返回普通字符串字面量
   return `"${url}"`;
 }
 
 /**
  * 根据字段列表生成接口类型文字
  * - 通用JSON Schema → TypeScript类型转换器
- * - 输出形如：
- *   `{
+ * @param {Object} schema - 自定义JSON Schema结构
+ * @returns {string} TypeScript类型字符串
+ * 
+ * @example  输出形如 :
+ *  `{
  *     /** 描述 *\/
  *     field?: string;
  *   }`
- * @param {Object} schema - 自定义JSON Schema结构
- * @returns {string} TypeScript类型字符串
  */
 export function genResponseType(schema: StandardBody): string {
-  // 处理基础类型, 非对象/数组类型直接返回
-  if (!['object', 'array'].includes(schema.type!)) {
-    return schema.type!;
-  }
-
   // 处理对象类型
   if (schema.type === 'object') {
     const properties: string[] = [];
@@ -144,11 +152,19 @@ export function genResponseType(schema: StandardBody): string {
     return `${innerType}[]`;
   }
 
-  // 默认情况（处理未定义类型）
-  return 'any';
+  // 处理基础类型
+  return schema.type;
 }
 
-/** 构建文件头部（按需插入请求 import 行） */
+/**
+ * 构建文件头部（按需插入请求 import 行）
+ * @param cfg - 配置对象
+ * @returns 
+ * @example
+ * // 配置了 `requestImport.importLine`
+ *  `import request from './request';`
+ * 
+ */
 export function buildHeader(cfg: ApiboostConfig): string {
   const header: string[] = [];
   if (cfg.requestImport?.enabled && cfg.requestImport.importLine) {
@@ -182,11 +198,35 @@ export function uniqueName(name: string, service: StandardService, used: Set<str
 
 /**
  * 生成单个服务的函数代码
- * - 形参：按需组合 params / pathParams / data，并生成 TS 类型字面量
- * - URL：调用 buildUrl 替换或拼接路径参数
- * - 请求：拼装 request({ url, method, params?, data? })
- * - 注释：JSDoc（可配置）包含 group / route / @param 列表
- * - 函数名：通过 uniqueName 保证唯一
+ * @param groupName - 分组名
+ * @param service - 服务数据
+ * @param cfg - 配置
+ * @param usedNames - 已使用名称集合
+ * @returns 函数代码字符串
+ * 
+ * @example 当配置为 function 模式时，生成独立函数：
+ * 
+ * ```ts
+ * function reqGetArticle(params: { id: string }) {
+ *   return request({
+ *     url: `/api/article/${params.id}`,
+ *     method: 'GET',
+ *     params,
+ *   });
+ * }
+ * ```
+ * 
+ * @example 当配置为 object 模式时，生成对象方法：
+ * 
+ * ```ts
+ * reqGetArticle(params: { id: string }) {
+ *   return request({
+ *     url: `/api/article/${params.id}`,
+ *     method: 'GET',
+ *     params,
+ *   });
+ * }
+ * ```
  */
 export function genFunctionCode(groupName: string, service: StandardService, cfg: ApiboostConfig, usedNames: Set<string>): string {
   const request = service.request; // 当前服务的请求定义
@@ -206,11 +246,9 @@ export function genFunctionCode(groupName: string, service: StandardService, cfg
     type: 'object',
     items: pathFields
   });
-  const bodyType = genResponseType({
-    type: 'object',
-    items: bodyFields
-  });
-  const returnType = genResponseType(service.response); // 响应类型尽力建模
+  const bodyType = genResponseType(request.body!);
+
+  const returnType = genResponseType(service.response); // 响应类型
 
   // 判断是否存在各类参数
   const hasQuery = queryFields.length > 0;
@@ -239,7 +277,7 @@ export function genFunctionCode(groupName: string, service: StandardService, cfg
    *  - 选择合适的对象名用于模板变量（优先 pathParams -> params -> data）
    */
   const argsNameForUrl = hasPath ? 'pathParams' : (hasQuery ? 'params' : 'data');
-  const urlExpr = buildUrl(cfg.baseUrlPrefix, rawPath, pathFields, argsNameForUrl);
+  const urlExpr = buildUrl(cfg.baseUrlPrefix!, rawPath, pathFields, argsNameForUrl);
 
   /**
    * 3. 构建 **请求负载**（request 调用参数）：
@@ -277,51 +315,11 @@ export function genFunctionCode(groupName: string, service: StandardService, cfg
   /**
    * 5. 最终函数体代码：包含注释、签名与 request 调用 
    */
-  let signature = `${funcName}(${sigArgs})${typeAnn} {\n  return ${cfg.requestImport.identifier}({\n${payload.join('\n')}\n  });\n}`;
+  let signature = `${funcName}(${sigArgs})${typeAnn} {\n  return ${cfg.requestImport!.identifier}({\n${payload.join('\n')}\n  });\n}`;
   if (cfg.exportStyle === 'function') {
     // 适配 object 风格
     signature = `export function ${signature}`
   }
 
   return (jsDocLines.length ? jsDocLines.join('\n') + '\n' : '') + signature + '\n';
-}
-
-/**
- * 生成对象聚合导出文件内容
- * - 顶部可插入 import
- * - 将每个服务的函数转换为对象方法（保留注释，去掉导出与返回类型字面量）
- */
-export function genObjectFile(group: StandardGroup, cfg: ApiboostConfig, header: string): string {
-  const objName = group.controllerName || `req${pascalCase(group.name)}`; // 对象名：优先使用 group.controllerName
-  const lines: string[] = [];
-  const usedNames = new Set<string>(); // 跟踪本组内函数名，确保唯一
-  if (header) lines.push(header);
-  lines.push(`export const ${objName} = {`);
-  for (const s of group.services || []) {
-    const fnCode = genFunctionCode(group.name, s, cfg, usedNames); // 先生成函数形式
-    // 将 "export function xxx(...): Promise<...> {" 改写为对象方法 "xxx(...){"
-    const method = fnCode
-      .replace(/^\/\*\*[\s\S]*?\*\/\n/, (m) => m.replace(/^/gm, '  ')) // 注释整体缩进到对象内部
-      .replace(/^export function\s+([a-zA-Z0-9_]+)\(([\s\S]*?)\)\s*(?::\s*Promise<[\s\S]*?>)?\s*\{\n/, '  $1($2) {\n')
-      .replace(/^  return\s+([a-zA-Z0-9_]+)\(\{/, '    return $1({'); // 内部缩进保持一致
-    lines.push(method.trimEnd().replace(/\n$/, ''));
-    lines.push(','); // 每个方法后加逗号分隔
-  }
-  lines.push('};\n');
-  return lines.join('\n');
-}
-
-/**
- * 生成逐函数导出文件内容
- * - 顶部可插入 import
- * - 每个服务导出一个独立函数，名称已唯一化
- */
-export function genFunctionFile(group: StandardGroup, cfg: ApiboostConfig, header: string): string {
-  const lines: string[] = [];
-  const usedNames = new Set<string>(); // 跟踪函数名唯一性
-  if (header) lines.push(header);
-  for (const s of group.services || []) {
-    lines.push(genFunctionCode(group.name, s, cfg, usedNames));
-  }
-  return lines.join('\n');
 }
