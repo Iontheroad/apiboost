@@ -2,9 +2,10 @@
 
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import fs from 'fs-extra'
+import fse from 'fs-extra'
 import { processConfig } from "../src/generator/index.js"
 import { loadConfig } from "../src/utils/index.js"
+import { ApiboostConfigFileNames } from '../src/config.js';
 import 'tsx/esm'
 
 const __filename = fileURLToPath(import.meta.url);
@@ -17,7 +18,10 @@ interface CliOptions {
   version?: boolean;
 }
 
-// 解析命令行参数
+/**
+ * 解析命令行参数
+ * @returns 
+ */
 function parseArgs(): CliOptions {
   const args = process.argv.slice(2);
   const options: CliOptions = {};
@@ -37,40 +41,40 @@ function parseArgs(): CliOptions {
   return options;
 }
 
-// 显示帮助信息
+/**
+ * 显示帮助信息
+ */
 function showHelp(): void {
   console.log(`
-  apiboost - API代码生成工具
+  apiboost - API前端接口代码生成工具
 
   用法:
     npx apiboost [选项]
 
   选项:
-    -c, --config <path>  指定配置文件路径 (默认: ./apiboost.config.ts)
+    -c, --config <path>  指定配置文件路径 (默认: ./${ApiboostConfigFileNames[0]})
     -h, --help           显示帮助信息
     -v, --version        显示版本信息
   `);
 }
 
-// 显示版本信息
+/**
+ * 显示版本信息
+ */
 function showVersion(): void {
-  // 从package.json读取版本信息
   try {
-    const packageJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../package.json'), 'utf8'));
-    console.log(`APIGen v${packageJson.version || '1.0.0'}`);
+    // 从package.json读取版本信息
+    const packageStr = fse.readFileSync(path.resolve(__dirname, '../package.json'), 'utf8')
+    const packageJson = JSON.parse(packageStr);
+    console.log(`apiboost v${packageJson.version || '1.0.0'}`);
   } catch (error) {
-    console.log('APIGen v1.0.0');
+    console.log(`版本读取失败: ${error}`);
   }
 }
 
-
 /**
- * 主流程：
- * 1) 解析命令行参数
- * 2) 读取配置，设置默认值（request 标识符、ext、命名风格等）
- * 3) 读取并解析源 JSONC
- * 4) 遍历分组，按 exportStyle 生成文件内容
- * 5) 写入 outDir 并输出日志
+ * 主流程
+ * @returns {Promise<void>}
  */
 async function main(): Promise<void> {
   try {

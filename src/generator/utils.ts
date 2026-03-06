@@ -1,8 +1,8 @@
-import { StandardBody, StandardField, StandardGroup, StandardService } from "@zpeak/openapi-adapter";
+import { StandardBody, StandardField, StandardService } from "@zpeak/openapi-adapter";
 import { ApiboostConfig } from "../type.js";
 
 /**
- * 生成 JSDoc 的 @param 注释行列表
+ * 生成 JSDoc 的 `@param` 注释行列表
  * @param fields 字段列表
  * @param namePrefix  `params/pathParams/data` 前缀
  * @returns 
@@ -13,7 +13,7 @@ export function genJsDocParams(fields: StandardField[], namePrefix: string): str
   for (const f of fields) {
     const desc = f.description || '';
     const type = f.type;
-    // 形如：@param {number} params.pageSize 每页数量
+    // 形如：` * @param {number} params.pageSize 每页数量`
     lines.push(` * @param {${type}} ${namePrefix}.${f.name} ${desc}`);
   }
   return lines;
@@ -36,6 +36,8 @@ export function camelCase(s: string): string {
  * 文件名命名风格转换
  *  - camel：小驼峰命名法（如 articleList）
  *  - kebab：短横线命名法（如 article-list）
+ * @param name - 待转换的文件名
+ * @param caseType - 转换目标风格
  */
 export function toFileName(name: string, caseType: 'camel' | 'kebab'): string {
   if (caseType === 'kebab') {
@@ -53,13 +55,17 @@ export function toFileName(name: string, caseType: 'camel' | 'kebab'): string {
  * @param argsObjName - 路径参数对象名（如 `pathParams`、`params`、`data`）
  * @returns URL 表达式字符串（模板字符串或普通字符串字面量）
  * 
- * @example
- * // 输入：basePrefix='/api', rawPath='/user/{id}', pathFields=[{name:'id'}], argsObjName='pathParams'
- * // 输出：`/api/user/${pathParams.id}`
+ * @example `{id}` 占位符
+ *  - 输入：basePrefix='/api', rawPath='/user/{id}', pathFields=[{name:'id'}], argsObjName='pathParams'
+ *  - 输出：`/api/user/${pathParams.id}`
  * 
- * @example
- * // 输入：basePrefix='/api', rawPath='/article', pathFields=[{name:'id'}], argsObjName='pathParams'
- * // 输出：`/api/article/${pathParams.id}`
+ * @example `:id` 占位符
+ *  - 输入：basePrefix='/api', rawPath='/user/:id', pathFields=[{name:'id'}], argsObjName='pathParams'
+ *  - 输出：`/api/user/${pathParams.id}`
+ * 
+ * @example 无占位符
+ *  - 输入：basePrefix='/api', rawPath='/user', pathFields=[{name:'id'}], argsObjName='pathParams'
+ *  - 输出：`/api/user/${pathParams.id}`
  */
 export function buildUrl(basePrefix: string, rawPath: string, pathFields: StandardField[] | undefined, argsObjName: string): string {
   const prefix = basePrefix || '';
@@ -99,10 +105,13 @@ export function buildUrl(basePrefix: string, rawPath: string, pathFields: Standa
  * @returns {string} TypeScript类型字符串
  * 
  * @example  输出形如 :
- *  `{
- *     /** 描述 *\/
- *     field?: string;
- *   }`
+ * 
+ *  ```ts
+ *  {
+ *    /** 描述 *\/
+ *    field?: string;
+ *  }
+ * ```
  */
 export function genResponseType(schema: StandardBody): string {
   // 处理对象类型
@@ -160,10 +169,11 @@ export function genResponseType(schema: StandardBody): string {
  * 构建文件头部（按需插入请求 import 行）
  * @param cfg - 配置对象
  * @returns 
- * @example
- * // 配置了 `requestImport.importLine`
- *  `import request from './request';`
  * 
+ * @example  配置了 `requestImport.importLine`
+ *  ```ts
+ *  import request from './request';
+ *  ```
  */
 export function buildHeader(cfg: ApiboostConfig): string {
   const header: string[] = [];
@@ -171,29 +181,6 @@ export function buildHeader(cfg: ApiboostConfig): string {
     header.push(cfg.requestImport.importLine); // 直接插入配置的 import 行
   }
   return header.length ? header.join('\n') + '\n\n' : ''; // 末尾补空行分隔正文
-}
-
-/**
- * 函数名唯一化：
- * - 若 controllerName 在同组内重复，基于 `${method}_${path}` 生成后缀
- * - 例如：reqGetArticle -> reqGetArticle_get_article_list_self
- * - 冲突兜底：若仍重复，追加序号
- */
-export function uniqueName(name: string, service: StandardService, used: Set<string>): string {
-  if (!used.has(name)) {
-    used.add(name);
-    return name;
-  }
-  // 将路径中 / : {} 等分隔符统一替换为 _，并去除多余的下划线
-  const suffix = `${service.method}_${service.path.replace(/[\/:{}]/g, '_').replace(/_+/g, '_').replace(/^_+|_+$/g, '')}`;
-  let candidate = `${name}_${suffix}`; // 基于方法与路径生成唯一后缀
-  let i = 2;
-  // 若仍冲突，逐步追加序号（_2、_3...）
-  while (used.has(candidate)) {
-    candidate = `${name}_${suffix}_${i++}`;
-  }
-  used.add(candidate);
-  return candidate;
 }
 
 /**
@@ -228,7 +215,7 @@ export function uniqueName(name: string, service: StandardService, used: Set<str
  * }
  * ```
  */
-export function genFunctionCode(groupName: string, service: StandardService, cfg: ApiboostConfig, usedNames: Set<string>): string {
+export function genFunctionCode(groupName: string, service: StandardService, cfg: ApiboostConfig): string {
   const request = service.request; // 当前服务的请求定义
   const { method, path: rawPath, summary, auth, description } = service;
 
@@ -308,16 +295,16 @@ export function genFunctionCode(groupName: string, service: StandardService, cfg
     jsDocLines.push(' */');
   }
 
-  const sigArgs = args.join(', '); // 形参签名文本
+  const sigArgs = args.join(', '); // 形参签名文本 : `params, pathParams, data`
   const typeAnn = cfg.outputExt === 'ts' ? `: Promise<${returnType}>` : ''; // 仅 TS 输出返回类型注解
-  const funcName = uniqueName(service.controllerName, service, usedNames); // 去重后函数名
+  const funcName = service.controllerName
 
   /**
    * 5. 最终函数体代码：包含注释、签名与 request 调用 
    */
   let signature = `${funcName}(${sigArgs})${typeAnn} {\n  return ${cfg.requestImport!.identifier}({\n${payload.join('\n')}\n  });\n}`;
   if (cfg.exportStyle === 'function') {
-    // 适配 object 风格
+    // 适配 function 风格
     signature = `export function ${signature}`
   }
 
