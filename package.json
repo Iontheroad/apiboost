@@ -30,32 +30,34 @@
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
-  "main": "dist/src/index.js",
-  "module": "dist/src/index.js",
-  "types": "dist/src/index.d.ts",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/src/index.d.ts",
-      "import": "./dist/src/index.js",
-      "require": "./dist/src/index.js",
-      "default": "./dist/src/index.js"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.mjs"
     }
   },
   "bin": {
-    "apiboost": "/dist/bin/generate.js"
+    "apiboost": "./dist/bin/generate.mjs"
   },
   "scripts": {
     "build": "tsc",
-    "test": "pnpm build && tsx bin/generate.ts",
+    "build:un": "unbuild",
+    "test": "tsx bin/generate.ts",
     "generate": "node dist/bin/generate.js",
-    "g": "node dist/bin/generate.js",
+    "g": "pnpm build &&  node dist/bin/generate.js",
     "release": "npx bumpp --excute=\"pnpm i && pnpm build\"",
     "pb": "pnpm publish"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^24.9.1",
-    "typescript": "^5.6.3"
+    "typescript": "^5.6.3",
+    "unbuild": "^3.6.1"
   },
   "dependencies": {
     "@zpeak/openapi-adapter": "^1.0.12",
