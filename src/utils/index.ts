@@ -1,6 +1,6 @@
 import fse from 'fs-extra'
 import path from "node:path";
-import { pathToFileURL, } from "node:url";
+import { pathToFileURL } from "node:url";
 import { ApiboostConfig } from '../type.js'
 import { ApiboostConfigFileNames } from '../config.js';
 

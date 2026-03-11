@@ -5,7 +5,16 @@ import { ApiboostConfig } from "../type.js";
  * 生成 JSDoc 的 `@param` 注释行列表
  * @param fields 字段列表
  * @param namePrefix  `params/pathParams/data` 前缀
- * @returns 
+ * @returns JSDoc 注释行列表
+ * 
+ * @example 输出形式：
+ * 
+ *  ```ts
+ *  [
+ *    `* @param {number} params.pageSize 每页数量`,
+ *    `* @param {string} params.pageNum 页码`
+ *  ]
+ *  ```
  */
 export function genJsDocParams(fields: StandardField[], namePrefix: string): string[] {
   if (!fields.length) return [];
